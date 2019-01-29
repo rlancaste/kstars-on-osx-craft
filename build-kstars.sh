@@ -274,28 +274,28 @@ EOF
 	mkdir -p ${SHORTCUTS_DIR}
 	
 	#Craft Shortcuts
-	ln -s ${CRAFT_DIR}/bin ${SHORTCUTS_DIR}
-	ln -s ${CRAFT_DIR}/lib ${SHORTCUTS_DIR}
-	ln -s ${CRAFT_DIR}/include ${SHORTCUTS_DIR}
-	ln -s ${CRAFT_DIR}/share ${SHORTCUTS_DIR}
-	ln -s ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/bin ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/lib ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/include ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/share ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde ${SHORTCUTS_DIR}
 	
 	# KStars Latest
-	ln -s ${CRAFT_DIR}/download/git/kde/applications/kstars-latest ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/download/git/kde/applications/kstars-latest ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/kstars-latest ${SHORTCUTS_DIR}/kstars-latest-source
-	ln -s ${CRAFT_DIR}/build/kde/applications/kstars-latest/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/build/kde/applications/kstars-latest/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/kstars-latest-build
 	
 	# INDIServer Latest
-	ln -s ${CRAFT_DIR}/download/git/libs/indiserver-latest ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver-latest ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/indiserver-latest ${SHORTCUTS_DIR}/indiserver-latest-source
-	ln -s ${CRAFT_DIR}/build/libs/indiserver-latest/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/build/libs/indiserver-latest/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiserver-latest-build
 	
 	# INDIServer 3rdParty Latest
-	ln -s ${CRAFT_DIR}/download/git/libs/indiserver3rdParty-latest ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver3rdParty-latest ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/indiserver3rdParty-latest ${SHORTCUTS_DIR}/3rdParty-latest-source
-	ln -s ${CRAFT_DIR}/build/libs/indiserver3rdParty-latest/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/build/libs/indiserver3rdParty-latest/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/3rdParty-latest-build
 
 #This will package everything up into the app and then make a dmg.
