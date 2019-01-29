@@ -174,6 +174,7 @@ EOF
 			brew remove --force $(brew list) --ignore-dependencies
 		fi  
 	else
+		announce "Installing Homebrew."
 		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	fi
 
