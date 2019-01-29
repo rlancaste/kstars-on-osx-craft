@@ -2,9 +2,9 @@
 
 This script is built on:
 
-	-the initial work that seanhoughton did to get KStars working on OS X initially
+	-the initial work that seanhoughton did to get KStars to run on OS X initially
 	
-	-the work that rlancaste did to get KStars modified to work on OS X
+	-the work that rlancaste did to get KStars modified to work decently on OS X
 	
 	-the work that Gonzothegreat did to figure out how to create a deployable app bundle and dmg
 	
@@ -19,8 +19,11 @@ This script is built on:
 ### Prerequisites for running the script (no longer required beforehand!!!)
 
 	This script makes use of the xcode command line tools, qt, homebrew (not much anymore), and craft.
-	In the old version of the script, you had to install many of these first, but it can now do them automatically. You can install these things beforehand if you like.
-	Warning:  Craft now must use its own internal version of QT.  If you have one installed elsewhere, such as ~/Qt, it could cause issues.  I kept getting this error where KStars wouldn't launch because it said certain classes were defined in two different places and it said "One of the two will be used. Which one is undefined."  So it is better to just have the one qt.
+	In the old version of the script, you had to install many of these first, but it can now do them automatically. 
+	You can install these things beforehand if you like, but it is not required, as they will install.
+	Warning:  Craft now must use its own internal version of QT.  If you have one installed elsewhere, such as ~/Qt, it could cause issues.  
+	I kept getting this error where KStars wouldn't launch because it said certain classes were defined in two different places and it said 
+	"One of the two will be used. Which one is undefined."  So it is better to just have the one qt.
 
 	Links to the websites of key tools:
 	QT         https://www.qt.io
@@ -45,7 +48,8 @@ This script is built on:
 
 ### Editing the build-env.sh file to reflect your installation
 
-	You should not need to change anything in the file unless you want to.  But if you want to build from different repositories or to install in different directories, these settings are for you.
+	You should not need to change anything in the file unless you want to.  
+	But if you want to build from different repositories or to install in different directories, these settings are for you.
 
 ### Running the build-kstars.sh Script
 ```console
@@ -62,17 +66,16 @@ This script is built on:
 	# Note that you can also use any combination of these options.
 ```
 
-After the script finishes, whichever method you chose, you should have built a kstars app that can actually be used.
-
-	-If you chose the dmg option, you can now distribute the app and/or dmg to other people freely.  The dmg has associated md5 and sha256 files for download verification.
-
-	-If you chose the QT Creator option, you should follow the EditingKStarsInQTCreatorOnOSX.pdf document to get all set up to do your editing.
-
-(For the last 2 options, of course you must have either XCode or QT Creator installed on your system respectively.
+	After the script finishes, whichever method you chose, you should have built a kstars app that can actually be used.
+	If you chose the dmg option, you can now distribute the app and/or dmg to other people freely.  
+	The dmg has associated md5 and sha256 files for download verification.
 
 ### Running the fixLibraries.sh Script
 
-	This script can only be run after building kstars as described above.  It will copy all required libraries and frameworks into the app bundle (except qt) and prepare it for distribution.  If you choose the -d option in build-kstars.sh, it runs this script automatically.  The only reason you would want to run it separately is if there is an issue you have to fix after KStars is built but before making the dmg.
+	This script can only be run after building kstars as described above.  
+	It will copy all required libraries and frameworks into the app bundle (except qt) and prepare it for distribution.  
+	If you choose the -d option in build-kstars.sh, it runs this script automatically.  
+	The only reason you would want to run it separately is if there is an issue you have to fix after KStars is built but before making the dmg.
 
 ### Running the generateDMG.sh Script
 
@@ -82,10 +85,13 @@ After the script finishes, whichever method you chose, you should have built a k
 
 	Please see the document EditingKStarsInQTCreatorOnOSX.pdf
 
-	If you have already run the build-kstars.sh script, you will be all set up to edit KStars and/or INDI.  It is recommended that you use QT Creator for this editing because it has extra tools for editing QT specific files like GUI interface files.
+	If you have already run the build-kstars.sh script, you will be all set up to edit KStars and/or INDI.  
+	It is recommended that you use QT Creator for this editing because it has extra tools for editing QT specific files like GUI interface files.
 	So you will want to first install QT Creator from QT's website: https://www.qt.io/download-qt-installer
 	The open source license version is free of charge.
-	Warning:  As indicated above, Craft now must use its own internal version of QT.  If you install a version of QT in ~/QT from their website it may cause problems as described above.  Follow the setup instructions in EditingKStarsInQTCreatorOnOSX.pdf to get this all set up to work in QT Creator.
+	Warning:  As indicated above, Craft now must use its own internal version of QT.  
+	If you install a version of QT in ~/QT from their website it may cause problems as described above.  
+	Follow the setup instructions in EditingKStarsInQTCreatorOnOSX.pdf to get this all set up to work in QT Creator.
 	
 ### Submitting any changes you make in KStars and/or INDI
 
