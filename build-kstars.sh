@@ -147,7 +147,10 @@ EOF
 		announce "and then building a DMG"
 	fi
 	
-#This installs the xcode command line tools if not installed yet.
+# This installs the xcode command line tools if not installed yet.
+# Yes these tools will be automatically installed if the user has never used git before
+# But sometimes they need to be installed again.
+# If they are already installed, it will just print an error message
 	announce "Installing xcode command line tools"
 	xcode-select --install
 	
@@ -171,7 +174,7 @@ EOF
 			brew remove --force $(brew list) --ignore-dependencies
 		fi  
 	else
-		usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	fi
 
 #This will install KStars dependencies from Homebrew.
