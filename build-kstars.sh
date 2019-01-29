@@ -182,6 +182,7 @@ EOF
 	announce "Installing Homebrew Dependencies."
 	brew upgrade
 	brew install python
+	brew install python2
 	brew install gpsd #(I tried to write a recipe for gpsd, but it requires scons, and I have no idea what to do)
 
 #This will create the Astro Directory if it doesn't exist
