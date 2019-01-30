@@ -276,6 +276,8 @@ EOF
 	SHORTCUTS_DIR=${ASTRO_ROOT}/craft-shortcuts
 	mkdir -p ${SHORTCUTS_DIR}
 	
+	rm ${SHORTCUTS_DIR}/*
+	
 	#Craft Shortcuts
 	ln -sf ${CRAFT_DIR}/bin ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/lib ${SHORTCUTS_DIR}
