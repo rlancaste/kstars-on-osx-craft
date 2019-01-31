@@ -8,6 +8,7 @@ GENERATE_DMG=""
 FORCE_RUN=""
 KSTARS_APP=""
 REMOVE_ALL=""
+VERBOSE=""
 
 #This will print out how to use the script
 function usage
@@ -19,6 +20,7 @@ cat <<EOF
 	    -d Generate dmg
 	    -f Force build even if there are script updates
 	    -r Remove everything and do a fresh install
+	    -v Print out verbose output while building
 EOF
 }
 
@@ -48,7 +50,7 @@ EOF
 #This function processes the user's options for running the script
 	function processOptions
 	{
-		while getopts "adfr" option
+		while getopts "adfrv" option
 		do
 			case $option in
 				a)
@@ -63,6 +65,9 @@ EOF
 				r)
 					REMOVE_ALL="Yep"
 					;;
+				v)
+					VERBOSE="Yep"
+					;;
 				*)
 					dieUsage "Unsupported option $option"
 					;;
@@ -71,20 +76,26 @@ EOF
 		shift $((${OPTIND} - 1))
 
 		echo ""
-		echo "ANNOUNCE            = ${ANNOUNCE:-Nope}"
-		echo "GENERATE_DMG  	= ${GENERATE_DMG:-Nope}"
-		echo "FORCE_RUN           = ${REMOVE_ALL:-Nope}"
-		echo "REMOVE_ALL           = ${REMOVE_ALL:-Nope}"
+		echo "ANNOUNCE           = ${ANNOUNCE:-Nope}"
+		echo "GENERATE_DMG  	 = ${GENERATE_DMG:-Nope}"
+		echo "FORCE_RUN          = ${FORCE_RUN:-Nope}"
+		echo "REMOVE_ALL         = ${REMOVE_ALL:-Nope}"
+		echo "VERBOSE            = ${VERBOSE:-Nope}"
 	}
 
-#This function checks to see that all connections are available before starting the script
-#That could save time if one of the repositories is not available and it would crash later
-	function checkForConnections
+# This function checks to see if a connection to a website exists.
+#
+	function checkForConnection
 	{
-		git ls-remote ${KSTARS_REPO} &> /dev/null
-		git ls-remote ${LIBINDI_REPO} &> /dev/null
-		git ls-remote ${CRAFT_REPO} &> /dev/null
-		statusBanner "All Git Respositories found"
+		testCommand=$(curl -Is $2 | head -n 1)
+		if [[ "${testCommand}" == *"OK"* || "${testCommand}" == *"Moved"* ]]
+  		then 
+  			echo "$1 connection was found."
+  		else
+  			echo "$1, ($2), a required connection, was not found, aborting script."
+  			echo "If you would like the script to run anyway, please comment out the line that tests this connection in build-kstars.sh."
+  			exit
+		fi
 	}
 
 #This checks to see that this script is up to date.  If it is not, you can use the -f option to force it to run.
@@ -135,10 +146,14 @@ EOF
 	checkUpToDate
 	
 # Prepare to run the script by setting all of the environment variables	
-	source "${DIR}/build-env.sh"
+	source ${DIR}/build-env.sh
 	
-# Before starting, check for QT and to see if the remote servers are accessible
-	checkForConnections
+# Before starting, check to see if the remote servers are accessible
+	statusBanner "Checking Connections"
+	checkForConnection Homebrew "https://raw.githubusercontent.com/Homebrew/install/master/install"
+	checkForConnection Craft "https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py"
+	checkForConnection Oxygen "https://github.com/KDE/oxygen.git"
+	checkForConnection CustomMacBlueprints "https://github.com/rlancaste/craft-blueprints-kde.git"
 	
 #Announce the script is starting and what will be done.
 	announce "Starting script, building INDI and KStars with Craft"
@@ -223,12 +238,29 @@ EOF
 #This will build indi, including the 3rd Party drivers.
 	announce "Building INDI and required dependencies"
 	source ${CRAFT_DIR}/craft/craftenv.sh
-	craft -vvv -i indiserver-latest
-	craft -vvv -i indiserver3rdParty-latest
+	if [ -n "$VERBOSE" ]
+	then
+		craft -vvv -i indiserver-latest
+	else
+		craft -i indiserver-latest
+	fi
+	
+	if [ -n "$VERBOSE" ]
+	then
+		craft -vvv -i indiserver3rdParty-latest
+	else
+		craft -i indiserver3rdParty-latest
+	fi
 
 #This will build gsc
 	announce "Building GSC"
-	craft -vvv -i gsc
+	if [ -n "$VERBOSE" ]
+	then
+		craft -vvv -i gsc
+	else
+		craft -i gsc
+	fi
+	
 
 #This will get some nice sounds for KStars
 	statusBanner "Getting Oxygen Sounds for KStars"
@@ -242,16 +274,26 @@ EOF
 
 #This will set the KStars App directory and craft KStars.
 	announce "Building KStars and required dependencies"
-	KSTARS_APP="${CRAFT_DIR}/Applications/KDE/KStars.app"
+	export KSTARS_APP="${CRAFT_DIR}/Applications/KDE/KStars.app"
 	rm -rf ${KSTARS_APP}
 	
 	source ${CRAFT_DIR}/craft/craftenv.sh
 		
 	statusBanner "Crafting icons"
-	craft -vvv -i breeze-icons
+	if [ -n "$VERBOSE" ]
+	then
+		craft -vvv -i breeze-icons
+	else
+		craft -i breeze-icons
+	fi
 		
 	statusBanner "Crafting KStars"
-	craft -vvv -i kstars-latest
+	if [ -n "$VERBOSE" ]
+	then
+		craft -vvv -i kstars-latest
+	else
+		craft -i kstars-latest
+	fi
 		
 	announce "CRAFT COMPLETE"
 	
@@ -273,12 +315,12 @@ EOF
 
 #This will create some symlinks that make it easier to edit INDI and KStars
 	announce "Creating symlinks"
-	SHORTCUTS_DIR=${ASTRO_ROOT}/craft-shortcuts
 	mkdir -p ${SHORTCUTS_DIR}
 	
 	rm ${SHORTCUTS_DIR}/*
 	
 	#Craft Shortcuts
+	ln -sf ${CRAFT_DIR}/Applications/KDE ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/bin ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/lib ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/include ${SHORTCUTS_DIR}

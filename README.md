@@ -57,6 +57,8 @@ This script is built on:
 	~/Projects/kstars-on-osx-craft/build-kstars.sh
 	# If you want to build KStars and get audible announcements along the way, then do:
 	~/Projects/kstars-on-osx-craft/build-kstars.sh -a
+	# If you want to build KStars with verbose craft output showing all the gory details:
+	~/Projects/kstars-on-osx-craft/build-kstars.sh -v
 	# If you want to build KStars to produce a distributable DMG, then do:
 	~/Projects/kstars-on-osx-craft/build-kstars.sh -d
 	# If you want to build KStars, but have an out of date script but still want to build anyway, then do:
