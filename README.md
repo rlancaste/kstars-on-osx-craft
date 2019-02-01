@@ -59,6 +59,11 @@ This script is built on:
 	~/Projects/kstars-on-osx-craft/build-kstars.sh -a
 	# If you want to build KStars with verbose craft output showing all the gory details:
 	~/Projects/kstars-on-osx-craft/build-kstars.sh -v
+	# If you want to build KStars with craft set to quiet mode (prints MUCH less detail):
+	~/Projects/kstars-on-osx-craft/build-kstars.sh -q
+	# If you want to build KStars to use the latest stable version of KStars and INDI, then do:
+	~/Projects/kstars-on-osx-craft/build-kstars.sh -s
+		(Note that by default, this script installs the latest version of KStars and INDI from github)
 	# If you want to build KStars to produce a distributable DMG, then do:
 	~/Projects/kstars-on-osx-craft/build-kstars.sh -d
 	# If you want to build KStars, but have an out of date script but still want to build anyway, then do:

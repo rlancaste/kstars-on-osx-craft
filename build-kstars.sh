@@ -4,6 +4,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 ANNOUNCE=""
 BUILD_INDI=""
+STABLE_BUILD=""
 GENERATE_DMG=""
 FORCE_RUN=""
 KSTARS_APP=""
@@ -17,10 +18,12 @@ function usage
 cat <<EOF
 	options:
 	    -a Announce stuff as you go
+	    -s Build the latest stable release (the default is to build the latest version from git)
 	    -d Generate dmg
 	    -f Force build even if there are script updates
 	    -r Remove everything and do a fresh install
 	    -v Print out verbose output while building
+	    -q Craft is in quiet mode while building
 EOF
 }
 
@@ -50,11 +53,14 @@ EOF
 #This function processes the user's options for running the script
 	function processOptions
 	{
-		while getopts "adfrv" option
+		while getopts "adfrvsq" option
 		do
 			case $option in
 				a)
 					ANNOUNCE="Yep"
+					;;
+				s)
+					STABLE_BUILD="Yep"
 					;;
 				d)
 					GENERATE_DMG="Yep"
@@ -66,7 +72,10 @@ EOF
 					REMOVE_ALL="Yep"
 					;;
 				v)
-					VERBOSE="Yep"
+					VERBOSE="-vvv"
+					;;
+				q)
+					VERBOSE="-q"
 					;;
 				*)
 					dieUsage "Unsupported option $option"
@@ -77,7 +86,8 @@ EOF
 
 		echo ""
 		echo "ANNOUNCE           = ${ANNOUNCE:-Nope}"
-		echo "GENERATE_DMG  	 = ${GENERATE_DMG:-Nope}"
+		echo "STABLE_BUILD       = ${STABLE_BUILD:-Nope}"
+		echo "GENERATE_DMG       = ${GENERATE_DMG:-Nope}"
 		echo "FORCE_RUN          = ${FORCE_RUN:-Nope}"
 		echo "REMOVE_ALL         = ${REMOVE_ALL:-Nope}"
 		echo "VERBOSE            = ${VERBOSE:-Nope}"
@@ -238,28 +248,25 @@ EOF
 #This will build indi, including the 3rd Party drivers.
 	announce "Building INDI and required dependencies"
 	source ${CRAFT_DIR}/craft/craftenv.sh
-	if [ -n "$VERBOSE" ]
+	
+	if [ -n "$STABLE_BUILD" ]
 	then
-		craft -vvv -i indiserver-latest
+		TARGET_VER="default"
 	else
-		craft -i indiserver-latest
+		TARGET_VER="Latest"
 	fi
 	
-	if [ -n "$VERBOSE" ]
-	then
-		craft -vvv -i indiserver3rdParty-latest
-	else
-		craft -i indiserver3rdParty-latest
-	fi
+	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver
+	
+	announce "Building INDI 3rd Party Libraries and required dependencies"
+	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver3rdPartyLibraries
+	
+	announce "Building INDI 3rd Party Drivers"
+	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver3rdParty
 
 #This will build gsc
 	announce "Building GSC"
-	if [ -n "$VERBOSE" ]
-	then
-		craft -vvv -i gsc
-	else
-		craft -i gsc
-	fi
+	craft "$VERBOSE" -i gsc
 	
 
 #This will get some nice sounds for KStars
@@ -280,20 +287,10 @@ EOF
 	source ${CRAFT_DIR}/craft/craftenv.sh
 		
 	statusBanner "Crafting icons"
-	if [ -n "$VERBOSE" ]
-	then
-		craft -vvv -i breeze-icons
-	else
-		craft -i breeze-icons
-	fi
+	craft "$VERBOSE" -i breeze-icons
 		
 	statusBanner "Crafting KStars"
-	if [ -n "$VERBOSE" ]
-	then
-		craft -vvv -i kstars-latest
-	else
-		craft -i kstars-latest
-	fi
+	craft "$VERBOSE" -i --target "${TARGET_VER}" kstars-mac
 		
 	announce "CRAFT COMPLETE"
 	
@@ -327,23 +324,23 @@ EOF
 	ln -sf ${CRAFT_DIR}/share ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde ${SHORTCUTS_DIR}
 	
-	# KStars Latest
-	ln -sf ${CRAFT_DIR}/download/git/kde/applications/kstars-latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/kstars-latest ${SHORTCUTS_DIR}/kstars-latest-source
-	ln -sf ${CRAFT_DIR}/build/kde/applications/kstars-latest/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/kstars-latest-build
+	# KStars
+	ln -sf ${CRAFT_DIR}/download/git/kde/applications/kstars-mac ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/kstars-mac ${SHORTCUTS_DIR}/kstars-source
+	ln -sf ${CRAFT_DIR}/build/kde/applications/kstars-mac/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/kstars-build
 	
-	# INDIServer Latest
-	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver-latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/indiserver-latest ${SHORTCUTS_DIR}/indiserver-latest-source
-	ln -sf ${CRAFT_DIR}/build/libs/indiserver-latest/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiserver-latest-build
+	# INDIServer
+	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/indiserver ${SHORTCUTS_DIR}/indiserver-source
+	ln -sf ${CRAFT_DIR}/build/libs/indiserver/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiserver-build
 	
-	# INDIServer 3rdParty Latest
-	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver3rdParty-latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/indiserver3rdParty-latest ${SHORTCUTS_DIR}/3rdParty-latest-source
-	ln -sf ${CRAFT_DIR}/build/libs/indiserver3rdParty-latest/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/3rdParty-latest-build
+	# INDIServer 3rdParty
+	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver3rdParty ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/indiserver3rdParty ${SHORTCUTS_DIR}/indiserver-3rdParty-source
+	ln -sf ${CRAFT_DIR}/build/libs/indiserver3rdParty/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiserver-3rdParty-build
 
 #This will package everything up into the app and then make a dmg.
 	if [ -n "$GENERATE_DMG" ]
