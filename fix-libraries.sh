@@ -179,6 +179,11 @@ announce "Running Fix Libraries Script"
 	rm -fr "${FRAMEWORKS_DIR}"
 	mkdir -p "${FRAMEWORKS_DIR}"
 	
+# This deletes the qt.conf file so macdeployqt can create a new one which points inside the app bundle
+	statusBanner "Deleting qt.conf so a new one that points inside the bundle can be made."
+	rm -f "${KSTARS_APP}/Contents/Resources/qt.conf"
+
+	
 cd ${DMG_DIR}
 
 statusBanner "Processing kstars executable"

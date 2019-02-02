@@ -81,7 +81,7 @@ set +e
 ###########################################
 announce "Building DMG"
 cd ${DMG_DIR}
-macdeployqt KStars.app -executable=${KSTARS_APP}/Contents/MacOS/dbus-daemon -qmldir=${CRAFT_DIR}/download/git/kde/applications/kstars-latest/kstars/data/qml
+macdeployqt KStars.app -executable=${KSTARS_APP}/Contents/MacOS/dbus-daemon -qmldir=${CRAFT_DIR}/download/git/kde/applications/kstars-mac/kstars/data/qml
 
 #Setting up some short paths
 	UNCOMPRESSED_DMG=${DMG_DIR}/KStarsUncompressed.dmg
