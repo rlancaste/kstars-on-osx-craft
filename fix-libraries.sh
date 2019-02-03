@@ -148,6 +148,14 @@ then
 	source ${DIR}/build-env.sh
 fi
 
+#This should stop the script so that it doesn't run if these paths are blank.
+#That way it doesn't try to edit /Applications instead of ${CRAFT_DIR}/Applications for example
+	if [ -z "${DIR}" ] || [ -z  "${CRAFT_DIR}" ]
+	then
+		echo "directory error! aborting Libraries script!"
+		exit 9
+	fi
+
 #This code should make sure the KStars app and the DMG Directory are set correctly.
 #In the case of the CMAKE and XCode builds, it also creates the dmg directory and copies in the app
 	if [ ! -e ${CRAFT_DIR} ]
@@ -157,14 +165,6 @@ fi
 	fi
 	DMG_DIR="${CRAFT_DIR}/Applications/KDE/"
 	KSTARS_APP="${DMG_DIR}/KStars.app"
-
-#This should stop the script so that it doesn't run if these paths are blank.
-#That way it doesn't try to edit /Applications instead of ${CRAFT_DIR}/Applications for example
-	if [ -z "${DIR}" ] || [ -z "${DMG_DIR}" ] || [ -z "${KSTARS_APP}" ]
-	then
-		echo "directory error! aborting Libraries script!"
-		exit 9
-	fi
 	
 announce "Running Fix Libraries Script"
 
@@ -174,10 +174,21 @@ announce "Running Fix Libraries Script"
 #Files in these locations do not need to be copied into the Frameworks folder.
 	IGNORED_OTOOL_OUTPUT="/Qt|${KSTARS_APP}/|/usr/lib/|/System/"
 
-#This deletes and replaces the former Frameworks folder so you can start fresh.  This is needed if it ran before.
+#This preserves the couple of Frameworks files that we cannot regenerate with this script currently
+	statusBanner "Preserving Several Frameworks"
+	mkdir -p "${KSTARS_APP}/Contents/Frameworks2"
+	cp -f "${FRAMEWORKS_DIR}/libphonon4qt5.4.dylib" "${KSTARS_APP}/Contents/Frameworks2/libphonon4qt5.4.dylib"
+	cp -f "${FRAMEWORKS_DIR}/libphonon4qt5experimental.4.dylib" "${KSTARS_APP}/Contents/Frameworks2/libphonon4qt5experimental.4.dylib"
+	cp -f "${FRAMEWORKS_DIR}/libvlc.dylib" "${KSTARS_APP}/Contents/Frameworks2/libvlc.dylib"
+	cp -f "${FRAMEWORKS_DIR}/libvlccore.dylib" "${KSTARS_APP}/Contents/Frameworks2/libvlccore.dylib"
+
+#This deletes the former Frameworks folder so you can start fresh.  This is needed if it ran before.
 	statusBanner "Replacing the Frameworks Directory"
 	rm -fr "${FRAMEWORKS_DIR}"
-	mkdir -p "${FRAMEWORKS_DIR}"
+	
+#This copies back the preserved frameworks
+	statusBanner "Restoring Preserved Frameworks"
+	mv "${KSTARS_APP}/Contents/Frameworks2" "${FRAMEWORKS_DIR}"
 	
 # This deletes the qt.conf file so macdeployqt can create a new one which points inside the app bundle
 	statusBanner "Deleting qt.conf so a new one that points inside the bundle can be made."
