@@ -1,8 +1,8 @@
 ## Instructions for Installing KStars, INDI, Dependencies, and related software on OS X with CRAFT
 
-This script is built on:
+This script is written by Rob Lancaster (rlancaste), but it is built upon:
 
-	-the initial work that seanhoughton did to get KStars to run on OS X initially
+	-the initial work that seanhoughton did to get KStars to build and run on OS X initially
 	
 	-the work that rlancaste did to get KStars modified to work decently on OS X
 	
@@ -52,8 +52,12 @@ This script is built on:
 	But if you want to build from different repositories or to install in different directories, these settings are for you.
 
 ### Running the build-kstars.sh Script
+
+	Note that you don't need to use any special options to use the script, you can just run the first command below.
+	But if you do want to do something different, this script has a number of options that are explained below.
+	
 ```console
-	# If you want to build KStars to just use the latest version of the program, then do:
+	# If you want just want to build KStars to use the latest version of the program, then do:
 	~/Projects/kstars-on-osx-craft/build-kstars.sh
 	# If you want to build KStars and get audible announcements along the way, then do:
 	~/Projects/kstars-on-osx-craft/build-kstars.sh -a
@@ -86,7 +90,10 @@ This script is built on:
 
 ### Running the generateDMG.sh Script
 
-	This script can only be run after building kstars as described above.  It will first run the fixLibraries.sh script and then generate a DMG.  If you choose the -d option in build-kstars.sh, it runs this script automatically.  The only reason you would want to run it separately is if there is an issue you have to fix after KStars is built but before making the dmg.
+	This script can only be run after building kstars as described above.  
+	It will first run the fixLibraries.sh script and then generate a DMG.  
+	If you choose the -d option in build-kstars.sh, it runs this script automatically.  
+	The only reason you would want to run it separately is if there is an issue you have to fix after KStars is built but before making the dmg.
 
 ### Editing KStars and/or INDI in QT Creator
 
