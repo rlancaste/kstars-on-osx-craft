@@ -307,7 +307,7 @@ EOF
 		then
 			mkdir -p "${xplanetArchiveFolder}"
 			cd "${xplanetArchiveFolder}"
-			curl -O https://downloads.sourceforge.net/project/xplanet/xplanet/1.3.1/xplanet-1.3.1.tar.gz
+			curl -OL https://downloads.sourceforge.net/project/xplanet/xplanet/1.3.1/xplanet-1.3.1.tar.gz
 		fi
 		tar -xzf "$xplanetArchive" -C ~/AstroRoot
 		cd xplanet-1.3.1
