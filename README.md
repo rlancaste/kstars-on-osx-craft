@@ -30,7 +30,7 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 	Homebrew   https://brew.sh
 	Craft      https://community.kde.org/Craft
 
-### Downloading the files from this repo 
+### Downloading the files from this repo using the OS X Terminal
 
 ```console
 	mkdir -p ~/Projects
@@ -53,7 +53,7 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 
 ### Running the build-kstars.sh Script
 
-	Note that you don't need to use any special options to use the script, you can just run the first command below.
+	Note that you don't need to use any special options to use the script, you can just run the first command below from the OS X Terminal.
 	But if you do want to do something different, this script has a number of options that are explained below.
 	
 ```console
@@ -107,9 +107,28 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 	If you install a version of QT in ~/QT from their website it may cause problems as described above.  
 	Follow the setup instructions in EditingKStarsInQTCreatorOnOSX.pdf to get this all set up to work in QT Creator.
 	
+	A Document for Editing INDI in QT Creator will be added soon.
+	
 ### Submitting any changes you make in KStars and/or INDI
 
-	KStars changes must be submitted using phabricator.  Instructions will be added for this.
+	Let's say you made some change that was totally awesome or made some significant improvement and you want to submit it.
+	
+	The KStars Code is hosted on this GIT Repository: https://github.com/KDE/kstars
+	But KStars changes must be submitted using Phabricator. Please see this website for details: https://phabricator.kde.org/project/profile/295/
+	
+	To set yourself up to be able to submit your changes, run the following code from the OS X Terminal:
+```console
+	mkdir -p ~/AstroRoot/arc
+	cd ~/AstroRoot/arc
+	git clone https://github.com/phacility/libphutil.git
+	git clone https://github.com/phacility/arcanist.git
+```
+	To actually commit and submit your changes, you can run this code:
+```console
+	export PATH="~/AstroRoot/arc/arcanist/bin:$PATH"
+	cd ~/AstroRoot/kstars-craft/download/git/kde/applications/kstars-mac
+	arc diff
+```
 	
 	INDI changes must be submitted using a pull request on Github.  Instructions will be added for this.
 
