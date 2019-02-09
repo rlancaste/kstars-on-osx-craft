@@ -244,7 +244,10 @@ EOF
 				echo "Quitting the script as you requested."
 				exit
 			fi
-			rm -rf "${CRAFT_DIR}"
+			if [ -d "${CRAFT_DIR}" ]
+			then
+				rm -rf "${CRAFT_DIR}"
+			fi
 			mkdir -p ${CRAFT_DIR}
 			curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && python3.7 setup.py --prefix "${CRAFT_DIR}"
 		fi
@@ -331,7 +334,10 @@ EOF
 #This will set the KStars App directory and craft KStars.
 	announce "Building KStars and required dependencies"
 	export KSTARS_APP="${CRAFT_DIR}/Applications/KDE/KStars.app"
-	rm -rf ${KSTARS_APP}
+	if [ -d "${KSTARS_APP}" ]
+	then
+		rm -rf "${KSTARS_APP}"
+	fi
 	
 	source ${CRAFT_DIR}/craft/craftenv.sh
 		
@@ -363,7 +369,10 @@ EOF
 	announce "Creating symlinks"
 	mkdir -p ${SHORTCUTS_DIR}
 	
-	rm ${SHORTCUTS_DIR}/*
+	if [ -d ${SHORTCUTS_DIR} ]
+	then
+		rm ${SHORTCUTS_DIR}/*
+	fi
 	
 	#Craft Shortcuts
 	ln -sf ${CRAFT_DIR}/Applications/KDE ${SHORTCUTS_DIR}
