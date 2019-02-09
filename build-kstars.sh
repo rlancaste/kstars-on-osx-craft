@@ -310,7 +310,7 @@ EOF
 			curl -OL https://downloads.sourceforge.net/project/xplanet/xplanet/1.3.1/xplanet-1.3.1.tar.gz
 		fi
 		tar -xzf "$xplanetArchive" -C ~/AstroRoot
-		cd xplanet-1.3.1
+		cd ~/AstroRoot/xplanet-1.3.1
 		export LDFLAGS="-Wl -rpath ${HOME}/AstroRoot/kstars-craft/lib -L${HOME}/AstroRoot/kstars-craft/lib"
 		export CPPFLAGS="-I/usr/include -I/usr/local/include -I${HOME}/AstroRoot/kstars-craft/include"
 		./configure --disable-dependency-tracking --without-cygwin --with-x=no --without-xscreensaver --with-aqua --prefix=${HOME}/AstroRoot/kstars-craft
