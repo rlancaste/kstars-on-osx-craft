@@ -371,7 +371,7 @@ EOF
 	
 	if [ -d ${SHORTCUTS_DIR} ]
 	then
-		rm ${SHORTCUTS_DIR}/*
+		rm -f ${SHORTCUTS_DIR}/*
 	fi
 	
 	#Craft Shortcuts
