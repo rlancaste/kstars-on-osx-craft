@@ -206,9 +206,27 @@ EOF
 #This will install KStars dependencies from Homebrew.
 	announce "Installing Homebrew Dependencies."
 	brew upgrade
+	
+	# python is required for craft to work.
 	brew install python
+	
+	# python 2 is now built in craft, but in fact installing numpy and pyfits relies on homebrew for some reason.
 	brew install python2
-	brew install gpsd #(I tried to write a recipe for gpsd, but it requires scons, and I have no idea what to do)
+	
+	# I tried to write a recipe for gpsd, but it requires scons, and I have no idea what to do.
+	brew install gpsd 
+	
+	# It would be good to sort this out.  gpg2 should be built in craft.  TODO!
+	brew install gpg
+	
+	# This is because gpg is not called gpg2 and translations call on gpg2.  Fix this??
+	ln -sf /usr/local/bin/gpg /usr/local/bin/gpg2
+	
+	# It would be good to get this stuff into craft too!!! TODO!
+	# The problem here is that the system ruby can't be changed and we need logger-colors.
+	brew install ruby
+	export PATH=/usr/local/opt/ruby/bin:$PATH
+	gem install logger-colors
 
 #This will create the Astro Directory if it doesn't exist
 	mkdir -p "${ASTRO_ROOT}"
@@ -266,7 +284,38 @@ EOF
 
 #This will build gsc
 	announce "Building GSC"
-	craft "$VERBOSE" -i gsc
+	craft "$VERBOSE" gsc
+
+#This will build xplanet if it is not installed yet.
+#This should be done by craft, but there is a build issue for xplanet using craft on Sierra that I cannot figure out, so this is a fix
+#It works fine on my machine, but this fix is necessary for others.
+#If this gets fixed, this entire section and the environment variable can be removed and xplanet can again be a craft dependency of kstars-mac
+	if [ -n "$XPLANETNOCRAFT" ]
+	then
+		craft "$VERBOSE" netpbm
+		cd ~/AstroRoot
+		if [ -d xplanet-1.3.1 ]
+		then
+			rm -r xplanet-1.3.1
+		fi
+		xplanetArchiveFolder="${HOME}"/AstroRoot/kstars-craft/download/archives/libs/xplanet/
+		xplanetArchive="${xplanetArchiveFolder}"/xplanet-1.3.1.tar.gz
+		if [ ! -e "$xplanetArchive" ]
+		then
+			mkdir -p "${xplanetArchiveFolder}"
+			cd "${xplanetArchiveFolder}"
+			curl -O https://downloads.sourceforge.net/project/xplanet/xplanet/1.3.1/xplanet-1.3.1.tar.gz
+		fi
+		tar -xzf "$xplanetArchive" -C ~/AstroRoot
+		cd xplanet-1.3.1
+		export LDFLAGS="-Wl -rpath ${HOME}/AstroRoot/kstars-craft/lib -L${HOME}/AstroRoot/kstars-craft/lib"
+		export CPPFLAGS="-I/usr/include -I/usr/local/include -I${HOME}/AstroRoot/kstars-craft/include"
+		./configure --disable-dependency-tracking --without-cygwin --with-x=no --without-xscreensaver --with-aqua --prefix=${HOME}/AstroRoot/kstars-craft
+		make
+		make install
+	else
+		craft "$VERBOSE" xplanet
+	fi
 	
 
 #This will get some nice sounds for KStars
@@ -287,7 +336,7 @@ EOF
 	source ${CRAFT_DIR}/craft/craftenv.sh
 		
 	statusBanner "Crafting icons"
-	craft "$VERBOSE" -i breeze-icons
+	craft "$VERBOSE" breeze-icons
 		
 	statusBanner "Crafting KStars"
 	craft "$VERBOSE" -i --target "${TARGET_VER}" kstars-mac

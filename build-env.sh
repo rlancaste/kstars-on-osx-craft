@@ -25,6 +25,7 @@ export DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 export ASTRO_ROOT=~/AstroRoot
 export CRAFT_DIR="${ASTRO_ROOT}"/kstars-craft
 export SHORTCUTS_DIR="${ASTRO_ROOT}"/craft-shortcuts
+export XPLANETNOCRAFT="Yep"
 
 # This sets the minimum OS X version you are compiling for
 # Note that the current version of qt can no longer build for anything less than 10.12
@@ -32,7 +33,7 @@ export QMAKE_MACOSX_DEPLOYMENT_TARGET=10.12
 export MACOSX_DEPLOYMENT_TARGET=10.12
 
 # This sets the current KStars version number that will be used throughout the script.
-export KSTARS_VERSION=3.1.0
+export KSTARS_VERSION=3.1.0-beta
 
 echo "DIR                   is [${DIR}]"
 echo "ASTRO_ROOT            is [${ASTRO_ROOT}]"
