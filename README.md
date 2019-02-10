@@ -1,5 +1,7 @@
 ## Instructions for Installing KStars, INDI, Dependencies, and related software on OS X with CRAFT
 
+![Screenshot of KStars on OS X](ScreenShotKStarsOnOSX.png "Screenshot of KStars on OS X")
+
 This script is written by Rob Lancaster (rlancaste), but it is built upon:
 
 	-the initial work that seanhoughton did to get KStars to build and run on OS X initially
