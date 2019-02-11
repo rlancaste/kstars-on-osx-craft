@@ -4,19 +4,19 @@
 
 This script is written by Rob Lancaster (rlancaste), but it is built upon:
 
-	-the initial work that seanhoughton did to get KStars to build and run on OS X initially
+	- the initial work that seanhoughton did to get KStars to build and run on OS X initially
 	
-	-the work that rlancaste did to get KStars modified to work decently on OS X
+	- the work that rlancaste did to get KStars modified to work decently on OS X
 	
-	-the work that Gonzothegreat did to figure out how to create a deployable app bundle and dmg
+	- the work that Gonzothegreat did to figure out how to create a deployable app bundle and dmg
 	
-	-the work that jamiesmith did to automate the entire process in a simple and easy to use script
+	- the work that jamiesmith did to automate the entire process in a simple and easy to use script
 	
-	-and the later work of rlancaste (myself) over the last couple of years to continue to revise, improve, and add new functionality
+	- and the later work of rlancaste (myself) over the last couple of years to continue to revise, improve, and add new functionality
 
-	-Note, Most of the epic journey is logged on the indilib forums [http://indilib.org/forum/ekos/525-ekos-on-mac-os-x.html?start=564#11793](http://indilib.org/forum/ekos/525-ekos-on-mac-os-x.html?start=564#11793)
+	- Note, Most of the epic journey is logged on the indilib forums [http://indilib.org/forum/ekos/525-ekos-on-mac-os-x.html?start=564#11793](http://indilib.org/forum/ekos/525-ekos-on-mac-os-x.html?start=564#11793)
 	
-	-The old version of the script is on: [https://github.com/jamiesmith/kstars-on-osx](https://github.com/jamiesmith/kstars-on-osx)
+	- The old version of the script is on: [https://github.com/jamiesmith/kstars-on-osx](https://github.com/jamiesmith/kstars-on-osx)
 
 ### Prerequisites for running the script (no longer required beforehand!!!)
 
@@ -28,14 +28,14 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 	I kept getting this error where KStars wouldn't launch because it said certain classes were defined in two different places and it said 
 	"One of the two will be used. Which one is undefined."  So it is better to just have the one qt.
 
-	Links to the websites of key tools:
-	QT         [https://www.qt.io](https://www.qt.io)
-	Homebrew   [https://brew.sh](https://brew.sh)
-	Craft      [https://community.kde.org/Craft](https://community.kde.org/Craft)
+Links to the websites of key tools:
+QT         [https://www.qt.io](https://www.qt.io)
+Homebrew   [https://brew.sh](https://brew.sh)
+Craft      [https://community.kde.org/Craft](https://community.kde.org/Craft)
 
 ### Downloading the files from this repo using the OS X Terminal
 
-```console
+```
 	mkdir -p ~/Projects
 	cd ~/Projects/
 	
@@ -62,7 +62,7 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 	Note that you don't need to use any special options to use the script, you can just run the first command below from the OS X Terminal.
 	But if you do want to do something different, this script has a number of options that are explained below.
 	
-```console
+```
 	# If you want just want to build KStars to use the latest version of the program, then do:
 	~/Projects/kstars-on-osx-craft/build-kstars.sh
 	# If you want to build KStars and get audible announcements along the way, then do:
@@ -123,14 +123,14 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 	But KStars changes must be submitted using Phabricator. Please see this website for details: https://phabricator.kde.org/project/profile/295/
 	
 	To set yourself up to be able to submit your changes, run the following code from the OS X Terminal:
-```console
+```
 	mkdir -p ~/AstroRoot/arc
 	cd ~/AstroRoot/arc
 	git clone https://github.com/phacility/libphutil.git
 	git clone https://github.com/phacility/arcanist.git
 ```
 	To actually commit and submit your changes, you can run this code:
-```console
+```
 	export PATH="~/AstroRoot/arc/arcanist/bin:$PATH"
 	cd ~/AstroRoot/kstars-craft/download/git/kde/applications/kstars-mac
 	arc diff
@@ -145,7 +145,7 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 	
 	1. Test everything you did in INDI throughly with KStars
 	2. Go to the command line and do the following (where "My Commit Message" corresponds to an explanation of what you did:
-```console
+```
 	cd ~/AstroRoot/indi-work/indi
 	git commit -am "My Commit Message"
 	git push
