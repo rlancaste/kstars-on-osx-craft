@@ -14,9 +14,9 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 	
 	-and the later work of rlancaste (myself) over the last couple of years to continue to revise, improve, and add new functionality
 
-	-Note, Most of the epic journey is logged on the indilib forums http://indilib.org/forum/ekos/525-ekos-on-mac-os-x.html?start=564#11793
+	-Note, Most of the epic journey is logged on the indilib forums [http://indilib.org/forum/ekos/525-ekos-on-mac-os-x.html?start=564#11793](http://indilib.org/forum/ekos/525-ekos-on-mac-os-x.html?start=564#11793)
 	
-	-The old version of the script is on: https://github.com/jamiesmith/kstars-on-osx
+	-The old version of the script is on: [https://github.com/jamiesmith/kstars-on-osx](https://github.com/jamiesmith/kstars-on-osx)
 
 ### Prerequisites for running the script (no longer required beforehand!!!)
 
@@ -29,9 +29,9 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 	"One of the two will be used. Which one is undefined."  So it is better to just have the one qt.
 
 	Links to the websites of key tools:
-	QT         https://www.qt.io
-	Homebrew   https://brew.sh
-	Craft      https://community.kde.org/Craft
+	QT         [https://www.qt.io](https://www.qt.io)
+	Homebrew   [https://brew.sh](https://brew.sh)
+	Craft      [https://community.kde.org/Craft](https://community.kde.org/Craft)
 
 ### Downloading the files from this repo using the OS X Terminal
 
@@ -43,10 +43,13 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 	# 
 	git clone https://github.com/rlancaste/kstars-on-osx-craft.git
 	
-	# if you do already have it:
-	# (if you changed something then you will have to work that out)
+	# if you do already have it and just want to update:
+	# (Note, if you changed the locaiton then you will have to work that out)
 	cd ~/Projects/kstars-on-osx-craft
 	git pull
+	
+	# You might need to do this to the scripts to make them executable on your system.
+	chmod +x build-kstars.sh
 ```
 
 ### Editing the build-env.sh file to reflect your installation
@@ -80,9 +83,10 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 	# Note that you can also use any combination of these options.
 ```
 
-	After the script finishes, whichever method you chose, you should have built a kstars app that can actually be used.
+	After the script finishes, with whichever options you chose, you should have built a kstars app that can actually be used.
 	If you chose the dmg option, you can now distribute the app and/or dmg to other people freely.  
 	The dmg has associated md5 and sha256 files for download verification.
+	It will be located in the ~/AstroRoot/craft-shortcuts/KDE folder.
 
 ### Running the fixLibraries.sh Script
 
@@ -115,7 +119,7 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 ### Submitting any changes you make in KStars
 
 	Let's say you made some change that was totally awesome or made some significant improvement and you want to submit it.
-	The KStars Code is hosted on this GIT Repository: https://github.com/KDE/kstars
+	The KStars Code is hosted on this GIT Repository: [https://github.com/KDE/kstars](https://github.com/KDE/kstars)
 	But KStars changes must be submitted using Phabricator. Please see this website for details: https://phabricator.kde.org/project/profile/295/
 	
 	To set yourself up to be able to submit your changes, run the following code from the OS X Terminal:
@@ -135,7 +139,7 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 ### Submitting any changes you make in INDI
 	
 	INDI changes must be submitted using a pull request on Github.
-	The INDI Code is hosted on this Repository: https://github.com/indilib/indi
+	The INDI Code is hosted on this Repository: [https://github.com/indilib/indi](https://github.com/indilib/indi)
 	Once you have made a fork, run the download script and edited your changes as described in the section above.
 	When you are ready to submit your changes, you should do the following:
 	
