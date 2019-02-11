@@ -122,14 +122,14 @@ Let's say you made some change that was totally awesome or made some significant
 The KStars Code is hosted on this GIT Repository: [https://github.com/KDE/kstars](https://github.com/KDE/kstars)
 But KStars changes must be submitted using Phabricator. Please see this website for details: https://phabricator.kde.org/project/profile/295/
 	
-#To set yourself up to be able to submit your changes, run the following code from the OS X Terminal:
+###### To set yourself up to be able to submit your changes, run the following code from the OS X Terminal:
 ```
 	mkdir -p ~/AstroRoot/arc
 	cd ~/AstroRoot/arc
 	git clone https://github.com/phacility/libphutil.git
 	git clone https://github.com/phacility/arcanist.git
 ```
-#To actually commit and submit your changes, you can run this code:
+###### To actually commit and submit your changes, you can run this code:
 ```
 	export PATH="~/AstroRoot/arc/arcanist/bin:$PATH"
 	cd ~/AstroRoot/kstars-craft/download/git/kde/applications/kstars-mac
