@@ -122,14 +122,14 @@ Let's say you made some change that was totally awesome or made some significant
 The KStars Code is hosted on this GIT Repository: [https://github.com/KDE/kstars](https://github.com/KDE/kstars)
 But KStars changes must be submitted using Phabricator. Please see this website for details: https://phabricator.kde.org/project/profile/295/
 	
-	To set yourself up to be able to submit your changes, run the following code from the OS X Terminal:
+#To set yourself up to be able to submit your changes, run the following code from the OS X Terminal:
 ```
 	mkdir -p ~/AstroRoot/arc
 	cd ~/AstroRoot/arc
 	git clone https://github.com/phacility/libphutil.git
 	git clone https://github.com/phacility/arcanist.git
 ```
-	To actually commit and submit your changes, you can run this code:
+#To actually commit and submit your changes, you can run this code:
 ```
 	export PATH="~/AstroRoot/arc/arcanist/bin:$PATH"
 	cd ~/AstroRoot/kstars-craft/download/git/kde/applications/kstars-mac
@@ -143,12 +143,12 @@ The INDI Code is hosted on this Repository: [https://github.com/indilib/indi](ht
 Once you have made a fork, run the download script and edited your changes as described in the section above.
 When you are ready to submit your changes, you should do the following:
 	
-	1. Test everything you did in INDI throughly with KStars
-	2. Go to the command line and do the following (where "My Commit Message" corresponds to an explanation of what you did:
+1. Test everything you did in INDI throughly with KStars
+2. Go to the command line and do the following (where "My Commit Message" corresponds to an explanation of what you did:
 ```
 	cd ~/AstroRoot/indi-work/indi
 	git commit -am "My Commit Message"
 	git push
 ```
-	3.  If it has been awhile since you made your fork, you should update it to the latest version using the updateINDIFork.sh script
-	4.  Go to Github on your INDI Fork and click "New Pull Request" to submit your changes.
+3.  If it has been awhile since you made your fork, you should update it to the latest version using the updateINDIFork.sh script
+4.  Go to Github on your INDI Fork and click "New Pull Request" to submit your changes.
