@@ -100,22 +100,21 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 
 ### Editing KStars and/or INDI in QT Creator
 
-	Please see the document EditingKStarsInQTCreatorOnOSX.pdf
+	Please see the document EditingKStarsInQTCreatorOnOSX.pdf for editing KStars
+	Please see the document EditingINDIInQTCreatorOnOSX.docx for editing INDI
 
-	If you have already run the build-kstars.sh script, you will be all set up to edit KStars and/or INDI.  
+	If you have already run the build-kstars.sh script, you will be all set up to edit KStars.
+	For INDI, you will need to also create a Fork on your own GitHub account first and then run the downloadINDIForkForEditing.sh script.  
 	It is recommended that you use QT Creator for this editing because it has extra tools for editing QT specific files like GUI interface files.
 	So you will want to first install QT Creator from QT's website: https://www.qt.io/download-qt-installer
 	The open source license version is free of charge.
 	Warning:  As indicated above, Craft now must use its own internal version of QT.  
 	If you install a version of QT in ~/QT from their website it may cause problems as described above.  
-	Follow the setup instructions in EditingKStarsInQTCreatorOnOSX.pdf to get this all set up to work in QT Creator.
+	Follow the setup instructions in the documents to get this all set up to work in QT Creator.
 	
-	A Document for Editing INDI in QT Creator will be added soon.
-	
-### Submitting any changes you make in KStars and/or INDI
+### Submitting any changes you make in KStars
 
 	Let's say you made some change that was totally awesome or made some significant improvement and you want to submit it.
-	
 	The KStars Code is hosted on this GIT Repository: https://github.com/KDE/kstars
 	But KStars changes must be submitted using Phabricator. Please see this website for details: https://phabricator.kde.org/project/profile/295/
 	
@@ -132,7 +131,20 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 	cd ~/AstroRoot/kstars-craft/download/git/kde/applications/kstars-mac
 	arc diff
 ```
+
+### Submitting any changes you make in INDI
 	
-	INDI changes must be submitted using a pull request on Github.  Instructions will be added for this.
-
-
+	INDI changes must be submitted using a pull request on Github.
+	The INDI Code is hosted on this Repository: https://github.com/indilib/indi
+	Once you have made a fork, run the download script and edited your changes as described in the section above.
+	When you are ready to submit your changes, you should do the following:
+	
+	1. Test everything you did in INDI throughly with KStars
+	2. Go to the command line and do the following (where "My Commit Message" corresponds to an explanation of what you did:
+```console
+	cd ~/AstroRoot/indi-work/indi
+	git commit -am "My Commit Message"
+	git push
+```
+	3.  If it has been awhile since you made your fork, you should update it to the latest version using the updateINDIFork.sh script
+	4.  Go to Github on your INDI Fork and click "New Pull Request" to submit your changes.
