@@ -23,6 +23,8 @@ export DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # This sets the directory paths.  Note that these are customizable.
 export ASTRO_ROOT=~/AstroRoot
+export INDI_DIR="${ASTRO_ROOT}"/indi-work
+export FORKED_INDI_REPO="https://github.com/rlancaste/indi.git"
 export CRAFT_DIR="${ASTRO_ROOT}"/kstars-craft
 export SHORTCUTS_DIR="${ASTRO_ROOT}"/craft-shortcuts
 export XPLANETNOCRAFT="Yep"
