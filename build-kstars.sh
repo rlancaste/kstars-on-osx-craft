@@ -307,7 +307,7 @@ EOF
 		then
 			rm -r xplanet-1.3.1
 		fi
-		xplanetArchiveFolder="${HOME}"/AstroRoot/kstars-craft/download/archives/libs/xplanet/
+		xplanetArchiveFolder="${CRAFT_DIR}"/download/archives/libs/xplanet/
 		xplanetArchive="${xplanetArchiveFolder}"/xplanet-1.3.1.tar.gz
 		if [ ! -e "$xplanetArchive" ]
 		then
@@ -317,9 +317,9 @@ EOF
 		fi
 		tar -xzf "$xplanetArchive" -C ~/AstroRoot
 		cd ~/AstroRoot/xplanet-1.3.1
-		export LDFLAGS="-Wl -rpath ${HOME}/AstroRoot/kstars-craft/lib -L${HOME}/AstroRoot/kstars-craft/lib"
-		export CPPFLAGS="-I/usr/include -I/usr/local/include -I${HOME}/AstroRoot/kstars-craft/include"
-		./configure --disable-dependency-tracking --without-cygwin --with-x=no --without-xscreensaver --with-aqua --prefix=${HOME}/AstroRoot/kstars-craft
+		export LDFLAGS="-Wl -rpath ${CRAFT_DIR}/lib -L${CRAFT_DIR}/lib"
+		export CPPFLAGS="-I/usr/include -I/usr/local/include -I${CRAFT_DIR}/include"
+		./configure --disable-dependency-tracking --without-cygwin --with-x=no --without-xscreensaver --with-aqua --prefix=${CRAFT_DIR}
 		make
 		make install
 	else
@@ -355,22 +355,6 @@ EOF
 		
 	announce "CRAFT COMPLETE"
 	
-#This will Post-Process the KStars build
-		##########################################
-		statusBanner "Post-processing KStars Build"
-		echo "KSTARS_APP=${KSTARS_APP}"
-		##########################################
-		statusBanner "Editing info.plist"
-		plutil -insert NSPrincipalClass -string NSApplication ${KSTARS_APP}/Contents/info.plist
-		plutil -insert NSHighResolutionCapable -string True ${KSTARS_APP}/Contents/info.plist
-		plutil -insert NSRequiresAquaSystemAppearance -string NO ${KSTARS_APP}/Contents/info.plist
-		plutil -replace CFBundleName -string KStars ${KSTARS_APP}/Contents/info.plist
-		plutil -replace CFBundleVersion -string $KSTARS_VERSION ${KSTARS_APP}/Contents/info.plist
-		plutil -replace CFBundleLongVersionString -string $KSTARS_VERSION ${KSTARS_APP}/Contents/info.plist
-		plutil -replace CFBundleShortVersionString -string $KSTARS_VERSION ${KSTARS_APP}/Contents/info.plist
-		plutil -replace NSHumanReadableCopyright -string "© 2001 - 2018, The KStars Team, Freely Released under GNU GPL V2" ${KSTARS_APP}/Contents/info.plist
-		##########################################
-
 #This will create some symlinks that make it easier to edit INDI and KStars
 	announce "Creating symlinks"
 	mkdir -p ${SHORTCUTS_DIR}
@@ -415,18 +399,17 @@ EOF
 #This will make an xcode build if desired
 	if [ -n "$GENERATE_XCODE" ]
 	then
-		export KSTARS_XCODE_DIR="${ASTRO_ROOT}/kstars-xcode"
 		rm -rf ${KSTARS_XCODE_DIR}
 		mkdir -p ${KSTARS_XCODE_DIR}
 		cd ${KSTARS_XCODE_DIR}
 
 		statusBanner "Building KStars using XCode"
 
-		cmake -DCMAKE_INSTALL_PREFIX="${CRAFT_DIR}" -G Xcode "${ASTRO_ROOT}/craft-shortcuts/kstars-source"
+		cmake -DCMAKE_INSTALL_PREFIX="${CRAFT_DIR}" -G Xcode "${SHORTCUTS_DIR}/kstars-source"
 		xcodebuild -project kstars.xcodeproj -alltargets -configuration Debug
 
 		KSTARS_XCODE_APP="${KSTARS_XCODE_DIR}/kstars/Debug/KStars.app"
-		KSTARS_CRAFT_APP="${ASTRO_ROOT}/craft-shortcuts/kstars-build/kstars/KStars.app"
+		KSTARS_CRAFT_APP="${SHORTCUTS_DIR}/kstars-build/kstars/KStars.app"
 
 		statusBanner "Copying Needed files from the Craft Build for the XCode Build to Work"
 

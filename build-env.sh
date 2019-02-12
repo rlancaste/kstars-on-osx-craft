@@ -22,11 +22,20 @@ function announce
 export DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # This sets the directory paths.  Note that these are customizable.
+# Beware that none of them should have spaces in the file path.
+	#This is the base path
 export ASTRO_ROOT=~/AstroRoot
+	#This is the path to the INDI directory for your personal editing work
 export INDI_DIR="${ASTRO_ROOT}"/indi-work
+	#This is the path to your personal fork of the INDI repository
 export FORKED_INDI_REPO="https://github.com/rlancaste/indi.git"
+	#This is the location of the craft root directory
 export CRAFT_DIR="${ASTRO_ROOT}"/kstars-craft
+	#This is the location of the craft shortcuts directory
 export SHORTCUTS_DIR="${ASTRO_ROOT}"/craft-shortcuts
+	#This is the path to your KStars XCode Build Directory
+export KSTARS_XCODE_DIR="${ASTRO_ROOT}/kstars-xcode"
+	#This is a variable designed to fix a temporary problem with xplanet in craft on sierra
 export XPLANETNOCRAFT="Yep"
 
 # This sets the minimum OS X version you are compiling for
@@ -39,6 +48,8 @@ export KSTARS_VERSION=3.1.0-beta
 
 echo "DIR                   is [${DIR}]"
 echo "ASTRO_ROOT            is [${ASTRO_ROOT}]"
+echo "INDI_DIR              is [${INDI_DIR}]"
+echo "FORKED_INDI_REPO      is [${FORKED_INDI_REPO}]"
 echo "CRAFT_DIR             is [${CRAFT_DIR}]"
 echo "SHORTCUTS_DIR         is [${SHORTCUTS_DIR}]"
 
