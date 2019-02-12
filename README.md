@@ -38,30 +38,31 @@ Links to the websites of key tools:
 ```
 	mkdir -p ~/Projects
 	cd ~/Projects/
-	
-	# if you don't already have the repo:
-	# 
 	git clone https://github.com/rlancaste/kstars-on-osx-craft.git
-	
-	# if you do already have it and just want to update:
-	# (Note, if you changed the locaiton then you will have to work that out)
+```
+### Updating the files in this repo to the latest version if you already have it
+
+```
 	cd ~/Projects/kstars-on-osx-craft
 	git pull
-	
-	# You might need to do this to the scripts to make them executable on your system.
-	chmod +x build-kstars.sh
 ```
 
-### Editing the build-env.sh file to reflect your installation
+### Editing the files to reflect your installation
 
-You should not need to change anything in the file unless you want to.  
+The main file you would need to edit is build-env.sh but you should not need to change anything in the file unless you want to.
+Note that if you do make changes to the paths, then some of the instructions in this README will have incorrect paths for your system. 
 But if you want to build from different repositories or to install in different directories, these settings are for you.
+Also note that you may have to run the following command on some or all of the scripts to make them executable on your system.
+You probably will not need to, but just in case, here it is for one of them.
+```
+	cd ~/Projects/kstars-on-osx-craft
+	chmod +x build-kstars.sh
+```
 
 ### Running the build-kstars.sh Script
 
 Note that you don't need to use any special options to use the script, you can just run the this command below from the OS X Terminal.
 (assuming that this is where your script is located)
-
 ```
 	~/Projects/kstars-on-osx-craft/build-kstars.sh
 ```
@@ -115,7 +116,7 @@ The only reason you would want to run it separately is if there is an issue you 
 
 If you have already run the build-kstars.sh script, you will be all set up to edit KStars.
 For INDI, you will need to also create a Fork on your own GitHub account first and then run the downloadINDIForkForEditing.sh script.  
-It is recommended that you use QT Creator for this editing because it has extra tools for editing QT specific files like GUI interface files.
+It is recommended that you use QT Creator for editing KStars because it has extra tools for editing QT specific files like GUI interface files.
 So you will want to first install QT Creator from QT's website: https://www.qt.io/download-qt-installer
 The open source license version is free of charge.
 Warning:  As indicated above, Craft now must use its own internal version of QT.  
@@ -147,6 +148,12 @@ But KStars changes must be submitted using Phabricator. Please see this website 
 	cd ~/AstroRoot/kstars-craft/download/git/kde/applications/kstars-mac
 	arc diff
 ```
+
+### Using the INDI Repository Scripts.
+There are two scripts in this repo that are going to be useful for editing INDI.  
+downloadINDIForkForEditing.sh is useful for downloading a Fork of INDI that you have created and getting it setup to edit in QT Creator
+updateINDIFork.sh is useful for making sure your INDI Fork is up to date before your pull request.
+Please see the document EditingINDIInQTCreatorOnOSX.docx for more detailed instructions.
 
 ### Submitting any changes you make in INDI
 	
