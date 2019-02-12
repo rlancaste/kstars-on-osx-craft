@@ -70,7 +70,7 @@ But if you do want to do something different, this script has a number of option
 
 	-a	The build script will speak out loud as it is doing key steps.
 
-	-v  This will set Craft to use verbose output showing all the gory details
+	-v	This will set Craft to use verbose output showing all the gory details
 
 	-q	This will set craft to use quiet mode (prints MUCH less detail)
 
@@ -82,7 +82,7 @@ But if you do want to do something different, this script has a number of option
 
 	-f	This will allow you to build KStars anyway with this script being out of date (If there is a newer version, it will prompt you to update by default)
 
-	-r	This will install KStars completely fresh, deleting all of homebrew and all of craft. (Be careful!!  But this is really good for testing purposes or if you installation breaks.)
+	-r	This will install KStars completely fresh, deleting all of homebrew and all of craft. (Be careful!!  But this is really good for testing purposes or if your installation breaks.)
 
 Note that you can also use any combination of these options. For example:
 ```
