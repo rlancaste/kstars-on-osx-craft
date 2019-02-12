@@ -91,9 +91,18 @@ Note that you can also use any combination of these options. For example:
 ```
 
 After the script finishes, with whichever options you chose, you should have built a kstars app that can actually be used.
-If you chose the dmg option, you can now distribute the app and/or dmg to other people freely.  
+
+### Generating a distributable DMG
+
+This is an extremely important function of the script, so even though it was explained above, it gets its own section.
+To generate a DMG that you can share, run this command:
+```
+	~/Projects/kstars-on-osx-craft/build-kstars.sh -d
+```
+Combining this with other options will not compromise the creation of the DMG.  
+If the script finishes successfully, the DMG will be located in the ~/AstroRoot/craft-shortcuts/KDE folder.
+You can now distribute the app and/or dmg to other people freely.  
 The dmg has associated md5 and sha256 files for download verification.
-It will be located in the ~/AstroRoot/craft-shortcuts/KDE folder.
 
 ### Running the fixLibraries.sh Script
 
@@ -111,19 +120,20 @@ The only reason you would want to run it separately is if there is an issue you 
 
 ### Editing KStars and/or INDI in QT Creator
 
-- Please see the document EditingKStarsInQTCreatorOnOSX.pdf for editing KStars
-- Please see the document EditingINDIInQTCreatorOnOSX.docx for editing INDI
+- Please see the document [EditingKStarsInQTCreatorOnOSX.pdf](EditingKStarsInQTCreatorOnOSX.pdf) for editing KStars
+- Please see the document [EditingINDIInQTCreatorOnOSX.docx](EditingINDIInQTCreatorOnOSX.docx) for editing INDI
 
-If you have already run the build-kstars.sh script, you will be all set up to edit KStars.
+If you have already run the build-kstars.sh script, you will be able to edit KStars.
 For INDI, you will need to also create a Fork on your own GitHub account first and then run the downloadINDIForkForEditing.sh script.  
 It is recommended that you use QT Creator for editing KStars because it has extra tools for editing QT specific files like GUI interface files.
-So you will want to first install QT Creator from QT's website: https://www.qt.io/download-qt-installer
+So you will want to first install QT Creator from QT's website: [https://www.qt.io/download-qt-installer](https://www.qt.io/download-qt-installer)
 The open source license version is free of charge.
 Warning:  As indicated above, Craft now must use its own internal version of QT.  
 If you install a version of QT in ~/QT from their website it may cause problems as described above.  
 Follow the setup instructions in the documents to get this all set up to work in QT Creator.
 
 ### Editing KStars in XCode
+
 There is an option to create an XCode Project with this script.  This is not the recommended method for editing
 KStars on OS X because it doesn't have some of the QT layout editing features present in QT Creator.
 However, XCode does have a number of code analysis features that are not present in QT Creator.
@@ -133,7 +143,7 @@ So it is provided here both for convenience and for additional functionality.
 
 Let's say you made some change that was totally awesome or made some significant improvement and you want to submit it.
 The KStars Code is hosted on this GIT Repository: [https://github.com/KDE/kstars](https://github.com/KDE/kstars)
-But KStars changes must be submitted using Phabricator. Please see this website for details: https://phabricator.kde.org/project/profile/295/
+But KStars changes must be submitted using Phabricator. Please see this website for details: [https://phabricator.kde.org/project/profile/295/](https://phabricator.kde.org/project/profile/295/)
 	
 ###### To set yourself up to be able to submit your changes, run the following code from the OS X Terminal:
 ```
@@ -163,7 +173,7 @@ Once you have made a fork, run the download script and edited your changes as de
 When you are ready to submit your changes, you should do the following:
 	
 1. Test everything you did in INDI throughly with KStars
-2. Go to the command line and do the following (where "My Commit Message" corresponds to an explanation of what you did:
+2. Go to the command line and do the following (where "My Commit Message" corresponds to an explanation of what you did):
 ```
 	cd ~/AstroRoot/indi-work/indi
 	git commit -am "My Commit Message"
