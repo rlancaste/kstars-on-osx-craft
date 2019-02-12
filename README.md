@@ -59,30 +59,34 @@ But if you want to build from different repositories or to install in different 
 
 ### Running the build-kstars.sh Script
 
-Note that you don't need to use any special options to use the script, you can just run the first command below from the OS X Terminal.
-But if you do want to do something different, this script has a number of options that are explained below.
-	
+Note that you don't need to use any special options to use the script, you can just run the this command below from the OS X Terminal.
+(assuming that this is where your script is located)
+
 ```
-	# If you want just want to build KStars to use the latest version of the program, then do:
 	~/Projects/kstars-on-osx-craft/build-kstars.sh
-	# If you want to build KStars and get audible announcements along the way, then do:
-	~/Projects/kstars-on-osx-craft/build-kstars.sh -a
-	# If you want to build KStars with verbose craft output showing all the gory details:
-	~/Projects/kstars-on-osx-craft/build-kstars.sh -v
-	# If you want to build KStars with craft set to quiet mode (prints MUCH less detail):
-	~/Projects/kstars-on-osx-craft/build-kstars.sh -q
-	# If you want to build KStars to use the latest stable version of KStars and INDI, then do:
-	~/Projects/kstars-on-osx-craft/build-kstars.sh -s
-		(Note that by default, this script installs the latest version of KStars and INDI from github)
-	# If you want to build KStars to produce a distributable DMG, then do:
-	~/Projects/kstars-on-osx-craft/build-kstars.sh -d
-	# If you want to create an XCode Project in addition to the normal build for editing or analyzing purposes, then do:
-	~/Projects/kstars-on-osx-craft/build-kstars.sh -x
-	# If you want to build KStars, but have an out of date script but still want to build anyway, then do:
-	~/Projects/kstars-on-osx-craft/build-kstars.sh -f
-	# If you want to build KStars completely fresh, deleting all of homebrew and all of craft:
-	~/Projects/kstars-on-osx-craft/build-kstars.sh -r
-	# Note that you can also use any combination of these options.
+```
+
+But if you do want to do something different, this script has a number of options that are explained below.
+
+	-a	The build script will speak out loud as it is doing key steps.
+
+	-v  This will set Craft to use verbose output showing all the gory details
+
+	-q	This will set craft to use quiet mode (prints MUCH less detail)
+
+	-s	This will make the script build the latest STABLE version of KStars and INDI (Note that by default, this script installs the LATEST version of KStars and INDI from github)
+		
+	-d	This will build KStars and produce a distributable DMG
+
+	-x	This will create an XCode Project in addition to the normal build for editing or analyzing purposes
+
+	-f	This will allow you to build KStars anyway with this script being out of date (If there is a newer version, it will prompt you to update by default)
+
+	-r	This will install KStars completely fresh, deleting all of homebrew and all of craft. (Be careful!!  But this is really good for testing purposes or if you installation breaks.)
+
+Note that you can also use any combination of these options. For example:
+```
+	~/Projects/kstars-on-osx-craft/build-kstars.sh -advx
 ```
 
 After the script finishes, with whichever options you chose, you should have built a kstars app that can actually be used.
