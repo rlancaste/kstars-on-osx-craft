@@ -76,6 +76,8 @@ But if you do want to do something different, this script has a number of option
 		(Note that by default, this script installs the latest version of KStars and INDI from github)
 	# If you want to build KStars to produce a distributable DMG, then do:
 	~/Projects/kstars-on-osx-craft/build-kstars.sh -d
+	# If you want to create an XCode Project in addition to the normal build for editing or analyzing purposes, then do:
+	~/Projects/kstars-on-osx-craft/build-kstars.sh -x
 	# If you want to build KStars, but have an out of date script but still want to build anyway, then do:
 	~/Projects/kstars-on-osx-craft/build-kstars.sh -f
 	# If you want to build KStars completely fresh, deleting all of homebrew and all of craft:
@@ -115,7 +117,13 @@ The open source license version is free of charge.
 Warning:  As indicated above, Craft now must use its own internal version of QT.  
 If you install a version of QT in ~/QT from their website it may cause problems as described above.  
 Follow the setup instructions in the documents to get this all set up to work in QT Creator.
-	
+
+### Editing KStars in XCode
+There is an option to create an XCode Project with this script.  This is not the recommended method for editing
+KStars on OS X because it doesn't have some of the QT layout editing features present in QT Creator.
+However, XCode does have a number of code analysis features that are not present in QT Creator.
+So it is provided here both for convenience and for additional functionality.
+
 ### Submitting any changes you make in KStars
 
 Let's say you made some change that was totally awesome or made some significant improvement and you want to submit it.

@@ -6,6 +6,7 @@ ANNOUNCE=""
 BUILD_INDI=""
 STABLE_BUILD=""
 GENERATE_DMG=""
+GENERATE_XCODE=""
 FORCE_RUN=""
 KSTARS_APP=""
 REMOVE_ALL=""
@@ -20,6 +21,7 @@ cat <<EOF
 	    -a Announce stuff as you go
 	    -s Build the latest stable release (the default is to build the latest version from git)
 	    -d Generate dmg
+	    -x Generate an XCode Project as well
 	    -f Force build even if there are script updates
 	    -r Remove everything and do a fresh install
 	    -v Print out verbose output while building
@@ -53,7 +55,7 @@ EOF
 #This function processes the user's options for running the script
 	function processOptions
 	{
-		while getopts "adfrvsq" option
+		while getopts "adfrvsqx" option
 		do
 			case $option in
 				a)
@@ -64,6 +66,9 @@ EOF
 					;;
 				d)
 					GENERATE_DMG="Yep"
+					;;
+				x)
+					GENERATE_XCODE="Yep"
 					;;
 				f)
 					FORCE_RUN="Yep"
@@ -88,6 +93,7 @@ EOF
 		echo "ANNOUNCE           = ${ANNOUNCE:-Nope}"
 		echo "STABLE_BUILD       = ${STABLE_BUILD:-Nope}"
 		echo "GENERATE_DMG       = ${GENERATE_DMG:-Nope}"
+		echo "GENERATE_XCODE     = ${GENERATE_XCODE:-Nope}"
 		echo "FORCE_RUN          = ${FORCE_RUN:-Nope}"
 		echo "REMOVE_ALL         = ${REMOVE_ALL:-Nope}"
 		echo "VERBOSE            = ${VERBOSE:-Nope}"
@@ -406,6 +412,42 @@ EOF
 		source ${DIR}/generate-dmg.sh
 	fi
 
+#This will make an xcode build if desired
+	if [ -n "$GENERATE_XCODE" ]
+	then
+		export KSTARS_XCODE_DIR="${ASTRO_ROOT}/kstars-xcode"
+		rm -rf ${KSTARS_XCODE_DIR}
+		mkdir -p ${KSTARS_XCODE_DIR}
+		cd ${KSTARS_XCODE_DIR}
+
+		statusBanner "Building KStars using XCode"
+
+		cmake -DCMAKE_INSTALL_PREFIX="${CRAFT_DIR}" -G Xcode "${ASTRO_ROOT}/craft-shortcuts/kstars-source"
+		xcodebuild -project kstars.xcodeproj -alltargets -configuration Debug
+
+		KSTARS_XCODE_APP="${KSTARS_XCODE_DIR}/kstars/Debug/KStars.app"
+		KSTARS_CRAFT_APP="${ASTRO_ROOT}/craft-shortcuts/kstars-build/kstars/KStars.app"
+
+		statusBanner "Copying Needed files from the Craft Build for the XCode Build to Work"
+
+		cp -rf ${KSTARS_CRAFT_APP}/Contents/Frameworks ${KSTARS_XCODE_APP}/Contents/
+		cp -rf ${KSTARS_CRAFT_APP}/Contents/PlugIns ${KSTARS_XCODE_APP}/Contents/
+		cp -rf ${KSTARS_CRAFT_APP}/Contents/Resources ${KSTARS_XCODE_APP}/Contents/
+
+		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/astrometry ${KSTARS_XCODE_APP}/Contents/MacOS/
+		cp -f ${KSTARS_CRAFT_APP}/Contents/MacOS/dbus-daemon ${KSTARS_XCODE_APP}/Contents/MacOS/
+		cp -f ${KSTARS_CRAFT_APP}/Contents/MacOS/dbus-send ${KSTARS_XCODE_APP}/Contents/MacOS/
+		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/indi ${KSTARS_XCODE_APP}/Contents/MacOS/
+		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/netpbm ${KSTARS_XCODE_APP}/Contents/MacOS/
+		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/python ${KSTARS_XCODE_APP}/Contents/MacOS/
+		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/xplanet ${KSTARS_XCODE_APP}/Contents/MacOS/
+
+		statusBanner "Copying to XCode Release Folder"
+		XCODE_RELEASE="${KSTARS_XCODE_DIR}/kstars/Release"
+		mkdir -p ${XCODE_RELEASE}
+		rm -rf ${XCODE_RELEASE}/KStars.app
+		cp -Rf ${KSTARS_XCODE_APP} ${XCODE_RELEASE}/
+	fi
 # Finally, remove the trap
 	trap - EXIT
 	announce "Script execution complete"
