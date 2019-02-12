@@ -1,4 +1,4 @@
-## Instructions for Installing KStars, INDI, Dependencies, and related software on OS X with CRAFT
+## Instructions for Installing KStars, INDI, Dependencies, and related software on MacOS with CRAFT
 
 ![Screenshot of KStars on OS X](ScreenShotKStarsOnOSX.png "Screenshot of KStars on OS X")
 
@@ -18,6 +18,8 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 	
 - The old version of the script is on: [https://github.com/jamiesmith/kstars-on-osx](https://github.com/jamiesmith/kstars-on-osx)
 
+# Getting Started
+
 ### Prerequisites for running the script (no longer required beforehand!!!)
 
 One very important requirement is that your mac must be running OS X Sierra (10.12) or later.  QT refuses to build now on earlier versions.
@@ -33,7 +35,7 @@ Links to the websites of key tools:
 - Homebrew   [https://brew.sh](https://brew.sh)
 - Craft      [https://community.kde.org/Craft](https://community.kde.org/Craft)
 
-### Downloading the files from this repo using the OS X Terminal
+### Downloading the files from this repo using the Mac OS X Terminal
 
 ```
 	mkdir -p ~/Projects
@@ -59,7 +61,9 @@ You probably will not need to, but just in case, here it is for one of them.
 	chmod +x build-kstars.sh
 ```
 
-### Running the build-kstars.sh Script
+# Building KStars and INDI on MacOS
+
+### Running the [build-kstars.sh](build-kstars.sh) Script
 
 Note that you don't need to use any special options to use the script, you can just run the this command below from the OS X Terminal.
 (assuming that this is where your script is located)
@@ -67,7 +71,21 @@ Note that you don't need to use any special options to use the script, you can j
 	~/Projects/kstars-on-osx-craft/build-kstars.sh
 ```
 
-But if you do want to do something different, this script has a number of options that are explained below.
+### Generating a distributable DMG
+
+This is an extremely important function of the script, to generate a DMG so that KStars can be used on other machines.
+To generate a DMG that you can share, run this command:
+```
+	~/Projects/kstars-on-osx-craft/build-kstars.sh -d
+```
+Combining this with other options will not compromise the creation of the DMG.  
+If the script finishes successfully, the DMG will be located in the ~/AstroRoot/craft-shortcuts/KDE folder.
+You can now distribute the app and/or dmg to other people freely.  
+The dmg has associated md5 and sha256 files for download verification.
+
+### Other Options for the build-kstars.sh Script
+
+The script has a number of options that are explained below.
 
 	-a	The build script will speak out loud as it is doing key steps.
 
@@ -92,31 +110,21 @@ Note that you can also use any combination of these options. For example:
 
 After the script finishes, with whichever options you chose, you should have built a kstars app that can actually be used.
 
-### Generating a distributable DMG
-
-This is an extremely important function of the script, so even though it was explained above, it gets its own section.
-To generate a DMG that you can share, run this command:
-```
-	~/Projects/kstars-on-osx-craft/build-kstars.sh -d
-```
-Combining this with other options will not compromise the creation of the DMG.  
-If the script finishes successfully, the DMG will be located in the ~/AstroRoot/craft-shortcuts/KDE folder.
-You can now distribute the app and/or dmg to other people freely.  
-The dmg has associated md5 and sha256 files for download verification.
-
-### Running the fixLibraries.sh Script
+### Running the [fixLibraries.sh](fixLibraries.sh) Script
 
 This script can only be run after building kstars as described above.  
 It will copy all required libraries and frameworks into the app bundle (except qt) and prepare it for distribution.  
 If you choose the -d option in build-kstars.sh, it runs this script automatically.  
 The only reason you would want to run it separately is if there is an issue you have to fix after KStars is built but before making the dmg.
 
-### Running the generateDMG.sh Script
+### Running the [generateDMG.sh](generateDMG.sh) Script
 
 This script can only be run after building kstars as described above.  
 It will first run the fixLibraries.sh script and then generate a DMG.  
 If you choose the -d option in build-kstars.sh, it runs this script automatically.  
 The only reason you would want to run it separately is if there is an issue you have to fix after KStars is built but before making the dmg.
+
+# Getting Set Up For Editing KStars and INDI on MacOS
 
 ### Editing KStars and/or INDI in QT Creator
 
