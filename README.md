@@ -151,8 +151,8 @@ But KStars changes must be submitted using Phabricator. Please see this website 
 
 ### Using the INDI Repository Scripts.
 There are two scripts in this repo that are going to be useful for editing INDI.  
-downloadINDIForkForEditing.sh is useful for downloading a Fork of INDI that you have created and getting it setup to edit in QT Creator
-updateINDIFork.sh is useful for making sure your INDI Fork is up to date before your pull request.
+- [downloadINDIForkForEditing.sh](downloadINDIForkForEditing.sh) is useful for downloading a Fork of INDI that you have created and getting it setup to edit in QT Creator
+- [updateINDIFork.sh](updateINDIFork.sh) is useful for making sure your INDI Fork is up to date before your pull request.
 Please see the document EditingINDIInQTCreatorOnOSX.docx for more detailed instructions.
 
 ### Submitting any changes you make in INDI
