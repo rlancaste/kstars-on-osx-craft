@@ -36,8 +36,6 @@ export CRAFT_DIR="${ASTRO_ROOT}"/kstars-craft
 export SHORTCUTS_DIR="${ASTRO_ROOT}"/craft-shortcuts
 	#This is the path to your KStars XCode Build Directory
 export KSTARS_XCODE_DIR="${ASTRO_ROOT}/kstars-xcode"
-	#This is a variable designed to fix a temporary problem with xplanet in craft on sierra
-export XPLANETNOCRAFT="Yep"
 
 # This sets the minimum OS X version you are compiling for
 # Note that the current version of qt can no longer build for anything less than 10.12

@@ -294,39 +294,7 @@ EOF
 #This will build gsc
 	announce "Building GSC"
 	craft "$VERBOSE" gsc
-
-#This will build xplanet if it is not installed yet.
-#This should be done by craft, but there is a build issue for xplanet using craft on Sierra that I cannot figure out, so this is a fix
-#It works fine on my machine, but this fix is necessary for others.
-#If this gets fixed, this entire section and the environment variable can be removed and xplanet can again be a craft dependency of kstars-mac
-	if [ -n "$XPLANETNOCRAFT" ]
-	then
-		craft "$VERBOSE" netpbm
-		cd ~/AstroRoot
-		if [ -d xplanet-1.3.1 ]
-		then
-			rm -r xplanet-1.3.1
-		fi
-		xplanetArchiveFolder="${CRAFT_DIR}"/download/archives/libs/xplanet/
-		xplanetArchive="${xplanetArchiveFolder}"/xplanet-1.3.1.tar.gz
-		if [ ! -e "$xplanetArchive" ]
-		then
-			mkdir -p "${xplanetArchiveFolder}"
-			cd "${xplanetArchiveFolder}"
-			curl -OL https://downloads.sourceforge.net/project/xplanet/xplanet/1.3.1/xplanet-1.3.1.tar.gz
-		fi
-		tar -xzf "$xplanetArchive" -C ~/AstroRoot
-		cd ~/AstroRoot/xplanet-1.3.1
-		export LDFLAGS="-Wl -rpath ${CRAFT_DIR}/lib -L${CRAFT_DIR}/lib"
-		export CPPFLAGS="-I/usr/include -I/usr/local/include -I${CRAFT_DIR}/include"
-		./configure --disable-dependency-tracking --without-cygwin --with-x=no --without-xscreensaver --with-aqua --prefix=${CRAFT_DIR}
-		make
-		make install
-	else
-		craft "$VERBOSE" xplanet
-	fi
 	
-
 #This will get some nice sounds for KStars
 	statusBanner "Getting Oxygen Sounds for KStars"
 	mkdir -p "${CRAFT_DIR}"/share/sounds/
