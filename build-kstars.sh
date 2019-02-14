@@ -292,8 +292,8 @@ EOF
 	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver3rdParty
 
 #This will build gsc
-	announce "Building GSC"
-	craft "$VERBOSE" gsc
+	#announce "Building GSC"
+	#craft "$VERBOSE" gsc
 	
 #This will get some nice sounds for KStars
 	statusBanner "Getting Oxygen Sounds for KStars"
