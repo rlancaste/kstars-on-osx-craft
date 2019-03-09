@@ -121,5 +121,5 @@ macdeployqt KStars.app -executable=${KSTARS_APP}/Contents/MacOS/dbus-daemon -qml
 	rm ${UNCOMPRESSED_DMG}
 
 # Generate Checksums
-	md5 ${DMG_DIR}/kstars-${KSTARS_VERSION}.dmg > ${DMG_DIR}/kstars-${KSTARS_VERSION}.md5
-	shasum -a 256 ${DMG_DIR}/kstars-${KSTARS_VERSION}.dmg > ${DMG_DIR}/kstars-${KSTARS_VERSION}.sha256
+	md5 ${DMG_DIR}/kstars-${KSTARS_VERSION}.dmg > ${DMG_DIR}/kstars-${KSTARS_VERSION}.dmg.md5
+	shasum -a 256 ${DMG_DIR}/kstars-${KSTARS_VERSION}.dmg > ${DMG_DIR}/kstars-${KSTARS_VERSION}.dmg.sha256
