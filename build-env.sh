@@ -43,7 +43,7 @@ export QMAKE_MACOSX_DEPLOYMENT_TARGET=10.12
 export MACOSX_DEPLOYMENT_TARGET=10.12
 
 # This sets the current KStars version number that will be used throughout the script.
-export KSTARS_VERSION=3.2.0
+export KSTARS_VERSION=3.2.1
 
 echo "DIR                   is [${DIR}]"
 echo "ASTRO_ROOT            is [${ASTRO_ROOT}]"
