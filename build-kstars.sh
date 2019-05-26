@@ -130,7 +130,7 @@ EOF
 
 			if [ -z "$FORCE_RUN" ]
 			then
-				announce "Script is out of date"
+				echo "Script is out of date"
 				echo ""
 				echo "override with a -f"
 				echo ""
