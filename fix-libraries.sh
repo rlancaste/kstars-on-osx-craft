@@ -234,6 +234,9 @@ processDirectory VLC_ACCESS "${KSTARS_APP}/Contents/PlugIns/vlc/access"
 processDirectory VLC_AUDIO_OUTPUT "${KSTARS_APP}/Contents/PlugIns/vlc/audio_output"
 processDirectory VLC_CODEC "${KSTARS_APP}/Contents/PlugIns/vlc/codec"
 
+#This should not be necessary because macdeployqt used to do this.  Why do I need to add this?
+processDirectory Platforms "${KSTARS_APP}/Contents/PlugIns/platforms"
+
 processDirectory Frameworks "${FRAMEWORKS_DIR}"
 
 while [ ${FILES_COPIED} -gt 0 ]
