@@ -224,7 +224,7 @@ processDirectory xplanet "${KSTARS_APP}/Contents/MacOS/xplanet/bin"
 processDirectory astrometry "${KSTARS_APP}/Contents/MacOS/astrometry/bin"
 processDirectory netpbm "${KSTARS_APP}/Contents/MacOS/netpbm/bin"
 processDirectory kio "${KSTARS_APP}/Contents/PlugIns/kf5/kio"
-processDirectory python "${KSTARS_APP}/Contents/MacOS/python/bin"
+#processDirectory python "${KSTARS_APP}/Contents/MacOS/python/bin"
 
 processDirectory GPHOTO_IOLIBS "${KSTARS_APP}/Contents/Resources/DriverSupport/gphoto/IOLIBS"
 processDirectory GPHOTO_CAMLIBS "${KSTARS_APP}/Contents/Resources/DriverSupport/gphoto/CAMLIBS"
