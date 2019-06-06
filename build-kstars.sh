@@ -216,8 +216,8 @@ EOF
 	# python is required for craft to work.
 	brew install python
 	
-	# python 2 is now built in craft, but in fact installing numpy and pyfits relies on homebrew for some reason.
-	brew install python2
+	# astropy is a required module for astrometry.net
+	pip3 install astropy
 	
 	# I tried to write a recipe for gpsd, but it requires scons, and I have no idea what to do.
 	brew install gpsd 
@@ -390,7 +390,6 @@ EOF
 		cp -f ${KSTARS_CRAFT_APP}/Contents/MacOS/dbus-send ${KSTARS_XCODE_APP}/Contents/MacOS/
 		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/indi ${KSTARS_XCODE_APP}/Contents/MacOS/
 		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/netpbm ${KSTARS_XCODE_APP}/Contents/MacOS/
-		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/python ${KSTARS_XCODE_APP}/Contents/MacOS/
 		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/xplanet ${KSTARS_XCODE_APP}/Contents/MacOS/
 
 		statusBanner "Copying to XCode Release Folder"
