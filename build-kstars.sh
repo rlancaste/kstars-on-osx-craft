@@ -216,6 +216,9 @@ EOF
 	# python is required for craft to work.
 	brew install python
 	
+	# Craft does build ninja and install it to the craft directory, but QT Creator expects the homebrew version.
+	brew install ninja
+	
 	# astropy is a required module for astrometry.net
 	pip3 install astropy
 	
@@ -290,6 +293,11 @@ EOF
 	
 	announce "Building INDI 3rd Party Drivers"
 	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver3rdParty
+	
+	# Note this should be removed because it should be handled in the dbus craft recipe
+	announce "Building dbus and dbus-kstars to be sure we get the right version in the app"
+	craft "$VERBOSE" -i dbus
+	craft "$VERBOSE" -i dbus-kstars
 
 #This will build gsc
 	#announce "Building GSC"
