@@ -42,8 +42,9 @@ export KSTARS_XCODE_DIR="${ASTRO_ROOT}/kstars-xcode"
 export QMAKE_MACOSX_DEPLOYMENT_TARGET=10.12
 export MACOSX_DEPLOYMENT_TARGET=10.12
 
-# This sets the current KStars version number that will be used throughout the script.
+# This sets the current version numbers that will be used throughout the script.
 export KSTARS_VERSION=3.2.3TEST
+export INDI_WEB_MANAGER_APP_VERSION=0.5
 
 echo "DIR                   is [${DIR}]"
 echo "ASTRO_ROOT            is [${ASTRO_ROOT}]"
@@ -56,3 +57,4 @@ echo "PATH                  is [${PATH}]"
 
 echo "OSX Deployment target is [${QMAKE_MACOSX_DEPLOYMENT_TARGET}]"
 echo "KStars Version        is [${KSTARS_VERSION}]"
+echo "INDI_WEB_MANAGER_VERSION        is [${INDI_WEB_MANAGER_VERSION}]"

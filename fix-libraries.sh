@@ -163,7 +163,9 @@ fi
 		"KStars Craft directory does not exist.  You have to build KStars with Craft first. Use build-kstars.sh"
 		exit
 	fi
-	DMG_DIR="${CRAFT_DIR}/Applications/KDE/"
+	mkdir -p "${ASTRO_ROOT}/KStarsDMG"
+	DMG_DIR="${ASTRO_ROOT}/KStarsDMG"
+	cp -rf "${CRAFT_DIR}/Applications/KDE/KStars.app" "${DMG_DIR}"
 	KSTARS_APP="${DMG_DIR}/KStars.app"
 	
 announce "Running Fix Libraries Script"
