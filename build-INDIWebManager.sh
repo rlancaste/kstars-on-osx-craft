@@ -347,9 +347,12 @@ EOF
 	ln -sf ${CRAFT_DIR}/build/libs/indiserver3rdParty/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiserver-3rdParty-build
 
-#This will package everything up into the app and then make a dmg.
+#This will copy the app to a DMG directory in ASTRO_ROOT, package everything up into the app and then make a dmg.
 	if [ -n "$GENERATE_DMG" ]
 	then
+		DMG_DIR="${ASTRO_ROOT}/INDIWebManagerAppDMG"
+		mkdir -p "${DMG_DIR}"
+		cp -rf "${CRAFT_DIR}/Applications/KDE/INDIWebManagerApp.app" "${DMG_DIR}/"
 		source ${DIR}/generate-dmg-INDIWebManager.sh
 	fi
 # Finally, remove the trap

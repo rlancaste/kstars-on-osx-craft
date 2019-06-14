@@ -53,16 +53,37 @@ set +e
 		source ${DIR}/build-env.sh
 	fi
 
-#The Fix Libraries Script Copies library files into the app and runs otool on them.
-	source ${DIR}/fix-libraries-INDIWebManager.sh
+#This sets some important variables.
+	DMG_DIR="${ASTRO_ROOT}/INDIWebManagerAppDMG"
+	INDI_WEB_MANAGER_APP="${DMG_DIR}/INDIWebManagerApp.app"
+	FRAMEWORKS_DIR="${INDI_WEB_MANAGER_APP}/Contents/Frameworks"
 
 #This should stop the script so that it doesn't run if these paths are blank.
 #That way it doesn't try to edit /Applications instead of ${CRAFT_DIR}/Applications for example
-	if [ -z "${DIR}" ] || [ -z "${DMG_DIR}" ]
+	if [ -z "${DIR}" ] || [ -z "${DMG_DIR}" ] || [ -z  "${CRAFT_DIR}" ]
 	then
 		echo "directory error! aborting DMG"
 		exit 9
 	fi
+
+#This code makes sure the craft directory exists.  This won't work too well if it doesn't
+	if [ ! -e ${CRAFT_DIR} ]
+	then
+		"INDIWebManager Craft directory does not exist.  You have to build INDIWebManager with Craft first. Use build-INDIWebManagerApp.sh"
+		exit
+	fi
+	
+#This code should make sure the INDI_WEB_MANAGER_APP and the DMG Directory are set correctly.
+	if [ ! -e ${DMG_DIR} ] || [ ! -e ${INDI_WEB_MANAGER_APP} ]
+	then
+		"INDIWebManager.app does not exist in the DMG Directory.  Please run build-indiwebmanagerapp.sh first!"
+		exit
+	fi
+	
+#This deletes the former Frameworks folder so you can start fresh.  This is needed if it ran before.
+	statusBanner "Replacing the Frameworks Directory"
+	rm -fr "${FRAMEWORKS_DIR}"
+	mkdir -p "${FRAMEWORKS_DIR}"
 
 #This copies the documentation that will be placed into the dmg.
 	announce "Copying Documentation"
@@ -82,6 +103,9 @@ set +e
 announce "Building DMG"
 cd ${DMG_DIR}
 macdeployqt INDIWebManagerApp.app 
+
+#The Fix Libraries Script Copies library files into the app and runs otool on them.
+	source ${DIR}/fix-libraries-INDIWebManager.sh
 
 #Setting up some short paths
 	UNCOMPRESSED_DMG=${DMG_DIR}/INDIWebManagerAppUncompressed.dmg
