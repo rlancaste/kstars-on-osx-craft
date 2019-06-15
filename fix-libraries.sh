@@ -157,7 +157,7 @@ fi
 #That way it doesn't try to edit /Applications instead of ${CRAFT_DIR}/Applications for example
 	if [ -z "${DIR}" ] || [ -z "${DMG_DIR}" ] || [ -z  "${CRAFT_DIR}" ]
 	then
-		echo "directory error! aborting DMG"
+		echo "directory error! aborting Fix Libraries Script"
 		exit 9
 	fi
 
