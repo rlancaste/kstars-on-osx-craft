@@ -148,6 +148,7 @@ then
 	source ${DIR}/build-env.sh
 fi
 
+#This sets some important variables.
 	DMG_DIR="${ASTRO_ROOT}/INDIWebManagerAppDMG"
 	INDI_WEB_MANAGER_APP="${DMG_DIR}/INDIWebManagerApp.app"
 	FRAMEWORKS_DIR="${INDI_WEB_MANAGER_APP}/Contents/Frameworks"
@@ -163,7 +164,7 @@ fi
 #This code makes sure the craft directory exists.  This won't work too well if it doesn't
 	if [ ! -e ${CRAFT_DIR} ]
 	then
-		"INDIWebManager Craft directory does not exist.  You have to build INDIWebManager with Craft first. Use build-INDIWebManagerApp.sh"
+		"Craft directory does not exist.  You have to build INDIWebManager with Craft first. Use build-INDIWebManagerApp.sh"
 		exit
 	fi
 	

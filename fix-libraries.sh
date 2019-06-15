@@ -148,49 +148,39 @@ then
 	source ${DIR}/build-env.sh
 fi
 
+#This sets some important variables.
+	DMG_DIR="${ASTRO_ROOT}/KStarsDMG"
+	KSTARS_APP="${DMG_DIR}/KStars.app"
+	FRAMEWORKS_DIR="${KSTARS_APP}/Contents/Frameworks"
+
 #This should stop the script so that it doesn't run if these paths are blank.
 #That way it doesn't try to edit /Applications instead of ${CRAFT_DIR}/Applications for example
-	if [ -z "${DIR}" ] || [ -z  "${CRAFT_DIR}" ]
+	if [ -z "${DIR}" ] || [ -z "${DMG_DIR}" ] || [ -z  "${CRAFT_DIR}" ]
 	then
-		echo "directory error! aborting Libraries script!"
+		echo "directory error! aborting DMG"
 		exit 9
 	fi
 
-#This code should make sure the KStars app and the DMG Directory are set correctly.
-#In the case of the CMAKE and XCode builds, it also creates the dmg directory and copies in the app
+#This code makes sure the craft directory exists.  This won't work too well if it doesn't
 	if [ ! -e ${CRAFT_DIR} ]
 	then
-		"KStars Craft directory does not exist.  You have to build KStars with Craft first. Use build-kstars.sh"
+		"Craft directory does not exist.  You have to build KStars with Craft first. Use build-kstars.sh"
 		exit
 	fi
-	mkdir -p "${ASTRO_ROOT}/KStarsDMG"
-	DMG_DIR="${ASTRO_ROOT}/KStarsDMG"
-	cp -rf "${CRAFT_DIR}/Applications/KDE/KStars.app" "${DMG_DIR}"
-	KSTARS_APP="${DMG_DIR}/KStars.app"
+
+#This code should make sure the KSTARS_APP and the DMG Directory are set correctly.
+	if [ ! -e ${DMG_DIR} ] || [ ! -e ${KSTARS_APP} ]
+	then
+		"KStars.app does not exist in the DMG Directory.  Please run build-kstars.sh first!"
+		exit
+	fi
 	
 announce "Running Fix Libraries Script"
 
 	FILES_TO_COPY=()
-	FRAMEWORKS_DIR="${KSTARS_APP}/Contents/Frameworks"
 
 #Files in these locations do not need to be copied into the Frameworks folder.
 	IGNORED_OTOOL_OUTPUT="/Qt|${KSTARS_APP}/|/usr/lib/|/System/"
-
-#This preserves the couple of Frameworks files that we cannot regenerate with this script currently
-	statusBanner "Preserving Several Frameworks"
-	mkdir -p "${KSTARS_APP}/Contents/Frameworks2"
-	cp -f "${FRAMEWORKS_DIR}/libphonon4qt5.4.dylib" "${KSTARS_APP}/Contents/Frameworks2/libphonon4qt5.4.dylib"
-	cp -f "${FRAMEWORKS_DIR}/libphonon4qt5experimental.4.dylib" "${KSTARS_APP}/Contents/Frameworks2/libphonon4qt5experimental.4.dylib"
-	cp -f "${FRAMEWORKS_DIR}/libvlc.dylib" "${KSTARS_APP}/Contents/Frameworks2/libvlc.dylib"
-	cp -f "${FRAMEWORKS_DIR}/libvlccore.dylib" "${KSTARS_APP}/Contents/Frameworks2/libvlccore.dylib"
-
-#This deletes the former Frameworks folder so you can start fresh.  This is needed if it ran before.
-	statusBanner "Replacing the Frameworks Directory"
-	rm -fr "${FRAMEWORKS_DIR}"
-	
-#This copies back the preserved frameworks
-	statusBanner "Restoring Preserved Frameworks"
-	mv "${KSTARS_APP}/Contents/Frameworks2" "${FRAMEWORKS_DIR}"
 	
 # This deletes the qt.conf file so macdeployqt can create a new one which points inside the app bundle
 	statusBanner "Deleting qt.conf so a new one that points inside the bundle can be made."

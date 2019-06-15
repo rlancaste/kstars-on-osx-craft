@@ -53,16 +53,48 @@ set +e
 		source ${DIR}/build-env.sh
 	fi
 
-#The Fix Libraries Script Copies library files into the app and runs otool on them.
-	source ${DIR}/fix-libraries.sh
+#This sets some important variables.
+	DMG_DIR="${ASTRO_ROOT}/KStarsDMG"
+	KSTARS_APP="${DMG_DIR}/KStars.app"
+	FRAMEWORKS_DIR="${KSTARS_APP}/Contents/Frameworks"
 
 #This should stop the script so that it doesn't run if these paths are blank.
 #That way it doesn't try to edit /Applications instead of ${CRAFT_DIR}/Applications for example
-	if [ -z "${DIR}" ] || [ -z "${DMG_DIR}" ]
+	if [ -z "${DIR}" ] || [ -z "${DMG_DIR}" ] || [ -z  "${CRAFT_DIR}" ]
 	then
 		echo "directory error! aborting DMG"
 		exit 9
 	fi
+
+#This code makes sure the craft directory exists.  This won't work too well if it doesn't
+	if [ ! -e ${CRAFT_DIR} ]
+	then
+		"Craft directory does not exist.  You have to build KStars with Craft first. Use build-kstars.sh"
+		exit
+	fi
+	
+#This code should make sure the KSTARS_APP and the DMG Directory are set correctly.
+	if [ ! -e ${DMG_DIR} ] || [ ! -e ${KSTARS_APP} ]
+	then
+		"KStars.app does not exist in the DMG Directory.  Please run build-kstars.sh first!"
+		exit
+	fi
+
+#This preserves the couple of Frameworks files that we cannot regenerate with this script currently
+	statusBanner "Preserving Several Frameworks"
+	mkdir -p "${KSTARS_APP}/Contents/Frameworks2"
+	cp -f "${FRAMEWORKS_DIR}/libphonon4qt5.4.dylib" "${KSTARS_APP}/Contents/Frameworks2/libphonon4qt5.4.dylib"
+	cp -f "${FRAMEWORKS_DIR}/libphonon4qt5experimental.4.dylib" "${KSTARS_APP}/Contents/Frameworks2/libphonon4qt5experimental.4.dylib"
+	cp -f "${FRAMEWORKS_DIR}/libvlc.dylib" "${KSTARS_APP}/Contents/Frameworks2/libvlc.dylib"
+	cp -f "${FRAMEWORKS_DIR}/libvlccore.dylib" "${KSTARS_APP}/Contents/Frameworks2/libvlccore.dylib"
+
+#This deletes the former Frameworks folder so you can start fresh.  This is needed if it ran before.
+	statusBanner "Replacing the Frameworks Directory"
+	rm -fr "${FRAMEWORKS_DIR}"
+	
+#This copies back the preserved frameworks
+	statusBanner "Restoring Preserved Frameworks"
+	mv "${KSTARS_APP}/Contents/Frameworks2" "${FRAMEWORKS_DIR}"
 
 #This copies the documentation that will be placed into the dmg.
 	announce "Copying Documentation"
@@ -82,6 +114,9 @@ set +e
 announce "Building DMG"
 cd ${DMG_DIR}
 macdeployqt KStars.app -executable=${KSTARS_APP}/Contents/MacOS/dbus-daemon -qmldir=${CRAFT_DIR}/download/git/kde/applications/kstars-mac/kstars/data/qml
+
+#The Fix Libraries Script Copies library files into the app and runs otool on them.
+	source ${DIR}/fix-libraries.sh
 
 #Setting up some short paths
 	UNCOMPRESSED_DMG=${DMG_DIR}/KStarsUncompressed.dmg
