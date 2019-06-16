@@ -31,7 +31,7 @@ export INDI_DIR="${ASTRO_ROOT}"/indi-work
 	#This is the path to your personal fork of the INDI repository
 export FORKED_INDI_REPO="https://github.com/rlancaste/indi.git"
 	#This is the location of the craft root directory
-export CRAFT_DIR="${ASTRO_ROOT}"/kstars-craft
+export CRAFT_DIR="${ASTRO_ROOT}"/craft-root
 	#This is the location of the craft shortcuts directory
 export SHORTCUTS_DIR="${ASTRO_ROOT}"/craft-shortcuts
 	#This is the path to your KStars XCode Build Directory
