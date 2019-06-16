@@ -57,4 +57,4 @@ echo "PATH                  is [${PATH}]"
 
 echo "OSX Deployment target is [${QMAKE_MACOSX_DEPLOYMENT_TARGET}]"
 echo "KStars Version        is [${KSTARS_VERSION}]"
-echo "INDI_WEB_MANAGER_VERSION        is [${INDI_WEB_MANAGER_VERSION}]"
+echo "INDI_WEB_MANAGER_VERSION        is [${INDI_WEB_MANAGER_APP_VERSION}]"
