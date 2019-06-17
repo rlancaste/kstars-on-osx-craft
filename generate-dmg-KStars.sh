@@ -116,7 +116,7 @@ cd ${DMG_DIR}
 macdeployqt KStars.app -executable=${KSTARS_APP}/Contents/MacOS/dbus-daemon -qmldir=${CRAFT_DIR}/download/git/kde/applications/kstars-mac/kstars/data/qml
 
 #The Fix Libraries Script Copies library files into the app and runs otool on them.
-	source ${DIR}/fix-libraries.sh
+	source ${DIR}/fix-libraries-KStars.sh
 
 #Setting up some short paths
 	UNCOMPRESSED_DMG=${DMG_DIR}/KStarsUncompressed.dmg

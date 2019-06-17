@@ -378,7 +378,7 @@ EOF
 		DMG_DIR="${ASTRO_ROOT}/KStarsDMG"
 		mkdir -p "${DMG_DIR}"
 		cp -rf "${CRAFT_DIR}/Applications/KDE/KStars.app" "${DMG_DIR}/"
-		source ${DIR}/generate-dmg.sh
+		source ${DIR}/generate-dmg-KStars.sh
 	fi
 
 #This will make an xcode build if desired
