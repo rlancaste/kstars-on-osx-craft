@@ -1,4 +1,4 @@
-## Instructions for Installing KStars, INDI, Dependencies, and related software on MacOS with CRAFT
+## Instructions for Installing KStars, INDI, INDIWebManagerApp, Dependencies, and related software on MacOS with CRAFT
 
 ![Screenshot of KStars on OS X](ScreenShotKStarsOnOSX.png "Screenshot of KStars on OS X")
 
@@ -61,7 +61,7 @@ You probably will not need to, but just in case, here it is for one of them.
 	chmod +x build-kstars.sh
 ```
 
-# Building KStars and INDI on MacOS
+# Building KStars, INDIWebManagerApp, and INDI on MacOS
 
 ### Running the [build-kstars.sh](build-kstars.sh) Script
 
@@ -71,19 +71,29 @@ Note that you don't need to use any special options to use the script, you can j
 	~/Projects/kstars-on-osx-craft/build-kstars.sh
 ```
 
+### Running the [build-INDIWebManagerApp.sh](build-INDIWebManagerApp.sh) Script
+
+Note that you don't need to use any special options to use the script, you can just run the this command below from the OS X Terminal.
+(assuming that this is where your script is located)
+```
+	~/Projects/kstars-on-osx-craft/build-INDIWebManagerApp.sh
+```
+
 ### Generating a distributable DMG
 
-This is an extremely important function of the script, to generate a DMG so that KStars can be used on other machines.
-To generate a DMG that you can share, run this command:
+This is an extremely important function of the script, to generate a DMG so that KStars or INDIWebManagerApp can be used on other machines.
+To generate a DMG that you can share, run this command (for KStars):
 ```
 	~/Projects/kstars-on-osx-craft/build-kstars.sh -d
 ```
 Combining this with other options will not compromise the creation of the DMG.  
-If the script finishes successfully, the DMG will be located in the ~/AstroRoot/craft-shortcuts/KDE folder.
+If the script finishes successfully, the DMG will be located in the ~/AstroRoot/KStarsDMG folder.
 You can now distribute the app and/or dmg to other people freely.  
 The dmg has associated md5 and sha256 files for download verification.
 
-### Other Options for the build-kstars.sh Script
+The same things are true for INDIWebManagerApp
+
+### Other Options for the build-kstars.sh or build-INDIWebManagerApp.sh Script
 
 The script has a number of options that are explained below.
 
@@ -110,17 +120,17 @@ Note that you can also use any combination of these options. For example:
 
 After the script finishes, with whichever options you chose, you should have built a kstars app that can actually be used.
 
-### Running the [fixLibraries.sh](fixLibraries.sh) Script
+### Running the [fixLibraries-KStars.sh](fixLibraries-KStars.sh) Script
 
 This script can only be run after building kstars as described above.  
 It will copy all required libraries and frameworks into the app bundle (except qt) and prepare it for distribution.  
 If you choose the -d option in [build-kstars.sh](build-kstars.sh), it runs this script automatically.  
 The only reason you would want to run it separately is if there is an issue you have to fix after KStars is built but before making the dmg.
 
-### Running the [generateDMG.sh](generateDMG.sh) Script
+### Running the [generateDMG-KStars.sh](generateDMG-KStars.sh) Script
 
 This script can only be run after building kstars as described above.  
-It will first run the [fixLibraries.sh](fixLibraries.sh) script and then generate a DMG.  
+It will first run the [fixLibraries-KStars.sh](fixLibraries-KStars.sh) script and then generate a DMG.  
 If you choose the -d option in [build-kstars.sh](build-kstars.sh), it runs this script automatically.  
 The only reason you would want to run it separately is if there is an issue you have to fix after KStars is built but before making the dmg.
 
@@ -189,3 +199,7 @@ When you are ready to submit your changes, you should do the following:
 ```
 3.  If it has been awhile since you made your fork, you should update it to the latest version using the updateINDIFork.sh script
 4.  Go to Github on your INDI Fork and click "New Pull Request" to submit your changes.
+
+### Submitting any changes you make in INDIWebManagerApp
+
+INDIWebManagerApp is hosted on Github right now, so any changes should be submitted via pull request.  The instructions would be similar to INDI.
