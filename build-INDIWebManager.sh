@@ -331,7 +331,7 @@ EOF
 	
 	# INDIWebManager
 	ln -sf ${CRAFT_DIR}/download/git/kde/applications/indiwebmanagerapp-mac ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/indiwebmanagerapp-mac ${SHORTCUTS_DIR}/indiwebmanager-source
+	mv ${SHORTCUTS_DIR}/indiwebmanagerapp-mac ${SHORTCUTS_DIR}/indiwebmanagerapp-source
 	ln -sf ${CRAFT_DIR}/build/kde/applications/indiwebmanagerapp-mac/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiwebmanagerapp-build
 	
