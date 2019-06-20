@@ -131,15 +131,14 @@ macdeployqt KStars.app -executable=${KSTARS_APP}/Contents/MacOS/dbus-daemon -qml
 	VOLUME=$(mount |grep ${DEV} | cut -f 3 -d ' ')
 
 # copy in and set volume icon
-	cp -f ${DIR}/DMGIcon.icns ${VOLUME}/DMGIcon.icns
-	mv -f ${VOLUME}/DMGIcon.icns ${VOLUME}/.VolumeIcon.icns
+	cp -f ${DIR}/images/DMGIcon.icns ${VOLUME}/.VolumeIcon.icns
 	SetFile -c icnC ${VOLUME}/.VolumeIcon.icns
 	SetFile -a C ${VOLUME}
 
 # copy in background image
 	mkdir -p ${VOLUME}/Pictures
 	#cp -f ${KSTARS_APP}/Contents/Resources/data/kstars.png ${VOLUME}/Pictures/background.jpg
-	cp -f ${DIR}/dmg_background.png ${VOLUME}/Pictures/background.jpg
+	cp -f ${DIR}/images/dmg_background.png ${VOLUME}/Pictures/background.jpg
 
 # symlink Applications folder, arrange icons, set background image, set folder attributes, hide pictures folder
 	ln -s /Applications/ ${VOLUME}/Applications

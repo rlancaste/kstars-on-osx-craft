@@ -268,8 +268,8 @@ EOF
 	
 #This copies all the required craft settings
 	statusBanner "Copying Craft Settings and Blueprint settings specific to building on macs."
-	cp ${DIR}/CraftSettings.ini ${CRAFT_DIR}/etc/
-	cp ${DIR}/BlueprintSettings.ini ${CRAFT_DIR}/etc/
+	cp ${DIR}/settings/CraftSettings.ini ${CRAFT_DIR}/etc/
+	cp ${DIR}/settings/BlueprintSettings.ini ${CRAFT_DIR}/etc/
 	statusBanner "Replacing default craft recipes with revised Mac recipes until they get revised and accepted."
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde
 	cd ${CRAFT_DIR}/etc/blueprints/locations

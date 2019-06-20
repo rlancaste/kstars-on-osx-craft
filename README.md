@@ -1,6 +1,6 @@
 ## Instructions for Installing KStars, INDI, INDIWebManagerApp, Dependencies, and related software on MacOS with CRAFT
 
-![Screenshot of KStars on OS X](ScreenShotKStarsOnOSX.png "Screenshot of KStars on OS X")
+![Screenshot of KStars on OS X](images/ScreenShotKStarsOnOSX.png "Screenshot of KStars on OS X")
 
 This script is written by Rob Lancaster (rlancaste), but it is built upon:
 

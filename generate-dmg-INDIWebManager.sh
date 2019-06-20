@@ -120,13 +120,13 @@ macdeployqt INDIWebManagerApp.app
 	VOLUME=$(mount |grep ${DEV} | cut -f 3 -d ' ')
 
 # copy in and set volume icon
-	cp -f ${DIR}/DMGIcon-INDIWebManagerApp.icns ${VOLUME}/.VolumeIcon.icns
+	cp -f ${DIR}/images/DMGIcon-INDIWebManagerApp.icns ${VOLUME}/.VolumeIcon.icns
 	SetFile -c icnC ${VOLUME}/.VolumeIcon.icns
 	SetFile -a C ${VOLUME}
 
 # copy in background image
 	mkdir -p ${VOLUME}/Pictures
-	cp -f ${DIR}/dmg_background-INDIWebManager.png ${VOLUME}/Pictures/background.png
+	cp -f ${DIR}/images/dmg_background-INDIWebManager.png ${VOLUME}/Pictures/background.png
 
 # symlink Applications folder, arrange icons, set background image, set folder attributes, hide pictures folder
 	ln -s /Applications/ ${VOLUME}/Applications
