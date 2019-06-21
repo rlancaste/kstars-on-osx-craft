@@ -138,8 +138,8 @@ The only reason you would want to run it separately is if there is an issue you 
 
 ### Editing KStars and/or INDI in QT Creator
 
-- Please see the document [EditingKStarsInQTCreatorOnOSX.pdf](EditingKStarsInQTCreatorOnOSX.pdf) for editing KStars
-- Please see the document [EditingINDIInQTCreatorOnOSX.docx](EditingINDIInQTCreatorOnOSX.docx) for editing INDI
+- Please see the document [docs/EditingKStarsInQTCreatorOnOSX.pdf](EditingKStarsInQTCreatorOnOSX.pdf) for editing KStars
+- Please see the document [docs/EditingINDIInQTCreatorOnOSX.pdf](EditingINDIInQTCreatorOnOSX.pdf) for editing INDI
 
 If you have already run the build-kstars.sh script, you will be able to edit KStars.
 For INDI, you will need to also create a Fork on your own GitHub account first and then run the [downloadINDIForkForEditing.sh](downloadINDIForkForEditing.sh) script.  

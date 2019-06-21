@@ -98,8 +98,8 @@ set +e
 
 #This copies the documentation that will be placed into the dmg.
 	announce "Copying Documentation"
-	cp -f ${DIR}/"CopyrightInfo and SourceCode.pdf" ${DMG_DIR}
-	cp -f ${DIR}/"QuickStart READ FIRST.pdf" ${DMG_DIR}
+	cp -f ${DIR}/docs/"CopyrightInfo and SourceCode.pdf" ${DMG_DIR}
+	cp -f ${DIR}/docs/"QuickStart READ FIRST.pdf" ${DMG_DIR}
 
 #This deletes any previous dmg stuff so a new one can be made.
 	announce "Removing any previous DMG, checksums, and unnecessary files"
@@ -132,6 +132,7 @@ macdeployqt KStars.app -executable=${KSTARS_APP}/Contents/MacOS/dbus-daemon -qml
 
 # copy in and set volume icon
 	cp -f ${DIR}/images/DMGIcon.icns ${VOLUME}/.VolumeIcon.icns
+	#mv -f ${VOLUME}/VolumeIcon.icns ${VOLUME}/.VolumeIcon.icns
 	SetFile -c icnC ${VOLUME}/.VolumeIcon.icns
 	SetFile -a C ${VOLUME}
 
