@@ -91,10 +91,7 @@ set +e
 	cp -f ${DIR}/docs/"QuickStart READ FIRST-INDIWebManager.pdf" ${DMG_DIR}/"QuickStart READ FIRST.pdf"
 
 #This deletes any previous dmg stuff so a new one can be made.
-	announce "Removing any previous DMG, checksums, and unnecessary files"
-	rm -r ${DMG_DIR}/kglobalaccel5.app
-	rm -r ${DMG_DIR}/kwallet-query.app
-	rm -r ${DMG_DIR}/kwalletd5.app
+	announce "Removing any previous DMG and checksums"
 	rm ${DMG_DIR}/INDIWebManagerApp*.dmg
 	rm ${DMG_DIR}/INDIWebManagerApp*.md5
 	rm ${DMG_DIR}/INDIWebManagerApp*.sha256
