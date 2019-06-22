@@ -32,7 +32,6 @@
 					set position of item "INDIWebManagerApp.app" to {340, 145}
 					set background picture of the icon view options of container window to file "background.png" of folder "Pictures"
 					set the bounds of the container window to {0, 0, 440, 270}
-					update without registering applications
 					delay 5 -- sync
 					close
 				end tell

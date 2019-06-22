@@ -32,7 +32,6 @@
 					set position of item "KStars.app" to {340, 145}
 					set background picture of the icon view options of container window to file "background.jpg" of folder "Pictures"
 					set the bounds of the container window to {0, 0, 440, 270}
-					update without registering applications
 					delay 5 -- sync
 					close
 				end tell
@@ -128,15 +127,13 @@ macdeployqt KStars.app -executable=${KSTARS_APP}/Contents/MacOS/dbus-daemon -qml
 	VOLUME=$(mount |grep ${DEV} | cut -f 3 -d ' ')
 
 # copy in and set volume icon
-	cp -f ${DIR}/images/DMGIcon-KStars.icns ${VOLUME}/VolumeIcon.icns
-	mv -f ${VOLUME}/VolumeIcon.icns ${VOLUME}/.VolumeIcon.icns
+	cp -f ${DIR}/images/DMGIcon-KStars.icns ${VOLUME}/.VolumeIcon.icns
 	SetFile -c icnC ${VOLUME}/.VolumeIcon.icns
 	SetFile -a C ${VOLUME}
 
 # copy in background image
 	mkdir -p ${VOLUME}/Pictures
-	#cp -f ${KSTARS_APP}/Contents/Resources/data/kstars.png ${VOLUME}/Pictures/background.jpg
-	cp -f ${DIR}/images/dmg_background.png ${VOLUME}/Pictures/background.jpg
+	cp -f ${DIR}/images/dmg_background-KStars.png ${VOLUME}/Pictures/background.jpg
 
 # symlink Applications folder, arrange icons, set background image, set folder attributes, hide pictures folder
 	ln -s /Applications/ ${VOLUME}/Applications
