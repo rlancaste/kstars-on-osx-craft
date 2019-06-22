@@ -138,8 +138,8 @@ The only reason you would want to run it separately is if there is an issue you 
 
 ### Editing KStars and/or INDI in QT Creator
 
-- Please see the document [docs/EditingKStarsInQTCreatorOnOSX.pdf](EditingKStarsInQTCreatorOnOSX.pdf) for editing KStars
-- Please see the document [docs/EditingINDIInQTCreatorOnOSX.pdf](EditingINDIInQTCreatorOnOSX.pdf) for editing INDI
+- Please see the document [EditingKStarsInQTCreatorOnOSX.pdf](docs/EditingKStarsInQTCreatorOnOSX.pdf) for editing KStars
+- Please see the document [EditingINDIInQTCreatorOnOSX.pdf](docs/EditingINDIInQTCreatorOnOSX.pdf) for editing INDI
 
 If you have already run the build-kstars.sh script, you will be able to edit KStars.
 For INDI, you will need to also create a Fork on your own GitHub account first and then run the [downloadINDIForkForEditing.sh](downloadINDIForkForEditing.sh) script.  
@@ -187,7 +187,7 @@ Please see the document EditingINDIInQTCreatorOnOSX.docx for more detailed instr
 	
 INDI changes must be submitted using a pull request on Github.
 The INDI Code is hosted on this Repository: [https://github.com/indilib/indi](https://github.com/indilib/indi)
-Once you have made a fork, run the download script and edited your changes as described in the section above.
+Once you have made a fork, run the [downloadINDIForkForEditing.sh](downloadINDIForkForEditing.sh) script and edited your changes as described in the section above.
 When you are ready to submit your changes, you should do the following:
 	
 1. Test everything you did in INDI throughly with KStars
@@ -197,7 +197,7 @@ When you are ready to submit your changes, you should do the following:
 	git commit -am "My Commit Message"
 	git push
 ```
-3.  If it has been awhile since you made your fork, you should update it to the latest version using the updateINDIFork.sh script
+3.  If it has been awhile since you made your fork, you should update it to the latest version using the [updateINDIFork.sh](updateINDIFork.sh) script
 4.  Go to Github on your INDI Fork and click "New Pull Request" to submit your changes.
 
 ### Submitting any changes you make in INDIWebManagerApp
