@@ -181,10 +181,6 @@ announce "Running Fix Libraries Script"
 
 #Files in these locations do not need to be copied into the Frameworks folder.
 	IGNORED_OTOOL_OUTPUT="/Qt|${KSTARS_APP}/|/usr/lib/|/System/"
-	
-# This deletes the qt.conf file so macdeployqt can create a new one which points inside the app bundle
-	statusBanner "Deleting qt.conf so a new one that points inside the bundle can be made."
-	rm -f "${KSTARS_APP}/Contents/Resources/qt.conf"
 
 	
 cd ${DMG_DIR}

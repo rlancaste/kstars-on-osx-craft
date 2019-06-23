@@ -95,6 +95,10 @@ set +e
 	rm ${DMG_DIR}/INDIWebManagerApp*.md5
 	rm ${DMG_DIR}/INDIWebManagerApp*.sha256
 
+# This deletes the qt.conf file so macdeployqt can create a new one which points inside the app bundle
+	statusBanner "Deleting qt.conf so a new one that points inside the bundle can be made."
+	rm -f "${INDI_WEB_MANAGER_APP}/Contents/Resources/qt.conf"
+
 ###########################################
 announce "Building DMG"
 cd ${DMG_DIR}
