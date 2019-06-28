@@ -44,7 +44,7 @@ export MACOSX_DEPLOYMENT_TARGET=10.12
 
 # This sets the current version numbers that will be used throughout the script.
 export KSTARS_VERSION=3.3.1
-export INDI_WEB_MANAGER_APP_VERSION=0.9
+export INDI_WEB_MANAGER_APP_VERSION=1.0
 
 echo "DIR                   is [${DIR}]"
 echo "ASTRO_ROOT            is [${ASTRO_ROOT}]"
