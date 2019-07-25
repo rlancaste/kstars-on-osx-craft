@@ -341,8 +341,8 @@ EOF
 	fi
 	
 	#Craft Shortcuts
-	ln -sf ${CRAFT_DIR}/Applications/KDE ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/bin ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/build ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/lib ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/include ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/share ${SHORTCUTS_DIR}
