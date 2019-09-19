@@ -16,11 +16,11 @@ cd ${INDI_DIR}/
 
 if [ ! -d indi ]
 then
-	echo "No indi directory, please run the other download INDI Fork script"
+	echo "No indi directory, please run the download INDI Fork script"
 	exit
 fi
 
-# Get into indi directory
+# Get into the indi directory
 cd indi
 
 # Attach the upstream repository and update your local fork to it.
@@ -28,6 +28,12 @@ git fetch upstream
 git merge upstream/master
 git push
 
+# Get into the indi 3rd Party directory
+cd indi-3rdparty
 
+# Attach the upstream repository and update your local fork to it.
+git fetch upstream
+git merge upstream/master
+git push
 
 		

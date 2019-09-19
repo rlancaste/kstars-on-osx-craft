@@ -30,6 +30,8 @@ export ASTRO_ROOT=~/AstroRoot
 export INDI_DIR="${ASTRO_ROOT}"/indi-work
 	#This is the path to your personal fork of the INDI repository
 export FORKED_INDI_REPO="https://github.com/rlancaste/indi.git"
+	#This is the path to your personal fork of the INDI 3rd Party repository
+export FORKED_INDI_3RDPARTY_REPO="https://github.com/rlancaste/indi-3rdparty.git"
 	#This is the location of the craft root directory
 export CRAFT_DIR="${ASTRO_ROOT}"/craft-root
 	#This is the location of the craft shortcuts directory
@@ -43,13 +45,14 @@ export QMAKE_MACOSX_DEPLOYMENT_TARGET=10.12
 export MACOSX_DEPLOYMENT_TARGET=10.12
 
 # This sets the current version numbers that will be used throughout the script.
-export KSTARS_VERSION=3.3.5
-export INDI_WEB_MANAGER_APP_VERSION=1.4
+export KSTARS_VERSION=3.3.6
+export INDI_WEB_MANAGER_APP_VERSION=1.5
 
 echo "DIR                   is [${DIR}]"
 echo "ASTRO_ROOT            is [${ASTRO_ROOT}]"
 echo "INDI_DIR              is [${INDI_DIR}]"
 echo "FORKED_INDI_REPO      is [${FORKED_INDI_REPO}]"
+echo "FORKED_INDI_3RDPARTY_REPO     is [${FORKED_INDI_3RDPARTY_REPO}]"
 echo "CRAFT_DIR             is [${CRAFT_DIR}]"
 echo "SHORTCUTS_DIR         is [${SHORTCUTS_DIR}]"
 
