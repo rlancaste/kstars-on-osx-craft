@@ -45,8 +45,8 @@ export QMAKE_MACOSX_DEPLOYMENT_TARGET=10.12
 export MACOSX_DEPLOYMENT_TARGET=10.12
 
 # This sets the current version numbers that will be used throughout the script.
-export KSTARS_VERSION=3.3.6
-export INDI_WEB_MANAGER_APP_VERSION=1.5
+export KSTARS_VERSION=3.3.8
+export INDI_WEB_MANAGER_APP_VERSION=1.6
 
 echo "DIR                   is [${DIR}]"
 echo "ASTRO_ROOT            is [${ASTRO_ROOT}]"

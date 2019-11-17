@@ -21,7 +21,7 @@ then
 fi
 
 # Get into the indi directory
-cd indi
+cd ${INDI_DIR}/indi
 
 # Attach the upstream repository and update your local fork to it.
 git fetch upstream
@@ -29,7 +29,7 @@ git merge upstream/master
 git push
 
 # Get into the indi 3rd Party directory
-cd indi-3rdparty
+cd ${INDI_DIR}/indi-3rdparty
 
 # Attach the upstream repository and update your local fork to it.
 git fetch upstream
