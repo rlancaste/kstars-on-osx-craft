@@ -50,6 +50,7 @@ set +e
 	if [ -z "${ASTRO_ROOT}" ]
 	then
 		source ${DIR}/build-env.sh
+		export PATH=~/Astroroot/craft-root/bin:$PATH
 	fi
 
 #This sets some important variables.
