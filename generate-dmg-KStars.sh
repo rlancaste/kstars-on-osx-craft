@@ -116,7 +116,7 @@ cd ${DMG_DIR}
 macdeployqt KStars.app -executable=${KSTARS_APP}/Contents/MacOS/dbus-daemon -qmldir=${CRAFT_DIR}/download/git/kde/applications/kstars-mac/kstars/data/qml
 
 #This line adds the translations to qt.conf
-    echo "\nTranslations = Resources/locale" > "${KSTARS_APP}/Contents/Resources/qt.conf"
+    echo "Translations = Resources/locale" >> "${KSTARS_APP}/Contents/Resources/qt.conf"
 #The Fix Libraries Script Copies library files into the app and runs otool on them.
 	source ${DIR}/fix-libraries-KStars.sh
 
