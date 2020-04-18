@@ -41,11 +41,11 @@ export KSTARS_XCODE_DIR="${ASTRO_ROOT}/kstars-xcode"
 
 # This sets the minimum OS X version you are compiling for
 # Note that the current version of qt can no longer build for anything less than 10.12
-export QMAKE_MACOSX_DEPLOYMENT_TARGET=10.12
-export MACOSX_DEPLOYMENT_TARGET=10.12
+export QMAKE_MACOSX_DEPLOYMENT_TARGET=10.13
+export MACOSX_DEPLOYMENT_TARGET=10.13
 
 # This sets the current version numbers that will be used throughout the script.
-export KSTARS_VERSION=3.4.0
+export KSTARS_VERSION=3.4.2
 export INDI_WEB_MANAGER_APP_VERSION=1.6
 
 echo "DIR                   is [${DIR}]"
