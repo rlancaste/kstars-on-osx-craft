@@ -258,12 +258,12 @@ EOF
 				rm -rf "${CRAFT_DIR}"
 			fi
 			mkdir -p ${CRAFT_DIR}
-			curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && python3.7 setup.py --prefix "${CRAFT_DIR}"
+			curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && python3.8 setup.py --prefix "${CRAFT_DIR}"
 		fi
 	else
 		announce "Installing craft"
 		mkdir -p ${CRAFT_DIR}
-		curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && python3.7 setup.py --prefix "${CRAFT_DIR}"
+		curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && python3.8 setup.py --prefix "${CRAFT_DIR}"
 	fi  
 	
 #This copies all the required craft settings
