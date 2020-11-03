@@ -164,6 +164,9 @@ EOF
 # Prepare to run the script by setting all of the environment variables	
 	source ${DIR}/build-env.sh
 	
+# Set the working directory to /tmp because otherwise setup.py for craft will be placed in the user directory and that is messy.
+	cd /tmp
+	
 # Before starting, check to see if the remote servers are accessible
 	statusBanner "Checking Connections"
 	checkForConnection Homebrew "https://raw.githubusercontent.com/Homebrew/install/master/install"
@@ -219,8 +222,8 @@ EOF
 	# Craft does build ninja and install it to the craft directory, but QT Creator expects the homebrew version.
 	brew install ninja
 	
-	# astropy is a required module for astrometry.net
-	pip3 install astropy
+	# astropy is a required module for astrometry.net, note this is not an absolute requirement anymore
+	#/usr/local/bin/pip3 install astropy
 	
 	# I tried to write a recipe for gpsd, but it requires scons, and I have no idea what to do.
 	brew install gpsd 
@@ -258,12 +261,12 @@ EOF
 				rm -rf "${CRAFT_DIR}"
 			fi
 			mkdir -p ${CRAFT_DIR}
-			curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && python3.8 setup.py --prefix "${CRAFT_DIR}"
+			curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && /usr/local/bin/python3 setup.py --prefix "${CRAFT_DIR}"
 		fi
 	else
 		announce "Installing craft"
 		mkdir -p ${CRAFT_DIR}
-		curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && python3.8 setup.py --prefix "${CRAFT_DIR}"
+		curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && /usr/local/bin/python3 setup.py --prefix "${CRAFT_DIR}"
 	fi  
 	
 #This copies all the required craft settings
