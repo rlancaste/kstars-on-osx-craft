@@ -277,10 +277,16 @@ EOF
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde
 	cd ${CRAFT_DIR}/etc/blueprints/locations
 	git clone https://github.com/rlancaste/craft-blueprints-kde.git
+	
+#This sets the craft environment based on the settings.
+	source ${CRAFT_DIR}/craft/craftenv.sh
+	
+#This sets an environment variable to disable some errors on XCode 12.
+	export CFLAGS=-Wno-implicit-function-declaration
 
 #This will build indi, including the 3rd Party drivers.
 	announce "Building INDI and required dependencies"
-	source ${CRAFT_DIR}/craft/craftenv.sh
+	
 	
 	if [ -n "$STABLE_BUILD" ]
 	then
