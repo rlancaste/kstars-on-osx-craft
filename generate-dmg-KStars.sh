@@ -72,8 +72,19 @@ set +e
 		"Craft directory does not exist.  You have to build KStars with Craft first. Use build-kstars.sh"
 		exit
 	fi
+
+#This code should make sure the KSTARS_APP exists in KDE at least and that the build script has run.
+	if [ ! -e ${CRAFT_DIR}/Applications/KDE/KStars.app ]
+	then
+		"KStars.app does not exist in the KDE Directory.  Please run build-kstars.sh first!"
+		exit
+	fi
+
+#This code creates the DMG Directory if it doesn't exist and copies in the KStars app if it does exist.
+	mkdir -p "${DMG_DIR}"
+	cp -rf "${CRAFT_DIR}/Applications/KDE/KStars.app" "${DMG_DIR}/"
 	
-#This code should make sure the KSTARS_APP and the DMG Directory are set correctly.
+#This code should make sure the KSTARS_APP and the DMG Directory are set correctly and that they now exist.
 	if [ ! -e ${DMG_DIR} ] || [ ! -e ${KSTARS_APP} ]
 	then
 		"KStars.app does not exist in the DMG Directory.  Please run build-kstars.sh first!"
@@ -95,6 +106,10 @@ set +e
 #This copies back the preserved frameworks
 	statusBanner "Restoring Preserved Frameworks"
 	mv "${KSTARS_APP}/Contents/Frameworks2" "${FRAMEWORKS_DIR}"
+	
+#This removes the debug symbols because we don't actually need to distribute them.
+	statusBanner "Deleting debug symbols"
+	find ${DMG_DIR} -name '*.dSYM' | xargs rm -rf;
 
 #This copies the documentation that will be placed into the dmg.
 	announce "Copying Documentation"

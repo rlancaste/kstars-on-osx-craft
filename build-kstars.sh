@@ -384,9 +384,6 @@ EOF
 #This will package everything up into the app and then make a dmg.
 	if [ -n "$GENERATE_DMG" ]
 	then
-		DMG_DIR="${ASTRO_ROOT}/KStarsDMG"
-		mkdir -p "${DMG_DIR}"
-		cp -rf "${CRAFT_DIR}/Applications/KDE/KStars.app" "${DMG_DIR}/"
 		source ${DIR}/generate-dmg-KStars.sh
 	fi
 
