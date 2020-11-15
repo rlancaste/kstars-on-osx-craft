@@ -309,8 +309,8 @@ EOF
 	craft "$VERBOSE" -i dbus-kstars
 
 #This will build gsc
-	#announce "Building GSC"
-	#craft "$VERBOSE" gsc
+	announce "Building GSC"
+	craft "$VERBOSE" -i gsc
 	
 #This will get some nice sounds for KStars
 	statusBanner "Getting Oxygen Sounds for KStars"
