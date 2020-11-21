@@ -31,7 +31,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 		
 		#This hard coded rpath needs to be removed from any files that have it for packaged apps because later there could be rpath conflicts
         #if the program is run on a computer with the same paths as the build computer
-        install_name_tool -delete_rpath ${CRAFT_DIR}/lib $file
+        install_name_tool -delete_rpath ${CRAFT_DIR}/lib $target
         	
 		entries=$(otool -L $target | sed '1d' | awk '{print $1}' | egrep -v "$IGNORED_OTOOL_OUTPUT")
 		echo "Processing $target"
@@ -44,7 +44,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 		if [[ "$pathDiff" == /Frameworks/* ]]
 		then
 			newname="@rpath/$(basename $target)"
-			install_name_tool -add_rpath "@loader_path/" $file		
+			install_name_tool -add_rpath "@loader_path/" $target		
 			echo "    This is a Framework, change its own id $target -> $newname" 
 			
 			install_name_tool -id \
@@ -53,7 +53,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 		else
 		    pathToFrameworks=$(echo $(dirname "${pathDiff}") | awk -F/ '{for (i = 1; i < NF ; i++) {printf("../")} }')
 			pathToFrameworks="${pathToFrameworks}Frameworks/"
-			install_name_tool -add_rpath "@loader_path/${pathToFrameworks}" $file
+			install_name_tool -add_rpath "@loader_path/${pathToFrameworks}" $target
 		fi
 		
 		for entry in $entries

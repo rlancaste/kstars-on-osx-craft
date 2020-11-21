@@ -129,7 +129,7 @@ set +e
 ###########################################
 announce "Building DMG"
 cd ${DMG_DIR}
-macdeployqt KStars.app -executable=${KSTARS_APP}/Contents/MacOS/dbus-daemon -qmldir=${CRAFT_DIR}/download/git/kde/applications/kstars-mac/kstars/data/qml
+macdeployqt KStars.app -qmldir=${CRAFT_DIR}/download/git/kde/applications/kstars-mac/kstars/data/qml
 
 # Why is this not copied in by macdeployqt??
 	cp -fr "${CRAFT_DIR}/lib/QtQmlWorkerScript.framework" "${FRAMEWORKS_DIR}"
