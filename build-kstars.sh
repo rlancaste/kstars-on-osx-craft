@@ -231,6 +231,9 @@ EOF
 	# It would be good to sort this out.  gpg2 should be built in craft.  TODO!
 	brew install gpg
 	
+	# This is apparently not installed on Big Sur, is not available in craft, but is needed by netpbm
+	brew install svn
+	
 	# This is because gpg is not called gpg2 and translations call on gpg2.  Fix this??
 	ln -sf /usr/local/bin/gpg /usr/local/bin/gpg2
 	

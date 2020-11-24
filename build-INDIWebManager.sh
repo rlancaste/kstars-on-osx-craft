@@ -163,6 +163,9 @@ EOF
 # Prepare to run the script by setting all of the environment variables	
 	source ${DIR}/build-env.sh
 	
+# Set the working directory to /tmp because otherwise setup.py for craft will be placed in the user directory and that is messy.
+	cd /tmp
+	
 # Before starting, check to see if the remote servers are accessible
 	statusBanner "Checking Connections"
 	checkForConnection Homebrew "https://raw.githubusercontent.com/Homebrew/install/master/install"
@@ -254,12 +257,12 @@ EOF
 				rm -rf "${CRAFT_DIR}"
 			fi
 			mkdir -p ${CRAFT_DIR}
-			curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && python3.7 setup.py --prefix "${CRAFT_DIR}"
+			curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && /usr/local/bin/python3 setup.py --prefix "${CRAFT_DIR}"
 		fi
 	else
 		announce "Installing craft"
 		mkdir -p ${CRAFT_DIR}
-		curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && python3.7 setup.py --prefix "${CRAFT_DIR}"
+		curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && /usr/local/bin/python3 setup.py --prefix "${CRAFT_DIR}"
 	fi  
 	
 #This copies all the required craft settings
@@ -270,10 +273,16 @@ EOF
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde
 	cd ${CRAFT_DIR}/etc/blueprints/locations
 	git clone https://github.com/rlancaste/craft-blueprints-kde.git
+	
+#This sets the craft environment based on the settings.
+	source ${CRAFT_DIR}/craft/craftenv.sh
+	
+#This sets an environment variable to disable some errors on XCode 12.
+	export CFLAGS=-Wno-implicit-function-declaration
 
 #This will build indi, including the 3rd Party drivers.
 	announce "Building INDI and required dependencies"
-	source ${CRAFT_DIR}/craft/craftenv.sh
+	
 	
 	if [ -n "$STABLE_BUILD" ]
 	then
@@ -322,8 +331,8 @@ EOF
 	fi
 	
 	#Craft Shortcuts
-	ln -sf ${CRAFT_DIR}/Applications/KDE ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/bin ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/build ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/lib ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/include ${SHORTCUTS_DIR}
 	ln -sf ${CRAFT_DIR}/share ${SHORTCUTS_DIR}
@@ -356,9 +365,6 @@ EOF
 #This will copy the app to a DMG directory in ASTRO_ROOT, package everything up into the app and then make a dmg.
 	if [ -n "$GENERATE_DMG" ]
 	then
-		DMG_DIR="${ASTRO_ROOT}/INDIWebManagerAppDMG"
-		mkdir -p "${DMG_DIR}"
-		cp -rf "${CRAFT_DIR}/Applications/KDE/INDIWebManagerApp.app" "${DMG_DIR}/"
 		source ${DIR}/generate-dmg-INDIWebManager.sh
 	fi
 # Finally, remove the trap

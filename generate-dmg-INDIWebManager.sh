@@ -72,11 +72,22 @@ set +e
 		"Craft directory does not exist.  You have to build INDIWebManager with Craft first. Use build-INDIWebManagerApp.sh"
 		exit
 	fi
+
+#This code should make sure the INDI_WEB_MANAGER_APP exists in KDE at least and that the build script has run.
+	if [ ! -e ${CRAFT_DIR}/Applications/KDE/INDIWebManagerApp.app ]
+	then
+		"INDIWebManagerApp.app does not exist in the KDE Directory.  Please run build-indiwebmanagerapp.sh first!"
+		exit
+	fi
+
+#This code creates the DMG Directory if it doesn't exist and copies in the INDIWebManagerApp folder if it does exist.
+	mkdir -p "${DMG_DIR}"
+	cp -rf "${CRAFT_DIR}/Applications/KDE/INDIWebManagerApp.app" "${DMG_DIR}/"
 	
-#This code should make sure the INDI_WEB_MANAGER_APP and the DMG Directory are set correctly.
+#This code should make sure the INDI_WEB_MANAGER_APP and the DMG Directory are set correctly and that they now exist.
 	if [ ! -e ${DMG_DIR} ] || [ ! -e ${INDI_WEB_MANAGER_APP} ]
 	then
-		"INDIWebManager.app does not exist in the DMG Directory.  Please run build-indiwebmanagerapp.sh first!"
+		"INDIWebManagerApp.app does not exist in the DMG Directory.  Please run build-indiwebmanagerapp.sh first!"
 		exit
 	fi
 	
