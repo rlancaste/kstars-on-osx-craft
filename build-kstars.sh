@@ -104,7 +104,7 @@ EOF
 	function checkForConnection
 	{
 		testCommand=$(curl -Is $2 | head -n 1)
-		if [[ "${testCommand}" == *"OK"* || "${testCommand}" == *"Moved"* ]]
+		if [[ "${testCommand}" == *"OK"* || "${testCommand}" == *"Moved"* || "${testCommand}" == *"HTTP/2 301"* || "${testCommand}" == *"HTTP/2 200"* ]]
   		then 
   			echo "$1 connection was found."
   		else
@@ -282,7 +282,7 @@ EOF
 	git clone https://github.com/rlancaste/craft-blueprints-kde.git
 	
 #This sets the craft environment based on the settings.
-	source ${CRAFT_DIR}/craft/craftenv.sh
+	source "${CRAFT_DIR}/craft/craftenv.sh"
 	
 #This sets an environment variable to disable some errors on XCode 12.
 	export CFLAGS=-Wno-implicit-function-declaration
@@ -298,22 +298,40 @@ EOF
 		TARGET_VER="Latest"
 	fi
 	
+	# This will build INDI Core.  We want to do that every time since INDI changes often.
 	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver
 	
+	# This will build INDI 3rd Party with the build libraries flag set.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Libraries and required dependencies"
 	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver3rdPartyLibraries
 	
+	# This will build INDI 3rd Party drivers only.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Drivers"
 	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver3rdParty
 	
+	# This will check for broken links before proceeding.  Sometimes the INDI build fails to properly build drivers due to broken links.
+	# If it does find broken links, you should fix them.
+	testBrokenLinks=$(find -L "${CRAFT_DIR}/lib" -maxdepth 1 -type l)
+	if [ -n "$testBrokenLinks" ]
+	then
+		echo "There are several broken links in the Craft Lib Directory. Please correct these prior to proceeding."
+		echo "Here are the issues: "
+		find -L "${CRAFT_DIR}/lib" -maxdepth 1 -type l
+		exit
+	fi
+	
 	# Note this should be removed because it should be handled in the dbus craft recipe
+	# But for now it has to be done here because the dbus that craft builds will not work for us with the settings they picked.
 	announce "Building dbus and dbus-kstars to be sure we get the right version in the app"
-	craft "$VERBOSE" -i dbus
+	craft "$VERBOSE" dbus
 	craft "$VERBOSE" -i dbus-kstars
 
-#This will build gsc
-	announce "Building GSC"
-	craft "$VERBOSE" -i gsc
+#This will build gsc if Needed, but no need to build it every time.
+	if [ ! -d "${CRAFT_DIR}"/gsc ]
+	then
+		announce "Building GSC"
+		craft "$VERBOSE" -i gsc
+	fi
 	
 #This will get some nice sounds for KStars
 	statusBanner "Getting Oxygen Sounds for KStars"
@@ -332,8 +350,6 @@ EOF
 	then
 		rm -rf "${KSTARS_APP}"
 	fi
-	
-	source ${CRAFT_DIR}/craft/craftenv.sh
 		
 	statusBanner "Crafting icons"
 	craft "$VERBOSE" breeze-icons
