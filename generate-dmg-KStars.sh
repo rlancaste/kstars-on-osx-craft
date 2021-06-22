@@ -129,13 +129,19 @@ set +e
 ###########################################
 announce "Building DMG"
 cd ${DMG_DIR}
-macdeployqt KStars.app -qmldir=${CRAFT_DIR}/download/git/kde/applications/kstars-mac/kstars/data/qml
+macdeployqt KStars.app -qmldir="${KSTARS_APP}/Contents/Resources/kstars/qml"
 
 # Why is this not copied in by macdeployqt??
 	cp -fr "${CRAFT_DIR}/lib/QtQmlWorkerScript.framework" "${FRAMEWORKS_DIR}"
 
-#This line adds the translations to qt.conf
-    echo "Translations = Resources/locale" >> "${KSTARS_APP}/Contents/Resources/qt.conf"
+#This sets up qt.conf since macdeployqt does not always do it right
+	QT_CONF="${KSTARS_APP}/Contents/Resources/qt.conf"
+	echo "[Paths]" > "${QT_CONF}"
+	echo "Plugins = PlugIns" >> "${QT_CONF}"
+	echo "Imports = Resources/qml" >> "${QT_CONF}"
+	echo "Qml2Imports = Resources/qml" >> "${QT_CONF}"
+    echo "Translations = Resources/locale" >> "${QT_CONF}"
+    
 #The Fix Libraries Script Copies library files into the app and runs otool on them.
 	source ${DIR}/fix-libraries-KStars.sh
 
