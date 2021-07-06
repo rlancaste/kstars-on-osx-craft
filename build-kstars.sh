@@ -290,24 +290,31 @@ EOF
 #This will build indi, including the 3rd Party drivers.
 	announce "Building INDI and required dependencies"
 	
-	
+	# This will build INDI Core.  We want to do that every time since INDI changes often.
 	if [ -n "$STABLE_BUILD" ]
 	then
-		TARGET_VER="default"
+		craft "$VERBOSE" -i indiserver
 	else
-		TARGET_VER="Latest"
+		craft "$VERBOSE" -i --target "Latest" indiserver
 	fi
-	
-	# This will build INDI Core.  We want to do that every time since INDI changes often.
-	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver
 	
 	# This will build INDI 3rd Party with the build libraries flag set.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Libraries and required dependencies"
-	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver3rdPartyLibraries
+	if [ -n "$STABLE_BUILD" ]
+	then
+		craft "$VERBOSE" -i indiserver3rdPartyLibraries
+	else
+		craft "$VERBOSE" -i --target "Latest" indiserver3rdPartyLibraries
+	fi
 	
 	# This will build INDI 3rd Party drivers only.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Drivers"
-	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver3rdParty
+	if [ -n "$STABLE_BUILD" ]
+	then
+		craft "$VERBOSE" -i indiserver3rdParty
+	else
+		craft "$VERBOSE" -i --target "Latest" indiserver3rdParty
+	fi
 	
 	# This will check for broken links before proceeding.  Sometimes the INDI build fails to properly build drivers due to broken links.
 	# If it does find broken links, you should fix them.
@@ -355,7 +362,12 @@ EOF
 	craft "$VERBOSE" breeze-icons
 		
 	statusBanner "Crafting KStars"
-	craft "$VERBOSE" -i --target "${TARGET_VER}" kstars-mac
+	if [ -n "$STABLE_BUILD" ]
+	then
+		craft "$VERBOSE" -i kstars-mac
+	else
+		craft "$VERBOSE" -i --target "Latest" kstars-mac
+	fi
 		
 	announce "CRAFT COMPLETE"
 	
