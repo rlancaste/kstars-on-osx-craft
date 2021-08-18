@@ -94,7 +94,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 				filename=$(echo $(find "${CRAFT_DIR}/lib" -name "${base}")| cut -d" " -f1)
 				if [[ "$filename" == "" ]]
 				then
-					filename=$(echo $(find /usr/local/lib -name "${base}")| cut -d" " -f1)
+					filename=$(echo $(find $(brew --prefix)/lib -name "${base}")| cut -d" " -f1)
 				fi
 			fi    
 

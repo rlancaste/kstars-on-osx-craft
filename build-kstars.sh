@@ -193,8 +193,11 @@ EOF
 	trap scriptDied EXIT
 	
 #This will install homebrew if it hasn't been installed yet, or reset homebrew if desired.
-	if [ -d "/usr/local/Homebrew" ]
+	if [[ $(command -v brew) == "" ]]
 	then
+		announce "Installing Homebrew."
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	else
 		#This will remove all the homebrew packages if desired.
 		if [ -n "$REMOVE_ALL" ]
 		then
@@ -207,9 +210,6 @@ EOF
 			fi
 			brew remove --force $(brew list) --ignore-dependencies
 		fi  
-	else
-		announce "Installing Homebrew."
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	fi
 
 #This will install KStars dependencies from Homebrew.
@@ -223,7 +223,7 @@ EOF
 	brew install ninja
 	
 	# astropy is a required module for astrometry.net, note this is not an absolute requirement anymore
-	#/usr/local/bin/pip3 install astropy
+	#$(brew --prefix)/bin/pip3 install astropy
 	
 	# I tried to write a recipe for gpsd, but it requires scons, and I have no idea what to do.
 	brew install gpsd 
@@ -235,12 +235,12 @@ EOF
 	brew install svn
 	
 	# This is because gpg is not called gpg2 and translations call on gpg2.  Fix this??
-	ln -sf /usr/local/bin/gpg /usr/local/bin/gpg2
+	ln -sf $(brew --prefix)/bin/gpg $(brew --prefix)/bin/gpg2
 	
 	# It would be good to get this stuff into craft too!!! TODO!
 	# The problem here is that the system ruby can't be changed and we need logger-colors.
 	brew install ruby
-	export PATH=/usr/local/opt/ruby/bin:$PATH
+	export PATH=$(brew --prefix)/opt/ruby/bin:$PATH
 	gem install logger-colors
 
 #This will create the Astro Directory if it doesn't exist
@@ -264,12 +264,12 @@ EOF
 				rm -rf "${CRAFT_DIR}"
 			fi
 			mkdir -p ${CRAFT_DIR}
-			curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && /usr/local/bin/python3 setup.py --prefix "${CRAFT_DIR}"
+			curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && $(brew --prefix)/bin/python3 setup.py --prefix "${CRAFT_DIR}"
 		fi
 	else
 		announce "Installing craft"
 		mkdir -p ${CRAFT_DIR}
-		curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && /usr/local/bin/python3 setup.py --prefix "${CRAFT_DIR}"
+		curl https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py -o setup.py && $(brew --prefix)/bin/python3 setup.py --prefix "${CRAFT_DIR}"
 	fi  
 	
 #This copies all the required craft settings
