@@ -29,9 +29,9 @@ export ASTRO_ROOT=~/AstroRoot
 	#This is the path to the INDI directory for your personal editing work
 export INDI_DIR="${ASTRO_ROOT}"/indi-work
 	#This is the path to your personal fork of the INDI repository
-export FORKED_INDI_REPO="https://github.com/rlancaste/indi.git"
+export FORKED_INDI_REPO="git@github.com:rlancaste/indi.git"
 	#This is the path to your personal fork of the INDI 3rd Party repository
-export FORKED_INDI_3RDPARTY_REPO="https://github.com/rlancaste/indi-3rdparty.git"
+export FORKED_INDI_3RDPARTY_REPO="git@github.com:rlancaste/indi-3rdparty.git"
 	#This is the location of the craft root directory
 export CRAFT_DIR="${ASTRO_ROOT}"/craft-root
 	#This is the location of the craft shortcuts directory
