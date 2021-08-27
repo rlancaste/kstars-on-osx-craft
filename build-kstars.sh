@@ -427,8 +427,8 @@ EOF
 		cmake -DCMAKE_INSTALL_PREFIX="${CRAFT_DIR}" -G Xcode "${SHORTCUTS_DIR}/kstars-source"
 		xcodebuild -project kstars.xcodeproj -alltargets -configuration Debug
 
-		KSTARS_XCODE_APP="${KSTARS_XCODE_DIR}/kstars/Debug/KStars.app"
-		KSTARS_CRAFT_APP="${SHORTCUTS_DIR}/kstars-build/kstars/KStars.app"
+		KSTARS_XCODE_APP="${KSTARS_XCODE_DIR}/bin/Debug/KStars.app"
+		KSTARS_CRAFT_APP="${SHORTCUTS_DIR}/kstars-build/bin/KStars.app"
 
 		statusBanner "Copying Needed files from the Craft Build for the XCode Build to Work"
 
@@ -443,7 +443,7 @@ EOF
 		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/xplanet ${KSTARS_XCODE_APP}/Contents/MacOS/
 
 		statusBanner "Copying to XCode Release Folder"
-		XCODE_RELEASE="${KSTARS_XCODE_DIR}/kstars/Release"
+		XCODE_RELEASE="${KSTARS_XCODE_DIR}/bin/Release"
 		mkdir -p ${XCODE_RELEASE}
 		rm -rf ${XCODE_RELEASE}/KStars.app
 		cp -Rf ${KSTARS_XCODE_APP} ${XCODE_RELEASE}/
