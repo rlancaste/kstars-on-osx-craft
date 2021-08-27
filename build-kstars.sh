@@ -231,9 +231,6 @@ EOF
 	# It would be good to sort this out.  gpg2 should be built in craft.  TODO!
 	brew install gpg
 	
-	# This is apparently not installed on Big Sur, is not available in craft, but is needed by netpbm
-	brew install svn
-	
 	# This is because gpg is not called gpg2 and translations call on gpg2.  Fix this??
 	ln -sf $(brew --prefix)/bin/gpg $(brew --prefix)/bin/gpg2
 	
@@ -443,7 +440,6 @@ EOF
 		cp -f ${KSTARS_CRAFT_APP}/Contents/MacOS/dbus-daemon ${KSTARS_XCODE_APP}/Contents/MacOS/
 		cp -f ${KSTARS_CRAFT_APP}/Contents/MacOS/dbus-send ${KSTARS_XCODE_APP}/Contents/MacOS/
 		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/indi ${KSTARS_XCODE_APP}/Contents/MacOS/
-		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/netpbm ${KSTARS_XCODE_APP}/Contents/MacOS/
 		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/xplanet ${KSTARS_XCODE_APP}/Contents/MacOS/
 
 		statusBanner "Copying to XCode Release Folder"

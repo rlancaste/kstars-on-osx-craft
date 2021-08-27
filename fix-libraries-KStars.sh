@@ -210,7 +210,6 @@ processTarget "${FRAMEWORKS_DIR}/libindidriver.1.dylib"
 processDirectory indi "${KSTARS_APP}/Contents/MacOS/indi"
 processDirectory xplanet "${KSTARS_APP}/Contents/MacOS/xplanet/bin"
 processDirectory astrometry "${KSTARS_APP}/Contents/MacOS/astrometry/bin"
-processDirectory netpbm "${KSTARS_APP}/Contents/MacOS/netpbm/bin"
 processDirectory kio "${KSTARS_APP}/Contents/PlugIns/kf5/kio"
 
 processDirectory GPHOTO_IOLIBS "${KSTARS_APP}/Contents/Resources/DriverSupport/gphoto/IOLIBS"
