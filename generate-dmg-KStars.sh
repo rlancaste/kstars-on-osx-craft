@@ -80,7 +80,11 @@ set +e
 		exit
 	fi
 
-#This code creates the DMG Directory if it doesn't exist and copies in the KStars app if it does exist.
+#This code creates the DMG Directory if it doesn't exist and replaces it if it does exist. Then it copies in the KStars app.
+	if [ -e ${DMG_DIR} ]
+	then
+		rm -rf "${DMG_DIR}"
+	fi
 	mkdir -p "${DMG_DIR}"
 	cp -rf "${CRAFT_DIR}/Applications/KDE/KStars.app" "${DMG_DIR}/"
 	
@@ -115,12 +119,6 @@ set +e
 	announce "Copying Documentation"
 	cp -f ${DIR}/docs/"CopyrightInfo and SourceCode.pdf" ${DMG_DIR}
 	cp -f ${DIR}/docs/"QuickStart READ FIRST-KStars.pdf" ${DMG_DIR}/"QuickStart READ FIRST.pdf"
-
-#This deletes any previous dmg stuff so a new one can be made.
-	announce "Removing any previous DMG and checksums"
-	rm ${DMG_DIR}/kstars*.dmg
-	rm ${DMG_DIR}/kstars*.md5
-	rm ${DMG_DIR}/kstars*.sha256
 	
 # This deletes the qt.conf file so macdeployqt can create a new one which points inside the app bundle
 	statusBanner "Deleting qt.conf so a new one that points inside the bundle can be made."

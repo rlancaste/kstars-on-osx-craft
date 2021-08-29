@@ -336,16 +336,6 @@ EOF
 		announce "Building GSC"
 		craft "$VERBOSE" -i gsc
 	fi
-	
-#This will get some nice sounds for KStars
-	statusBanner "Getting Oxygen Sounds for KStars"
-	mkdir -p "${CRAFT_DIR}"/share/sounds/
-	cd ${CRAFT_DIR}
-	if [ ! -d oxygen ]
-	then
-		git clone https://github.com/KDE/oxygen.git
-	fi
-	cp -f "${CRAFT_DIR}"/oxygen/sounds/*.ogg "${CRAFT_DIR}"/share/sounds/
 
 #This will set the KStars App directory and craft KStars.
 	announce "Building KStars and required dependencies"
