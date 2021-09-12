@@ -345,8 +345,9 @@ EOF
 		rm -rf "${KSTARS_APP}"
 	fi
 		
-	statusBanner "Crafting icons"
-	craft "$VERBOSE" breeze-icons
+	#Breeze icons are needed, but the RCC files are now in the mac files repo, so no need to keep rebuilding the icons.
+	#statusBanner "Crafting icons"
+	#craft "$VERBOSE" breeze-icons
 		
 	statusBanner "Crafting KStars"
 	if [ -n "$STABLE_BUILD" ]
