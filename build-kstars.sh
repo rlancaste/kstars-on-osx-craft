@@ -424,7 +424,7 @@ EOF
 		statusBanner "Copying Needed files from the Craft Build for the XCode Build to Work"
 
 		cp -rf ${KSTARS_CRAFT_APP}/Contents/Frameworks ${KSTARS_XCODE_APP}/Contents/
-		cp -rf ${KSTARS_CRAFT_APP}/Contents/PlugIns ${KSTARS_XCODE_APP}/Contents/
+		cp -rf ${KSTARS_CRAFT_APP}/Contents/Plugins ${KSTARS_XCODE_APP}/Contents/
 		cp -rf ${KSTARS_CRAFT_APP}/Contents/Resources ${KSTARS_XCODE_APP}/Contents/
 
 		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/astrometry ${KSTARS_XCODE_APP}/Contents/MacOS/

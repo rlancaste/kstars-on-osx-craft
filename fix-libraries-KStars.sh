@@ -210,19 +210,19 @@ processTarget "${FRAMEWORKS_DIR}/libindidriver.1.dylib"
 processDirectory indi "${KSTARS_APP}/Contents/MacOS/indi"
 processDirectory xplanet "${KSTARS_APP}/Contents/MacOS/xplanet/bin"
 processDirectory astrometry "${KSTARS_APP}/Contents/MacOS/astrometry/bin"
-processDirectory kio "${KSTARS_APP}/Contents/PlugIns/kf5/kio"
+processDirectory kio "${KSTARS_APP}/Contents/Plugins/kf5/kio"
 
 processDirectory GPHOTO_IOLIBS "${KSTARS_APP}/Contents/Resources/DriverSupport/gphoto/IOLIBS"
 processDirectory GPHOTO_CAMLIBS "${KSTARS_APP}/Contents/Resources/DriverSupport/gphoto/CAMLIBS"
 
 processDirectory MathPlugins "${KSTARS_APP}/Contents/Resources/MathPlugins"
 
-processDirectory VLC_ACCESS "${KSTARS_APP}/Contents/PlugIns/vlc/access"
-processDirectory VLC_AUDIO_OUTPUT "${KSTARS_APP}/Contents/PlugIns/vlc/audio_output"
-processDirectory VLC_CODEC "${KSTARS_APP}/Contents/PlugIns/vlc/codec"
+processDirectory VLC_ACCESS "${KSTARS_APP}/Contents/Plugins/vlc/access"
+processDirectory VLC_AUDIO_OUTPUT "${KSTARS_APP}/Contents/Plugins/vlc/audio_output"
+processDirectory VLC_CODEC "${KSTARS_APP}/Contents/Plugins/vlc/codec"
 
 #This should not be necessary because macdeployqt used to do this.  Why do I need to add this?  It fails to perfectly do them now.
-processDirectory Platforms "${KSTARS_APP}/Contents/PlugIns/platforms"
+processDirectory Platforms "${KSTARS_APP}/Contents/Plugins/platforms"
 
 processDirectory Frameworks "${FRAMEWORKS_DIR}"
 

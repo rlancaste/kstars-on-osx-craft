@@ -208,7 +208,7 @@ processDirectory GPHOTO_CAMLIBS "${INDI_WEB_MANAGER_APP}/Contents/Resources/Driv
 processDirectory MathPlugins "${INDI_WEB_MANAGER_APP}/Contents/Resources/MathPlugins"
 
 #This should not be necessary because macdeployqt used to do this.  Why do I need to add this?
-processDirectory Platforms "${INDI_WEB_MANAGER_APP}/Contents/PlugIns/platforms"
+processDirectory Platforms "${INDI_WEB_MANAGER_APP}/Contents/Plugins/platforms"
 
 processDirectory Frameworks "${FRAMEWORKS_DIR}"
 
