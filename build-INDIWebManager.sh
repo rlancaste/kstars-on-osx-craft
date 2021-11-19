@@ -103,7 +103,7 @@ EOF
 	function checkForConnection
 	{
 		testCommand=$(curl -Is $2 | head -n 1)
-		if [[ "${testCommand}" == *"OK"* || "${testCommand}" == *"Moved"* ]]
+		if [[ "${testCommand}" == *"OK"* || "${testCommand}" == *"Moved"* || "${testCommand}" == *"HTTP/2 301"* || "${testCommand}" == *"HTTP/2 200"* ]]
   		then 
   			echo "$1 connection was found."
   		else
@@ -169,6 +169,7 @@ EOF
 # Before starting, check to see if the remote servers are accessible
 	statusBanner "Checking Connections"
 	checkForConnection Homebrew "https://raw.githubusercontent.com/Homebrew/install/master/install"
+	checkForConnection Craft "https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py"
 	checkForConnection INDIWebSrc "https://github.com/rlancaste/INDIWebManagerApp.git"
 	checkForConnection Oxygen "https://github.com/KDE/oxygen.git"
 	checkForConnection CustomMacBlueprints "https://github.com/rlancaste/craft-blueprints-kde.git"
@@ -275,7 +276,7 @@ EOF
 	git clone https://github.com/rlancaste/craft-blueprints-kde.git
 	
 #This sets the craft environment based on the settings.
-	source ${CRAFT_DIR}/craft/craftenv.sh
+	source "${CRAFT_DIR}/craft/craftenv.sh"
 	
 #This sets an environment variable to disable some errors on XCode 12.
 	export CFLAGS=-Wno-implicit-function-declaration
@@ -283,25 +284,42 @@ EOF
 #This will build indi, including the 3rd Party drivers.
 	announce "Building INDI and required dependencies"
 	
-	
+	# This will build INDI Core.  We want to do that every time since INDI changes often.
 	if [ -n "$STABLE_BUILD" ]
 	then
-		TARGET_VER="default"
+		craft "$VERBOSE" -i indiserver
 	else
-		TARGET_VER="Latest"
+		craft "$VERBOSE" -i --target "Latest" indiserver
 	fi
 	
-	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver
-	
+	# This will build INDI 3rd Party with the build libraries flag set.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Libraries and required dependencies"
-	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver3rdPartyLibraries
+	if [ -n "$STABLE_BUILD" ]
+	then
+		craft "$VERBOSE" -i indiserver3rdPartyLibraries
+	else
+		craft "$VERBOSE" -i --target "Latest" indiserver3rdPartyLibraries
+	fi
 	
+	# This will build INDI 3rd Party drivers only.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Drivers"
-	craft "$VERBOSE" -i --target "${TARGET_VER}" indiserver3rdParty
-
-#This will build gsc
-	#announce "Building GSC"
-	#craft "$VERBOSE" gsc
+	if [ -n "$STABLE_BUILD" ]
+	then
+		craft "$VERBOSE" -i indiserver3rdParty
+	else
+		craft "$VERBOSE" -i --target "Latest" indiserver3rdParty
+	fi
+	
+	# This will check for broken links before proceeding.  Sometimes the INDI build fails to properly build drivers due to broken links.
+	# If it does find broken links, you should fix them.
+	testBrokenLinks=$(find -L "${CRAFT_DIR}/lib" -maxdepth 1 -type l)
+	if [ -n "$testBrokenLinks" ]
+	then
+		echo "There are several broken links in the Craft Lib Directory. Please correct these prior to proceeding."
+		echo "Here are the issues: "
+		find -L "${CRAFT_DIR}/lib" -maxdepth 1 -type l
+		exit
+	fi
 	
 #This will set the INDI_WEB_MANAGER App directory and craft INDI_WEB_MANAGER.
 	announce "Building INDIWebManager and required dependencies"
@@ -317,7 +335,12 @@ EOF
 	craft "$VERBOSE" breeze-icons
 		
 	statusBanner "Crafting INDIWebManager"
-	craft "$VERBOSE" -i --target "${TARGET_VER}" indiwebmanagerapp-mac
+	if [ -n "$STABLE_BUILD" ]
+	then
+		craft "$VERBOSE" -i indiwebmanagerapp-mac
+	else
+		craft "$VERBOSE" -i --target "Latest" indiwebmanagerapp-mac
+	fi
 		
 	announce "CRAFT COMPLETE"
 	

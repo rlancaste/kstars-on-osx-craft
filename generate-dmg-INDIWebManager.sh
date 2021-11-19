@@ -80,10 +80,15 @@ set +e
 		exit
 	fi
 
-#This code creates the DMG Directory if it doesn't exist and copies in the INDIWebManagerApp folder if it does exist.
+#This code creates the DMG Directory if it doesn't exist and replaces it if it does exist. Then it copies in the INDIWebManagerApp.
+	if [ -e ${DMG_DIR} ]
+	then
+		rm -rf "${DMG_DIR}"
+	fi
 	mkdir -p "${DMG_DIR}"
 	cp -rf "${CRAFT_DIR}/Applications/KDE/INDIWebManagerApp.app" "${DMG_DIR}/"
 	
+
 #This code should make sure the INDI_WEB_MANAGER_APP and the DMG Directory are set correctly and that they now exist.
 	if [ ! -e ${DMG_DIR} ] || [ ! -e ${INDI_WEB_MANAGER_APP} ]
 	then
@@ -96,16 +101,14 @@ set +e
 	rm -fr "${FRAMEWORKS_DIR}"
 	mkdir -p "${FRAMEWORKS_DIR}"
 
+#This removes the debug symbols because we don't actually need to distribute them.
+	statusBanner "Deleting debug symbols"
+	find ${DMG_DIR} -name '*.dSYM' | xargs rm -rf;
+
 #This copies the documentation that will be placed into the dmg.
 	announce "Copying Documentation"
 	cp -f ${DIR}/docs/"CopyrightInfo and SourceCode.pdf" ${DMG_DIR}
 	cp -f ${DIR}/docs/"QuickStart READ FIRST-INDIWebManager.pdf" ${DMG_DIR}/"QuickStart READ FIRST.pdf"
-
-#This deletes any previous dmg stuff so a new one can be made.
-	announce "Removing any previous DMG and checksums"
-	rm ${DMG_DIR}/INDIWebManagerApp*.dmg
-	rm ${DMG_DIR}/INDIWebManagerApp*.md5
-	rm ${DMG_DIR}/INDIWebManagerApp*.sha256
 
 # This deletes the qt.conf file so macdeployqt can create a new one which points inside the app bundle
 	statusBanner "Deleting qt.conf so a new one that points inside the bundle can be made."
@@ -116,6 +119,14 @@ announce "Building DMG"
 cd ${DMG_DIR}
 macdeployqt INDIWebManagerApp.app 
 
+#This sets up qt.conf since macdeployqt does not always do it right
+	QT_CONF="${Plugins}/Contents/Resources/qt.conf"
+	echo "[Paths]" > "${QT_CONF}"
+	echo "Plugins = Plugins" >> "${QT_CONF}"
+	echo "Imports = Resources/qml" >> "${QT_CONF}"
+	echo "Qml2Imports = Resources/qml" >> "${QT_CONF}"
+    echo "Translations = Resources/locale" >> "${QT_CONF}"
+    
 #The Fix Libraries Script Copies library files into the app and runs otool on them.
 	source ${DIR}/fix-libraries-INDIWebManager.sh
 
