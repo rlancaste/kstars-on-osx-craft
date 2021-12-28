@@ -273,10 +273,18 @@ EOF
 	statusBanner "Copying Craft Settings and Blueprint settings specific to building on macs."
 	cp ${DIR}/settings/CraftSettings.ini ${CRAFT_DIR}/etc/
 	cp ${DIR}/settings/BlueprintSettings.ini ${CRAFT_DIR}/etc/
-	statusBanner "Replacing default craft recipes with revised Mac recipes until they get revised and accepted."
+	statusBanner "Resetting Craft Recipes to the official repo."
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde
 	cd ${CRAFT_DIR}/etc/blueprints/locations
-	git clone https://github.com/rlancaste/craft-blueprints-kde.git
+	git clone https://github.com/KDE/craft-blueprints-kde.git
+	statusBanner "Replacing default craft recipes with revised Mac recipes and adding some of my own until they get revised and accepted."
+	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/libraw
+	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/wcslib
+	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/cfitsio
+	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/_unix/swig
+	cp -R ${DIR}/craftRecipes/libs/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/
+	cp -R ${DIR}/craftRecipes/libs-unix/swig ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/_unix/
+	cp -R ${DIR}/craftRecipes/kde/applications/kstars-mac ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/
 	
 #This sets the craft environment based on the settings.
 	source "${CRAFT_DIR}/craft/craftenv.sh"
@@ -344,10 +352,6 @@ EOF
 	then
 		rm -rf "${KSTARS_APP}"
 	fi
-		
-	#Breeze icons are needed, but the RCC files are now in the mac files repo, so no need to keep rebuilding the icons.
-	#statusBanner "Crafting icons"
-	#craft "$VERBOSE" breeze-icons
 		
 	statusBanner "Crafting KStars"
 	if [ -n "$STABLE_BUILD" ]
