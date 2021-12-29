@@ -7,7 +7,7 @@ class subinfo(info.infoclass):
         for ver in ['8.45']:
             self.targets[ver] = f"https://sourceforge.net/projects/pcre/files/pcre/{ver}/pcre-{ver}.tar.bz2"
             self.targetInstSrc[ver] = f"pcre-{ver}"
-            self.archiveNames[ver] = "pcreTest-%s.tar.gz" % ver
+            self.archiveNames[ver] = "pcre-%s.tar.gz" % ver
         self.description = 'Perl compatible regular expressions library'
         self.defaultTarget = '8.45'
 

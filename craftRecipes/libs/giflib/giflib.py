@@ -26,3 +26,11 @@ class Package(CMakePackageBase):
         CMakePackageBase.__init__(self)
         self.subinfo.options.package.packageName = 'giflib'
         self.subinfo.options.configure.args = "-DBUILD_utils=OFF"
+
+    def postQmerge(self):
+        packageName = "libgiflib4"
+        root = str(CraftCore.standardDirs.craftRoot())
+        craftLibDir = os.path.join(root,  'lib')
+        utils.system("install_name_tool -add_rpath " + craftLibDir + " " + craftLibDir + "/" + packageName + ".dylib")
+        utils.system("install_name_tool -id @rpath/" + packageName + ".dylib " + craftLibDir + "/" + packageName + ".dylib")
+        return True

@@ -13,7 +13,7 @@ class subinfo(info.infoclass):
 
     def setDependencies(self):
         self.buildDependencies["dev-utils/bison"] = None
-        self.buildDependencies["libs/pcreTest"] = None
+        self.buildDependencies["libs/pcre"] = None
         self.runtimeDependencies["virtual/base"] = None
 
 
