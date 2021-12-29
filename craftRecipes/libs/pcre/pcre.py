@@ -20,6 +20,12 @@ class subinfo(info.infoclass):
 from Package.AutoToolsPackageBase import *
 
 class Package(AutoToolsPackageBase):
+    def fixLibraryID(self, packageName):
+        root = str(CraftCore.standardDirs.craftRoot())
+        craftLibDir = os.path.join(root,  'lib')
+        utils.system("install_name_tool -add_rpath " + craftLibDir + " " + craftLibDir +"/" + packageName + ".dylib")
+        utils.system("install_name_tool -id @rpath/" + packageName + ".dylib " + craftLibDir +"/" + packageName + ".dylib")
+
     def __init__( self, **args ):
         AutoToolsPackageBase.__init__( self )
         prefix = self.shell.toNativePath(CraftCore.standardDirs.craftRoot())
@@ -36,6 +42,15 @@ class Package(AutoToolsPackageBase):
         " --enable-pcregrep-libbz2" \
         " --enable-jit"
 
+    def postQmerge(self):
+        self.fixLibraryID("libpcre")
+        self.fixLibraryID("libpcrecpp")
+        self.fixLibraryID("libpcreposix")
+        root = str(CraftCore.standardDirs.craftRoot())
+        craftLibDir = os.path.join(root,  'lib')
+        utils.system("install_name_tool -change libpcre.dylib @rpath/libpcre.dylib " + craftLibDir +  "/" + "libpcrecpp.dylib")
+        utils.system("install_name_tool -change libpcre.dylib @rpath/libpcre.dylib " + craftLibDir +  "/" + "libpcreposix.dylib")
+        return True
 
 
 
