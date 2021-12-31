@@ -46,11 +46,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["qt-libs/qtkeychain"] = None
         
         self.runtimeDependencies["libs/libgphoto2"] = "default"
-        self.runtimeDependencies["libs/astrometry.net"] = "default"
-        self.runtimeDependencies["libs/astrometry.netForKStars"] = "default"
-        self.runtimeDependencies["libs/sextractor"] = "default"
         self.runtimeDependencies["libs/xplanet"] = "default"
-        self.runtimeDependencies["libs/dbus-kstars"] = "default"
         self.runtimeDependencies["libs/gsc"] = "default"
         #Making these dependencies doesn't seem to download the latest versions, it downloads the default.
         #self.runtimeDependencies["libs/indiserver"] = "Latest"
@@ -108,19 +104,6 @@ class Package(CMakePackageBase):
         
         #	The gsc executable
         utils.system("cp -f " + craftRoot + "/bin/gsc " + KSTARS_APP + "/Contents/MacOS/indi/")
-        
-        #	The astrometry files.  this one is way too complex, need to be like homebrew. Finish later
-        astometryBinDir = os.path.join(craftRoot , 'astrometry', 'bin')
-        astometryLibDir = os.path.join(craftRoot , 'astrometry', 'lib')
-        astrometryDestDir = "" + KSTARS_APP + "/Contents/MacOS/astrometry"
-        
-        utils.system("mkdir -p " + astrometryDestDir)
-        utils.system("cp -Rf " + astometryBinDir + " " + astrometryDestDir + "/")
-        utils.system("cp -Rf " + astometryLibDir + " " + astrometryDestDir + "/")
-        
-        #	Sextractor for astrometry
-        craftBinDir =  os.path.join(craftRoot , 'bin')
-        utils.system("cp -f " + craftBinDir + "/sex " + astrometryDestDir + "/bin/")
 
         #	xplanet
         #planet picture setup?

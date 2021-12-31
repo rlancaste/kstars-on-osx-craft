@@ -222,9 +222,6 @@ EOF
 	# Craft does build ninja and install it to the craft directory, but QT Creator expects the homebrew version.
 	brew install ninja
 	
-	# astropy is a required module for astrometry.net, note this is not an absolute requirement anymore
-	#$(brew --prefix)/bin/pip3 install astropy
-	
 	# I tried to write a recipe for gpsd, but it requires scons, and I have no idea what to do.
 	brew install gpsd 
 	
@@ -280,7 +277,7 @@ EOF
 	statusBanner "Replacing default craft recipes with revised Mac recipes and adding some of my own until they get revised and accepted."
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/libraw
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/wcslib
-	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/cfitsio
+	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/dbus
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/pcre
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/_unix/swig
 	cp -R ${DIR}/craftRecipes/libs/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/
@@ -332,12 +329,6 @@ EOF
 		find -L "${CRAFT_DIR}/lib" -maxdepth 1 -type l
 		exit
 	fi
-	
-	# Note this should be removed because it should be handled in the dbus craft recipe
-	# But for now it has to be done here because the dbus that craft builds will not work for us with the settings they picked.
-	announce "Building dbus and dbus-kstars to be sure we get the right version in the app"
-	craft "$VERBOSE" dbus
-	craft "$VERBOSE" -i dbus-kstars
 
 #This will build gsc if Needed, but no need to build it every time.
 	if [ ! -d "${CRAFT_DIR}"/gsc ]
@@ -432,7 +423,6 @@ EOF
 		cp -rf ${KSTARS_CRAFT_APP}/Contents/Plugins ${KSTARS_XCODE_APP}/Contents/
 		cp -rf ${KSTARS_CRAFT_APP}/Contents/Resources ${KSTARS_XCODE_APP}/Contents/
 
-		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/astrometry ${KSTARS_XCODE_APP}/Contents/MacOS/
 		cp -f ${KSTARS_CRAFT_APP}/Contents/MacOS/dbus-daemon ${KSTARS_XCODE_APP}/Contents/MacOS/
 		cp -f ${KSTARS_CRAFT_APP}/Contents/MacOS/dbus-send ${KSTARS_XCODE_APP}/Contents/MacOS/
 		cp -rf ${KSTARS_CRAFT_APP}/Contents/MacOS/indi ${KSTARS_XCODE_APP}/Contents/MacOS/
