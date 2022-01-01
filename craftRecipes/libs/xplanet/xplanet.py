@@ -28,8 +28,14 @@ class Package(AutoToolsPackageBase):
         AutoToolsPackageBase.__init__( self )
         prefix = str(self.shell.toNativePath(CraftCore.standardDirs.craftRoot()))
         self.subinfo.options.configure.args = "--disable-dependency-tracking" \
+        " --without-cspice" \
         " --without-cygwin" \
-        " --with-x=no" \
+        " --without-gif" \
+        " --with-jpeg" \
+        " --without-libtiff" \
+        " --without-pango" \
+        " --without-pnm" \
+        " --without-x" \
         " --without-xscreensaver" \
         " --with-aqua" \
         " --prefix=" + prefix

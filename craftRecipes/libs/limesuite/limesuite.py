@@ -4,12 +4,12 @@ import info
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        for ver in ['18.10.0']:
+        for ver in ['20.10.0']:
             self.targets[ver] = 'https://github.com/myriadrf/LimeSuite/archive/v%s.tar.gz' % ver
             self.archiveNames[ver] = "limesuite-%s.tar.bz2" % ver
             self.targetInstSrc[ver] = 'LimeSuite-%s' % ver
         self.description = 'Lime suite device drivers, GUI, and SDR support'
-        self.defaultTarget = '18.10.0'
+        self.defaultTarget = '20.10.0'
 
     def setDependencies(self):
         self.buildDependencies["dev-utils/pkg-config"] = "default"

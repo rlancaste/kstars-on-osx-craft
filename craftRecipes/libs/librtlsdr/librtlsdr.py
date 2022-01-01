@@ -3,12 +3,12 @@ import info
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        for ver in ['0.5.4']:
-            self.targets[ver] = 'https://github.com/steve-m/librtlsdr/archive/v%s.tar.gz' % ver
+        for ver in ['0.6.0']:
+            self.targets[ver] = 'https://github.com/steve-m/librtlsdr/archive/refs/tags/%s.tar.gz' % ver
             self.archiveNames[ver] = "librtlsdr-%s.tar.gz" % ver
             self.targetInstSrc[ver] = 'librtlsdr-' + ver
         self.description = 'Use Realtek DVT-T dongles as a cheap SDR'
-        self.defaultTarget = '0.5.4'
+        self.defaultTarget = '0.6.0'
 
     def setDependencies(self):
         self.buildDependencies["dev-utils/pkg-config"] = "default"
