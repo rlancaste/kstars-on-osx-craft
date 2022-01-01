@@ -1,46 +1,42 @@
-# -*- coding: utf-8 -*-
 import info
+from Package.CMakePackageBase import *
 
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        for ver in ['8.45']:
-            self.targets[ver] = f"https://sourceforge.net/projects/pcre/files/pcre/{ver}/pcre-{ver}.tar.bz2"
+        for ver in ["8.45"]:
+            self.targets[ver] = f"https://downloads.sourceforge.net/sourceforge/pcre/pcre-{ver}.tar.bz2"
             self.targetInstSrc[ver] = f"pcre-{ver}"
-            self.archiveNames[ver] = "pcre-%s.tar.gz" % ver
-        self.description = 'Perl compatible regular expressions library'
-        self.defaultTarget = '8.45'
+        self.patchToApply["8.45"] = [("pcre-8.10-20101125.diff", 1)]
+        self.targetDigests['8.45'] = (
+            ['4dae6fdcd2bb0bb6c37b5f97c33c2be954da743985369cddac3546e3218bffb8'], CraftHash.HashAlgorithm.SHA256)
+
+        self.description = "Perl-Compatible Regular Expressions"
+        self.defaultTarget = "8.45"
 
     def setDependencies(self):
-        self.runtimeDependencies["virtual/base"] = "default"
-        self.runtimeDependencies["libs/libbzip2"] = "default"
-        self.runtimeDependencies["libs/zlib"] = "default"
-       # self.runtimeDependencies["libs/glibtool"] = "default"
+        self.buildDependencies["virtual/base"] = None
+        self.runtimeDependencies["libs/libbzip2"] = None
+        self.runtimeDependencies["libs/zlib"] = None
 
-from Package.AutoToolsPackageBase import *
 
-class Package(AutoToolsPackageBase):
+class Package(CMakePackageBase):
     def fixLibraryID(self, packageName):
         root = str(CraftCore.standardDirs.craftRoot())
         craftLibDir = os.path.join(root,  'lib')
         utils.system("install_name_tool -add_rpath " + craftLibDir + " " + craftLibDir +"/" + packageName + ".dylib")
         utils.system("install_name_tool -id @rpath/" + packageName + ".dylib " + craftLibDir +"/" + packageName + ".dylib")
 
-    def __init__( self, **args ):
-        AutoToolsPackageBase.__init__( self )
-        prefix = self.shell.toNativePath(CraftCore.standardDirs.craftRoot())
-        #self.subinfo.options.configure.bootstrap = True
-        self.subinfo.options.useShadowBuild = False
-        self.subinfo.options.configure.args += " --disable-dependency-tracking" \
-        " --prefix=#{prefix}" \
-        " --enable-utf8" \
-        " --enable-pcre8" \
-        " --enable-pcre16" \
-        " --enable-pcre32" \
-        " --enable-unicode-properties" \
-        " --enable-pcregrep-libz" \
-        " --enable-pcregrep-libbz2" \
-        " --enable-jit"
+    def __init__(self, **args):
+        CMakePackageBase.__init__(self)
+
+        defines = "-DBUILD_SHARED_LIBS=ON "
+        defines += "-DPCRE_SUPPORT_UNICODE_PROPERTIES=ON "
+        defines += "-DPCRE_SUPPORT_UTF8=ON "
+        defines += "-DPCRE_EBCDIC=OFF "
+        if CraftCore.compiler.isAndroid:
+            defines += "-DHAVE_STRTOQ=FALSE -DPCRE_BUILD_PCREGREP=FALSE -DPCRE_BUILD_TEST=FALSE"
+        self.subinfo.options.configure.args = defines
 
     def postQmerge(self):
         self.fixLibraryID("libpcre")
@@ -51,9 +47,4 @@ class Package(AutoToolsPackageBase):
         utils.system("install_name_tool -change libpcre.dylib @rpath/libpcre.dylib " + craftLibDir +  "/" + "libpcrecpp.dylib")
         utils.system("install_name_tool -change libpcre.dylib @rpath/libpcre.dylib " + craftLibDir +  "/" + "libpcreposix.dylib")
         return True
-
-
-
-
-
 

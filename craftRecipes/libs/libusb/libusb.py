@@ -13,7 +13,6 @@ class subinfo(info.infoclass):
 
     def setDependencies(self):
         self.runtimeDependencies["virtual/base"] = "default"
-        #self.buildDependencies["libs/glibtool"] = "default"
 
 from Package.AutoToolsPackageBase import *
 

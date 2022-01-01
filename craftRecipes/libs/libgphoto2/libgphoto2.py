@@ -15,7 +15,6 @@ class subinfo(info.infoclass):
         self.buildDependencies["libs/gettext"] = "default"
         self.buildDependencies["dev-utils/pkg-config"] = "default"
         self.runtimeDependencies["virtual/base"] = "default"
-        self.runtimeDependencies["libs/glibtool"] = "default"
         self.runtimeDependencies["libs/libusb-compat"] = "default"
         #gd and libexif might be needed too
 
@@ -25,7 +24,7 @@ class Package(AutoToolsPackageBase):
     def __init__( self, **args ):
         AutoToolsPackageBase.__init__( self )
         prefix = str(self.shell.toNativePath(CraftCore.standardDirs.craftRoot()))
-       	#self.subinfo.options.configure.bootstrap = True
+       	self.subinfo.options.configure.autoreconf = False
        	self.subinfo.options.useShadowBuild = False
         self.subinfo.options.configure.args += " --disable-dependency-tracking" \
         " --disable-silent-rules" \

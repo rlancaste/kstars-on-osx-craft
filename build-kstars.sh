@@ -275,11 +275,14 @@ EOF
 	cd ${CRAFT_DIR}/etc/blueprints/locations
 	git clone https://github.com/KDE/craft-blueprints-kde.git
 	statusBanner "Replacing default craft recipes with revised Mac recipes and adding some of my own until they get revised and accepted."
-	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/libraw
-	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/wcslib
-	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/dbus
-	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/pcre
-	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/_unix/swig
+	# These are the ones that need replacing for now.  I hope to eliminate all of them in the future.
+	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/libraw 		# Note, this has to stay until they fix 0.20's OpenMP error in craft, Also, there is an issue with the install ID
+	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/wcslib 		# This one is needed because of an issue with the latest wcslib 7.7's wcsconfig.h definition of int64
+	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/dbus 		# This one is needed because craft's dbus cannot be started by kstars on mac
+	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/pcre 		# The normal pcre doesn't have the right install id for its libs. This corrects that
+	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/_unix/swig 	# swig needs to have the pcre built first otherwise it can't find it.  This just adds it as a dependency
+
+	# This copies in all the recipes including the replacements and the new recipes.
 	cp -R ${DIR}/craftRecipes/libs/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/
 	cp -R ${DIR}/craftRecipes/libs-unix/swig ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/_unix/
 	cp -R ${DIR}/craftRecipes/kde/applications/kstars-mac ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/
