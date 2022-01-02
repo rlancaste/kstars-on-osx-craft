@@ -40,11 +40,15 @@ from Package.CMakePackageBase import *
 
 
 class Package(CMakePackageBase):
-    def fixLibraryID(self, packageName):
-        root = str(CraftCore.standardDirs.craftRoot())
-        craftLibDir = os.path.join(root,  'lib')
-        utils.system("install_name_tool -add_rpath " + craftLibDir + " " + craftLibDir +"/" + packageName + ".dylib")
-        utils.system("install_name_tool -id @rpath/" + packageName + ".dylib " + craftLibDir +"/" + packageName + ".dylib")
+    def fixLibraryFolder(self, folder):
+        craftLibDir = os.path.join(CraftCore.standardDirs.craftRoot(),  'lib')
+        for library in utils.filterDirectoryContent(str(folder)):
+            for path in utils.getLibraryDeps(str(library)):
+                if path.startswith(craftLibDir):
+                    utils.system(["install_name_tool", "-change", path, os.path.join("@rpath", os.path.basename(path)), library])
+            if library.endswith(".dylib"):
+                utils.system(["install_name_tool", "-id", os.path.join("@rpath", os.path.basename(path)), library])
+            utils.system(["install_name_tool", "-add_rpath", craftLibDir, library])
 
     def __init__(self):
         CMakePackageBase.__init__(self)
@@ -52,17 +56,9 @@ class Package(CMakePackageBase):
         craftLibDir = os.path.join(root,  'lib')
         self.subinfo.options.configure.args = "-DCMAKE_INSTALL_PREFIX=" + root + " -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_MACOSX_RPATH=1 -DBUILD_LIBS=1 -DCMAKE_INSTALL_RPATH=" + craftLibDir
 
-    def postQmerge(self):
-        self.fixLibraryID("libsbig")
-        self.fixLibraryID("libASICamera2")
-        self.fixLibraryID("libEAFFocuser")
-        self.fixLibraryID("libEFWFilter")
-        self.fixLibraryID("libPlayerOneCamera")
-        self.fixLibraryID("libatikcameras")
-        self.fixLibraryID("libgxccd")
-        root = str(CraftCore.standardDirs.craftRoot())
-        craftLibDir = os.path.join(root,  'lib')
-        utils.system("install_name_tool -change /usr/local/opt/libusb/lib/libusb-1.0.0.dylib @rpath/libusb.dylib " + craftLibDir +  "/" + "libqhyccd.dylib")
-        utils.system("install_name_tool -change @loader_path/libusb-1.0.0.dylib @rpath/libusb.dylib " + craftLibDir +  "/" + "libASICamera2.dylib")
-        utils.system("install_name_tool -change /usr/local/lib/libusb-1.0.0.dylib @rpath/libusb.dylib " + craftLibDir + "/" + "libPlayerOneCamera.dylib")
-        return True
+    def install(self):
+        ret = CMakePackageBase.install(self)
+        if OsUtils.isMac():
+             self.fixLibraryFolder(os.path.join(str(self.imageDir()),  "bin"))
+             self.fixLibraryFolder(os.path.join(str(self.imageDir()),  "lib"))
+        return ret

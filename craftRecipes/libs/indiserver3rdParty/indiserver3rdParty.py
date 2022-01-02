@@ -43,8 +43,22 @@ from Package.CMakePackageBase import *
 
 
 class Package(CMakePackageBase):
+    def fixLibraryFolder(self, folder):
+        craftLibDir = os.path.join(CraftCore.standardDirs.craftRoot(),  'lib')
+        for library in utils.filterDirectoryContent(str(folder)):
+            for path in utils.getLibraryDeps(str(library)):
+                if path.startswith(craftLibDir):
+                    utils.system(["install_name_tool", "-change", path, os.path.join("@rpath", os.path.basename(path)), library])
+            utils.system(["install_name_tool", "-add_rpath", craftLibDir, library])
+
     def __init__(self):
         CMakePackageBase.__init__(self)
         root = str(CraftCore.standardDirs.craftRoot())
         craftLibDir = os.path.join(root,  'lib')
         self.subinfo.options.configure.args = "-DCMAKE_INSTALL_PREFIX=" + root + " -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_MACOSX_RPATH=1 -DCMAKE_INSTALL_RPATH=" + craftLibDir
+
+    def install(self):
+        ret = CMakePackageBase.install(self)
+        if OsUtils.isMac():
+             self.fixLibraryFolder(os.path.join(str(self.imageDir()),  "bin"))
+        return ret

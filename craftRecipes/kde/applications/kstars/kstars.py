@@ -83,6 +83,7 @@ class Package(CMakePackageBase):
         packageDir = str(self.packageDir())
         imageDir = str(self.imageDir())
         craftRoot = str(CraftCore.standardDirs.craftRoot())
+        craftLibDir = os.path.join(craftRoot,  'lib')
         KSTARS_APP = os.path.join(buildDir , 'bin' , 'KStars.app')
         KSTARS_RESOURCES = os.path.join(KSTARS_APP , 'Contents' , 'Resources')
         KSTARS_PLUGINS = os.path.join(KSTARS_APP , 'Contents' , 'PlugIns')
@@ -139,6 +140,10 @@ class Package(CMakePackageBase):
         
         utils.system("touch " + KSTARS_RESOURCES + "/qt.conf")
         utils.system("echo \"" + confContents + "\" >> " + KSTARS_RESOURCES + "/qt.conf")
+
+        for path in utils.getLibraryDeps(str(KSTARS_APP + "/Contents/MacOS/kstars")):
+            if path.startswith(craftLibDir):
+                utils.system(["install_name_tool", "-change", path, os.path.join("@rpath", os.path.basename(path)), KSTARS_APP + "/Contents/MacOS/kstars"])
 
         return True
 

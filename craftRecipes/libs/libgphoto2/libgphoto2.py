@@ -21,6 +21,17 @@ class subinfo(info.infoclass):
 from Package.AutoToolsPackageBase import *
 
 class Package(AutoToolsPackageBase):
+    def fixLibraryFolder(self, folder):
+        root = str(CraftCore.standardDirs.craftRoot())
+        craftLibDir = os.path.join(root,  'lib')
+        for library in utils.filterDirectoryContent(str(folder)):
+            for path in utils.getLibraryDeps(str(library)):
+                if path.startswith(craftLibDir):
+                    utils.system(["install_name_tool", "-change", path, os.path.join("@rpath", os.path.basename(path)), library])
+            if library.endswith(".dylib"):
+                utils.system(["install_name_tool", "-id", os.path.join("@rpath", os.path.basename(path)), library])
+            utils.system(["install_name_tool", "-add_rpath", craftLibDir, library])
+
     def __init__( self, **args ):
         AutoToolsPackageBase.__init__( self )
         prefix = str(self.shell.toNativePath(CraftCore.standardDirs.craftRoot()))
@@ -30,9 +41,13 @@ class Package(AutoToolsPackageBase):
         " --disable-silent-rules" \
         " --prefix=" + prefix
 
-
-
-
+    def install(self):
+        ret = AutoToolsPackageBase.install(self)
+        if OsUtils.isMac():
+            self.fixLibraryFolder(os.path.join(self.imageDir(), "lib"))
+            self.fixLibraryFolder(os.path.join(self.imageDir(), "lib", "libgphoto2", "2.5.27"))
+            self.fixLibraryFolder(os.path.join(self.imageDir(), "lib", "libgphoto2_port", "0.12.0"))
+        return ret
 
 
 
