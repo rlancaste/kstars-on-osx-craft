@@ -5,16 +5,12 @@ import subprocess
 class subinfo(info.infoclass):
     def setTargets(self):
         self.versionInfo.setDefaultValues()
+        
         self.description = 'a desktop planetarium'
-        self.displayName = "KStars Desktop Planetarium"
-        
+        self.svnTargets['3.5.6'] = 'https://invent.kde.org/education/kstars.git|stable-3.5.6'
         self.svnTargets['Latest'] = "https://github.com/KDE/kstars.git"
-        self.svnTargets['3.5.6'] = "https://github.com/KDE/kstars.git||stable-3.5.6"
-        
-       # for ver in ['3.5.4']:
-       #     self.targets[ver] = 'https://github.com/KDE/kstars.git||stable-' + ver
-       #     self.targetInstSrc[ver] = 'kstars-%s' % ver
         self.defaultTarget = '3.5.6'
+        self.displayName = "KStars Desktop Planetarium"
 
     def setDependencies(self):
         self.runtimeDependencies["libs/qt5/qtbase"] = None
@@ -45,7 +41,6 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/stellarsolver"] = None
         self.runtimeDependencies["qt-libs/qtkeychain"] = None
         
-        self.runtimeDependencies["libs/libgphoto2"] = "default"
         self.runtimeDependencies["libs/xplanet"] = "default"
         self.runtimeDependencies["libs/gsc"] = "default"
         #Making these dependencies doesn't seem to download the latest versions, it downloads the default.
