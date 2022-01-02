@@ -15,7 +15,7 @@ then
 fi
 
 # Check to see that the user has actually already downloaded and built KStars, Craft, etc.
-if [ ! -d ${CRAFT_DIR}/download/git/kde/applications/kstars-mac ]
+if [ ! -d ${CRAFT_DIR}/download/git/kde/applications/kstars ]
 then
 	echo "No KStars git repo detected.  Please make sure to run build-KStars.sh first and make changes to submit."
 	exit
@@ -23,8 +23,8 @@ fi
 
 # Export the Arcanist path so that it can be run.
 	export PATH="${ASTRO_ROOT}"/arc/arcanist/bin:$PATH
-# Change to the kstars-mac directory so that the changes can be submitted.
-	cd ${CRAFT_DIR}/download/git/kde/applications/kstars-mac
+# Change to the kstars directory so that the changes can be submitted.
+	cd ${CRAFT_DIR}/download/git/kde/applications/kstars
 # Check with the user to see if they want to create a new diff or change the current one.
 	read -p "Do you either want to create a new arcanist diff (1) or update an existing one (2)? " arcDiffOpts
 

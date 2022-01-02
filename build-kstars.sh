@@ -280,11 +280,11 @@ EOF
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/wcslib 		# This one is needed because of an issue with the latest wcslib 7.7's wcsconfig.h definition of int64
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/pcre 		# The normal pcre doesn't have the right install id for its libs. This corrects that
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/_unix/swig 	# swig needs to have the pcre built first otherwise it can't find it.  This just adds it as a dependency
-
+	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/kstars # This will need to be finished and accepted before it can be merged.	
 	# This copies in all the recipes including the replacements and the new recipes.
 	cp -R ${DIR}/craftRecipes/libs/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/ # This copies in all the new and modified lib recipes
 	cp -R ${DIR}/craftRecipes/libs-unix/swig ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/_unix/ # This copies in the new swig recipe
-	cp -R ${DIR}/craftRecipes/kde/applications/kstars-mac ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/ # This copies in the main kstars-mac recipe
+	cp -R ${DIR}/craftRecipes/kde/applications/kstars ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/ # This copies in the main kstars recipe
 	
 #This sets the craft environment based on the settings.
 	source "${CRAFT_DIR}/craft/craftenv.sh"
@@ -350,9 +350,9 @@ EOF
 	statusBanner "Crafting KStars"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i kstars-mac
+		craft "$VERBOSE" -i kstars
 	else
-		craft "$VERBOSE" -i --target "Latest" kstars-mac
+		craft "$VERBOSE" -i --target "Latest" kstars
 	fi
 		
 	announce "CRAFT COMPLETE"
@@ -381,9 +381,9 @@ EOF
 	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiwebmanagerapp-build
 	
 	# KStars
-	ln -sf ${CRAFT_DIR}/download/git/kde/applications/kstars-mac ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/kstars-mac ${SHORTCUTS_DIR}/kstars-source
-	ln -sf ${CRAFT_DIR}/build/kde/applications/kstars-mac/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/download/git/kde/applications/kstars ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/kstars ${SHORTCUTS_DIR}/kstars-source
+	ln -sf ${CRAFT_DIR}/build/kde/applications/kstars/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/kstars-build
 	
 	# INDIServer

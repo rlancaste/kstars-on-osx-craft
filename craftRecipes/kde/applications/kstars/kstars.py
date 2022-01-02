@@ -10,6 +10,7 @@ class subinfo(info.infoclass):
         self.svnTargets['3.5.6'] = 'https://invent.kde.org/education/kstars.git|stable-3.5.6'
         self.svnTargets['Latest'] = "https://github.com/KDE/kstars.git"
         self.defaultTarget = '3.5.6'
+        self.patchLevel['3.5.6'] = 1
         self.displayName = "KStars Desktop Planetarium"
 
     def setDependencies(self):
@@ -37,23 +38,25 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/eigen3"] = None
         self.runtimeDependencies["libs/cfitsio"] = None
         self.runtimeDependencies["libs/wcslib"] = None
+        
+        if CraftCore.compiler.isMacOS:
+            self.runtimeDependencies["libs/xplanet"] = "default"
+            self.runtimeDependencies["libs/gsc"] = "default"
+            #Making these dependencies doesn't seem to download the latest versions, it downloads the default.
+            #self.runtimeDependencies["libs/indiserver"] = "Latest"
+            #self.runtimeDependencies["libs/indiserver3rdParty"] = "Latest"
+        if not CraftCore.compiler.isMacOS:
+            self.runtimeDependencies["libs/indiclient"] = None
+            
         self.runtimeDependencies["libs/libraw"] = None
         self.runtimeDependencies["libs/gsl"] = None
+        self.runtimeDependencies["libs/zlib"] = None
         self.runtimeDependencies["libs/stellarsolver"] = None
         self.runtimeDependencies["qt-libs/qtkeychain"] = None
-        
-        self.runtimeDependencies["libs/xplanet"] = "default"
-        self.runtimeDependencies["libs/gsc"] = "default"
-        #Making these dependencies doesn't seem to download the latest versions, it downloads the default.
-        #self.runtimeDependencies["libs/indiserver"] = "Latest"
-        #self.runtimeDependencies["libs/indiserver3rdParty"] = "Latest"
 
-        # The icons are now in the mac files repo
-        #self.runtimeDependencies["kde/frameworks/tier1/breeze-icons"] = None
-        
         if not CraftCore.compiler.isMacOS:
             self.runtimeDependencies["qt-libs/phonon-vlc"] = None
-
+            self.runtimeDependencies["kde/frameworks/tier1/breeze-icons"] = None
 
 from Package.CMakePackageBase import *
 
@@ -64,13 +67,15 @@ class Package(CMakePackageBase):
         self.ignoredPackages.append("binary/mysql")
         self.ignoredPackages.append("libs/llvm-meta")
         self.blacklist_file = ["blacklist.txt"]
-        
+   
     def make(self):
         if not super().make():
             return False
-            
-            
-        #Copying things needed for MacOS KStars
+        
+        if not CraftCore.compiler.isMacOS:
+        	return True
+        
+        #	Copying things needed for MacOS KStars
         
         #	Defining Craft Directories
         buildDir = str(self.buildDir())
@@ -136,3 +141,22 @@ class Package(CMakePackageBase):
         utils.system("echo \"" + confContents + "\" >> " + KSTARS_RESOURCES + "/qt.conf")
 
         return True
+
+    def createPackage(self):
+        self.defines["executable"] = "bin\\kstars.exe"
+        #self.defines["setupname"] = "kstars-latest-win64.exe"
+        self.defines["icon"] = os.path.join(self.packageDir(), "kstars.ico")
+        # TODO: support dpi scaling
+        # TODO: use assets from src with the next release
+        #self.defines["icon_png"] = os.path.join(self.sourceDir(), "packaging", "windows", "assets", "Square150x150Logo.scale-100.png")
+        #self.defines["icon_png_44"] = os.path.join(self.sourceDir(), "packaging", "windows", "assets", "Square44x44Logo.scale-100.png")
+        #self.defines["icon_png_310x150"] = os.path.join(self.sourceDir(), "packaging", "windows", "assets", "Wide310x150Logo.scale-100.png")
+        #self.defines["icon_png_310x310"] = os.path.join(self.sourceDir(), "packaging", "windows", "assets", "Square310x310Logo.scale-100.png")
+        self.defines["icon_png"] = os.path.join(self.packageDir(), ".assets", "Square150x150Logo.scale-100.png")
+        self.defines["icon_png_44"] = os.path.join(self.packageDir(), ".assets", "Square44x44Logo.scale-100.png")
+        self.defines["icon_png_310x150"] = os.path.join(self.packageDir(), ".assets", "Wide310x150Logo.scale-100.png")
+        self.defines["icon_png_310x310"] = os.path.join(self.packageDir(), ".assets", "Square310x310Logo.scale-100.png")
+        if isinstance(self, AppxPackager):
+              self.defines["display_name"] = "KStars"
+
+        return TypePackager.createPackage(self)
