@@ -22,6 +22,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/qt5/qtwebsockets"] = None
         self.runtimeDependencies["kde/frameworks/tier1/kconfig"] = None
         self.runtimeDependencies["kde/frameworks/tier2/kdoctools"] = None
+        self.runtimeDependencies["kde/frameworks/tier2/kpackage"] = None
         self.runtimeDependencies["kde/frameworks/tier1/kwidgetsaddons"] = None
         self.runtimeDependencies["kde/frameworks/tier3/knewstuff"] = None
         self.runtimeDependencies["kde/frameworks/tier1/kdbusaddons"] = None
@@ -61,6 +62,7 @@ class Package(CMakePackageBase):
     def __init__(self):
         CMakePackageBase.__init__(self)
         self.ignoredPackages.append("binary/mysql")
+        self.ignoredPackages.append("libs/llvm-meta")
         self.blacklist_file = ["blacklist.txt"]
         
     def make(self):
