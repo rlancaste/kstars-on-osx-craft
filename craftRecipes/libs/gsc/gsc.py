@@ -63,13 +63,13 @@ class Package(MakeFilePackageBase):
         sourcedir = str(self.sourceDir())
         sourcesrc = os.path.join(sourcedir, 'src')
         craftbindir = os.path.join(CraftCore.standardDirs.craftRoot(), 'bin')
-        gscdir = os.path.join(CraftCore.standardDirs.craftRoot(), 'gsc')
+        gscdir = os.path.join(self.imageDir(), 'gsc')
         
         self.enterSourceDir()
-        
         utils.copyDir(sourcedir, gscdir)
         utils.rmtree(os.path.join(gscdir, 'src'))
-        utils.copyFile(os.path.join(sourcedir, 'bin', 'gsc'), craftbindir)
+        
+        utils.copyFile(os.path.join(os.path.join(gscdir, 'bin'), 'gsc'), craftbindir)
 
         return True
 
