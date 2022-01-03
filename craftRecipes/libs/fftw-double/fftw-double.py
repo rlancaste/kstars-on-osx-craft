@@ -30,12 +30,13 @@ class Package(AutoToolsPackageBase):
         prefix = str(self.shell.toNativePath(CraftCore.standardDirs.craftRoot()))
         self.subinfo.options.configure.args += "--disable-dependency-tracking" \
         " --disable-openmp" \
+        " --disable-debug" \
         " --disable-fortran" \
         " --disable-mpi" \
         " --enable-shared" \
         " --enable-threads" \
-        " --enable-sse2" \
-        " --enable-avx" \
-        " --enable-avx2" \
+       # " --enable-sse2" \
+       # " --enable-avx" \    Disabling these options so it compiles on M1 Macs
+       # " --enable-avx2" \
         " --prefix=" + prefix
 
