@@ -191,6 +191,7 @@ processTarget "${KSTARS_APP}/Contents/MacOS/kstars"
 statusBanner "Processing dbus programs"
 processTarget "${KSTARS_APP}/Contents/MacOS/dbus-daemon"
 processTarget "${KSTARS_APP}/Contents/MacOS/dbus-send"
+processTarget "${KSTARS_APP}/Contents/MacOS/xplanet"
 
 statusBanner "Processing Phonon backend"
 processTarget "${KSTARS_APP}/Contents/Plugins/phonon4qt5_backend/phonon_vlc.so"
@@ -208,7 +209,6 @@ statusBanner "Processing libindidriver library"
 #
 processTarget "${FRAMEWORKS_DIR}/libindidriver.1.dylib"
 processDirectory indi "${KSTARS_APP}/Contents/MacOS/indi"
-processDirectory xplanet "${KSTARS_APP}/Contents/MacOS/xplanet/bin"
 processDirectory kio "${KSTARS_APP}/Contents/Plugins/kf5/kio"
 
 processDirectory GPHOTO_IOLIBS "${KSTARS_APP}/Contents/Resources/DriverSupport/gphoto/IOLIBS"

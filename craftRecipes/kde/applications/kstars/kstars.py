@@ -111,10 +111,8 @@ class Package(CMakePackageBase):
         #	xplanet
         #planet picture setup?
         xplanet_dir = KSTARS_APP + "/Contents/MacOS/xplanet"
-        utils.system("mkdir -p " + xplanet_dir + "/bin")
-        utils.system("mkdir -p " + xplanet_dir + "/share")
-        utils.system("cp -f " + craftRoot + "/bin/xplanet " + xplanet_dir + "/bin/")
-        utils.system("cp -rf " + craftRoot + "/share/xplanet " + xplanet_dir + "/share/")
+        utils.system("cp -f " + craftRoot + "/bin/xplanet " + KSTARS_APP + "/Contents/MacOS/")
+        utils.system("cp -rf " + craftRoot + "/share/xplanet " + KSTARS_APP + "/Contents/Resources/kstars/")
         
         #	GPhoto Plugins
         GPHOTO_VERSION = subprocess.getoutput("pkg-config --modversion libgphoto2")

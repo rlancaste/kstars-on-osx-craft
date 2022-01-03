@@ -166,8 +166,6 @@ share/knotifications5/proxyscout.notifyrc
 share/knotifications5/kwalletd.notifyrc
 bin/dbus-send
 bin/dbus-daemon
-# why does this fail because it thinks it is a directory??
-bin/xplanet
 lib/libphonon4qt5.4.dylib
 lib/libphonon4qt5experimental.4.dylib
 
