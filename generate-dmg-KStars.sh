@@ -133,7 +133,7 @@ macdeployqt KStars.app -qmldir="${KSTARS_APP}/Contents/Resources/kstars/qml"
 	cp -fr "${CRAFT_DIR}/lib/QtQmlWorkerScript.framework" "${FRAMEWORKS_DIR}"
 
 #This sets up qt.conf since macdeployqt does not always do it right
-	QT_CONF="${Plugins}/Contents/Resources/qt.conf"
+	QT_CONF="${KSTARS_APP}/Contents/Resources/qt.conf"
 	echo "[Paths]" > "${QT_CONF}"
 	echo "Plugins = Plugins" >> "${QT_CONF}"
 	echo "Imports = Resources/qml" >> "${QT_CONF}"

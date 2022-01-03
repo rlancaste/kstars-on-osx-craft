@@ -125,7 +125,7 @@ plugins/kauth/helper/kauth_helper_plugin.so
 plugins/platforms/libqoffscreen.dylib
 plugins/platforms/libqminimal.dylib
 plugins/platforms/libqcocoa.dylib
-plugins/qmltooling/.*
+#plugins/qmltooling/.*
 plugins/platformthemes/libqxdgdesktopportal.dylib
 plugins/kcm_proxy.so
 plugins/kcm_cookies.so
