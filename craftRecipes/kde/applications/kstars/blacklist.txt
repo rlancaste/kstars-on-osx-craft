@@ -125,7 +125,7 @@ plugins/kauth/helper/kauth_helper_plugin.so
 plugins/platforms/libqoffscreen.dylib
 plugins/platforms/libqminimal.dylib
 plugins/platforms/libqcocoa.dylib
-#plugins/qmltooling/.*
+plugins/qmltooling/.*
 plugins/platformthemes/libqxdgdesktopportal.dylib
 plugins/kcm_proxy.so
 plugins/kcm_cookies.so
@@ -164,6 +164,7 @@ plugins/kcm_trash.so
 share/knotifications5/kstars.notifyrc
 share/knotifications5/proxyscout.notifyrc
 share/knotifications5/kwalletd.notifyrc
+bin/xplanet
 bin/dbus-send
 bin/dbus-daemon
 lib/libphonon4qt5.4.dylib
