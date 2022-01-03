@@ -52,9 +52,3 @@ class Package(AutoToolsPackageBase):
         self.shell.environment["CFLAGS"] = '-I' + craftIncludeDir
         AutoToolsPackageBase.configure(self)
         return True
-
-    def install(self):
-        ret = AutoToolsPackageBase.install(self)
-        if OsUtils.isMac():
-            utils.system("tar -xf " + str(self.packageDir()) + "/flatplanet-images.zip -C " + str(self.imageDir()) + "/share/xplanet/images/ --strip-components=1")
-        return ret
