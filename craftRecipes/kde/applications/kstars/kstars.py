@@ -108,12 +108,11 @@ class Package(CMakePackageBase):
         #	The gsc executable
         utils.system("cp -f " + craftRoot + "/bin/gsc " + KSTARS_APP + "/Contents/MacOS/indi/")
 
-        #	xplanet
-        #planet picture setup?
+        #	X Planet
         xplanet_dir = KSTARS_APP + "/Contents/MacOS/xplanet"
         utils.system("cp -f " + craftRoot + "/bin/xplanet " + KSTARS_APP + "/Contents/MacOS/")
         utils.system("cp -rf " + craftRoot + "/share/xplanet " + KSTARS_APP + "/Contents/Resources/kstars/")
-        
+
         #	GPhoto Plugins
         GPHOTO_VERSION = subprocess.getoutput("pkg-config --modversion libgphoto2")
         PORT_VERSION = "0.12.0"
