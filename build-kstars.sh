@@ -125,7 +125,7 @@ EOF
 		echo ""
 		echo ""
 
-		if [ "${localVersion}" != "${remoteVersion}" ]
+		if ! git merge-base --is-ancestor $remoteVersion $localVersion ; 
 		then
 
 			if [ -z "$FORCE_RUN" ]
@@ -145,8 +145,13 @@ EOF
 				echo "Forcing run"
 			fi
 		else
-			echo "Script is up-to-date"
-			echo ""
+			if [ $remoteVersion = $localVersion ] ; then
+			    echo "Script is up-to-date"
+			    echo ""
+			else
+			    echo "Script has local additions"
+			    echo ""
+			fi
 		fi	
 	}
 
