@@ -121,13 +121,13 @@ EOF
 
 		localVersion=$(git log --pretty=%H ...refs/heads/master^ | head -n 1)
 		remoteVersion=$(git ls-remote origin -h refs/heads/master | cut -f1)
+		isChildOfRemote=$(git merge-base --is-ancestor "$remoteVersion" "$localVersion")
 		cd - > /dev/null
 		echo ""
 		echo ""
 
-		if ! git merge-base --is-ancestor $remoteVersion $localVersion ; 
+		if [[ $isChildOfRemote -eq 1 ]]
 		then
-
 			if [ -z "$FORCE_RUN" ]
 			then
 				echo "Script is out of date"
@@ -136,16 +136,15 @@ EOF
 				echo ""
 				echo "There is a newer version of the script available, please update - run"
 				echo "cd $DIR ; git pull"
-
 				echo "Aborting run"
 				exit 9
 			else
 				echo "WARNING: Script is out of date"
-			
 				echo "Forcing run"
 			fi
 		else
-			if [ $remoteVersion = $localVersion ] ; then
+			if [[ $remoteVersion == $localVersion ]]
+			then
 			    echo "Script is up-to-date"
 			    echo ""
 			else
