@@ -40,8 +40,8 @@ class Package(CMakePackageBase):
             for path in utils.getLibraryDeps(str(library)):
                 if path.startswith(craftLibDir):
                     utils.system(["install_name_tool", "-change", path, os.path.join("@rpath", os.path.basename(path)), library])
-                if library.endswith(".dylib"):
-                    utils.system(["install_name_tool", "-id", os.path.join("@rpath", os.path.basename(path)), library])
+            if library.endswith(".dylib"):
+                utils.system(["install_name_tool", "-id", os.path.join("@rpath", os.path.basename(library)), library])
             utils.system(["install_name_tool", "-add_rpath", craftLibDir, library])
 
     def __init__(self):

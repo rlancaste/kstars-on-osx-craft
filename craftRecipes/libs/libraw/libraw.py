@@ -28,6 +28,18 @@ class subinfo(info.infoclass):
 
 
 class Package(CMakePackageBase):
+    def fixLibraryFolder(self, folder):
+        craftLibDir = os.path.join(CraftCore.standardDirs.craftRoot(),  'lib')
+        for library in utils.filterDirectoryContent(str(folder)):
+            for path in utils.getLibraryDeps(str(library)):
+                if path.startswith(craftLibDir):
+                    utils.system(["install_name_tool", "-change", path, os.path.join("@rpath", os.path.basename(path)), library])
+                if "/" not in path:
+                    utils.system(["install_name_tool", "-change", path, os.path.join("@rpath", path), library])
+            if library.endswith(".dylib"):
+                utils.system(["install_name_tool", "-id", os.path.join("@rpath", os.path.basename(library)), library])
+            utils.system(["install_name_tool", "-add_rpath", craftLibDir, library])
+
     def fixLibraryID(self, packageName):
         root = str(CraftCore.standardDirs.craftRoot())
         craftLibDir = os.path.join(root,  'lib')
@@ -37,7 +49,10 @@ class Package(CMakePackageBase):
     def __init__(self):
         CMakePackageBase.__init__(self)
 
-    def postQmerge(self):
-        self.fixLibraryID("libraw")
-        self.fixLibraryID("libraw_r")
-        return True
+    def install(self):
+        ret = CMakePackageBase.install(self)
+        if OsUtils.isMac():
+             self.fixLibraryFolder(os.path.join(str(self.imageDir()),  "lib"))
+             self.fixLibraryFolder(os.path.join(str(self.imageDir()),  "bin"))
+        return ret
+
