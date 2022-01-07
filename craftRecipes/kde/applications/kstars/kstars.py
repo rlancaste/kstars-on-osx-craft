@@ -67,6 +67,7 @@ class Package(CMakePackageBase):
         self.ignoredPackages.append("binary/mysql")
         self.ignoredPackages.append("libs/llvm-meta")
         self.blacklist_file = ["blacklist.txt"]
+        self.subinfo.options.configure.args += "-DBUILD_DOC=OFF"
    
     def make(self):
         if not super().make():
