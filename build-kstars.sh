@@ -281,13 +281,10 @@ EOF
 	statusBanner "Replacing default craft recipes with revised Mac recipes and adding some of my own until they get revised and accepted."
 	# These are the ones that need replacing for now.  I hope to eliminate all of them in the future.
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/libraw 		# Note, this has to stay until they fix 0.20's OpenMP error in craft, Also, there is an issue with the install ID
-	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/wcslib 		# This one is needed because of an issue with the latest wcslib 7.7's wcsconfig.h definition of int64
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/pcre 		# The normal pcre doesn't have the right install id for its libs. This corrects that
-	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/_unix/swig 	# swig needs to have the pcre built first otherwise it can't find it.  This just adds it as a dependency
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/kstars # This will need to be finished and accepted before it can be merged.	
 	# This copies in all the recipes including the replacements and the new recipes.
 	cp -R ${DIR}/craftRecipes/libs/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/ # This copies in all the new and modified lib recipes
-	cp -R ${DIR}/craftRecipes/libs-unix/swig ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/_unix/ # This copies in the new swig recipe
 	cp -R ${DIR}/craftRecipes/kde/applications/kstars ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/ # This copies in the main kstars recipe
 	
 #This sets the craft environment based on the settings.

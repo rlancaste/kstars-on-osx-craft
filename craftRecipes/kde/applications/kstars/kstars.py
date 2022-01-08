@@ -88,10 +88,9 @@ class Package(CMakePackageBase):
         KSTARS_APP = os.path.join(buildDir , 'bin' , 'KStars.app')
         KSTARS_RESOURCES = os.path.join(KSTARS_APP , 'Contents' , 'Resources')
         KSTARS_PLUGINS = os.path.join(KSTARS_APP , 'Contents' , 'PlugIns')
-        
-        #	The Translations Directory
-        utils.system("cp -rf " + craftRoot + "/share/locale " + KSTARS_RESOURCES)
 				
+		# INDI Related items
+
         #	INDI Drivers
         utils.system("mkdir -p " + KSTARS_APP + "/Contents/MacOS/indi")
         utils.system("cp -f " + craftRoot + "/bin/indi* " + KSTARS_APP + "/Contents/MacOS/indi/")
@@ -117,11 +116,13 @@ class Package(CMakePackageBase):
         utils.system("cp -rf " + craftRoot + "/lib/libgphoto2_port/" + PORT_VERSION + "/* " + KSTARS_RESOURCES + "/DriverSupport/gphoto/IOLIBS/")
         utils.system("cp -rf " + craftRoot + "/lib/libgphoto2/" + GPHOTO_VERSION + "/* " + KSTARS_RESOURCES + "/DriverSupport/gphoto/CAMLIBS/")
         
+        # Qt Related items
+
+        #	The Translations Directory
+        utils.system("cp -rf " + craftRoot + "/share/locale " + KSTARS_RESOURCES)
+
         #   Plugins
         utils.system("cp -rf " + craftRoot + "/plugins/* " + KSTARS_PLUGINS)
-        
-        #	Notifications
-        utils.system("cp -rf " + craftRoot + "/share/knotifications5 " + KSTARS_RESOURCES)
         
         # qt.conf
         confContents = "[Paths]\n"
