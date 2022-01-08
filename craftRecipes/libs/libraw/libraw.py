@@ -40,12 +40,6 @@ class Package(CMakePackageBase):
                 utils.system(["install_name_tool", "-id", os.path.join("@rpath", os.path.basename(library)), library])
             utils.system(["install_name_tool", "-add_rpath", craftLibDir, library])
 
-    def fixLibraryID(self, packageName):
-        root = str(CraftCore.standardDirs.craftRoot())
-        craftLibDir = os.path.join(root,  'lib')
-        utils.system("install_name_tool -add_rpath " + craftLibDir + " " + craftLibDir +"/" + packageName + ".dylib")
-        utils.system("install_name_tool -id @rpath/" + packageName + ".dylib " + craftLibDir +"/" + packageName + ".dylib")
-
     def __init__(self):
         CMakePackageBase.__init__(self)
 
