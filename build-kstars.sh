@@ -278,11 +278,9 @@ EOF
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde
 	cd ${CRAFT_DIR}/etc/blueprints/locations
 	git clone https://github.com/KDE/craft-blueprints-kde.git
-	statusBanner "Replacing default craft recipes with revised Mac recipes and adding some of my own until they get revised and accepted."
-	# These are the ones that need replacing for now.  I hope to eliminate all of them in the future.
-	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/pcre 		# The normal pcre doesn't have the right install id for its libs. This corrects that
+	statusBanner "Copying in my own recipes until they get revised and accepted."
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/kstars # This will need to be finished and accepted before it can be merged.	
-	# This copies in all the recipes including the replacements and the new recipes.
+	# This copies in all the new recipes.
 	cp -R ${DIR}/craftRecipes/libs/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/ # This copies in all the new and modified lib recipes
 	cp -R ${DIR}/craftRecipes/kde/applications/kstars ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/ # This copies in the main kstars recipe
 	
