@@ -280,7 +280,6 @@ EOF
 	git clone https://github.com/KDE/craft-blueprints-kde.git
 	statusBanner "Replacing default craft recipes with revised Mac recipes and adding some of my own until they get revised and accepted."
 	# These are the ones that need replacing for now.  I hope to eliminate all of them in the future.
-	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/libraw 		# Note, this has to stay until they fix 0.20's OpenMP error in craft, Also, there is an issue with the install ID
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/pcre 		# The normal pcre doesn't have the right install id for its libs. This corrects that
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/kstars # This will need to be finished and accepted before it can be merged.	
 	# This copies in all the recipes including the replacements and the new recipes.
