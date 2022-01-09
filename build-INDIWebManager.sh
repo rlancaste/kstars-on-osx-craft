@@ -281,7 +281,7 @@ EOF
 	statusBanner "Copying in my own recipes until they get revised and accepted."
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/kstars # This will need to be finished and accepted before it can be merged.
 	# This copies in all the new recipes.
-	cp -R ${DIR}/craftRecipes/libs/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/ # This copies in all the new and modified lib recipes
+	cp -R ${DIR}/craftRecipes/libs/_mac/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/_mac/ # This copies in all the new and modified lib recipes
 	cp -R ${DIR}/craftRecipes/kde/applications/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/ # This copies in the main kstars recipe
 	
 #This sets the craft environment based on the settings.
@@ -390,15 +390,15 @@ EOF
 	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/kstars-build
 	
 	# INDIServer
-	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/download/git/libs/_mac/indiserver ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/indiserver ${SHORTCUTS_DIR}/indiserver-source
-	ln -sf ${CRAFT_DIR}/build/libs/indiserver/work/build ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/build/libs/_mac/indiserver/work/build ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiserver-build
 	
 	# INDIServer 3rdParty
-	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver-3rdparty ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/download/git/libs/_mac/indiserver-3rdparty ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/indiserver-3rdparty ${SHORTCUTS_DIR}/indiserver-3rdparty-source
-	ln -sf ${CRAFT_DIR}/build/libs/indiserver-3rdparty/work/build ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/build/libs/_mac/indiserver-3rdparty/work/build ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiserver-3rdparty-build
 
 #This will copy the app to a DMG directory in ASTRO_ROOT, package everything up into the app and then make a dmg.

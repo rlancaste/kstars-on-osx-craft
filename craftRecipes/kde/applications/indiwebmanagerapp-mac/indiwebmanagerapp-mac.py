@@ -45,12 +45,12 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/gsl"] = None
         self.runtimeDependencies["qt-libs/qtkeychain"] = None
         
-        self.runtimeDependencies["libs/libgphoto2"] = None
+        self.runtimeDependencies["libs/_mac/libgphoto2"] = None
 
-        self.runtimeDependencies["libs/gsc"] = None
+        self.runtimeDependencies["libs/_mac/gsc"] = None
         #Making these dependencies doesn't seem to download the latest versions, it downloads the default.
-        self.runtimeDependencies["libs/indiserver"] = None
-        self.runtimeDependencies["libs/indiserver3rdParty"] = None
+        self.runtimeDependencies["libs/_mac/indiserver"] = None
+        self.runtimeDependencies["libs/_mac/indiserver3rdParty"] = None
 
         # Install proper theme
         self.runtimeDependencies["kde/frameworks/tier1/breeze-icons"] = None
