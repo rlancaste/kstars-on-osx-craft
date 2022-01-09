@@ -44,7 +44,7 @@ class subinfo(info.infoclass):
             self.runtimeDependencies["libs/gsc"] = "default"
             #Making these dependencies doesn't seem to download the latest versions, it downloads the default.
             #self.runtimeDependencies["libs/indiserver"] = "Latest"
-            #self.runtimeDependencies["libs/indiserver3rdParty"] = "Latest"
+            #self.runtimeDependencies["libs/indiserver-3rdparty"] = "Latest"
         if not CraftCore.compiler.isMacOS:
             self.runtimeDependencies["libs/indiclient"] = None
             
