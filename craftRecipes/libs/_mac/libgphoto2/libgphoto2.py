@@ -35,8 +35,9 @@ class Package(AutoToolsPackageBase):
     def __init__( self, **args ):
         AutoToolsPackageBase.__init__( self )
         prefix = str(self.shell.toNativePath(CraftCore.standardDirs.craftRoot()))
-       	self.subinfo.options.configure.autoreconf = False
-       	self.subinfo.options.useShadowBuild = False
+        self.subinfo.options.configure.autoreconf = False
+        self.subinfo.options.useShadowBuild = False
+        self.subinfo.options.configure.cflags += " -Wno-implicit-function-declaration"
         self.subinfo.options.configure.args += " --disable-dependency-tracking" \
         " --disable-silent-rules" \
         " --prefix=" + prefix
