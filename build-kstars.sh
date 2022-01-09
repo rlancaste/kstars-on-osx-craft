@@ -375,26 +375,26 @@ EOF
 	# INDIWebManager
 	ln -sf ${CRAFT_DIR}/download/git/kde/applications/indiwebmanagerapp-mac ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/indiwebmanagerapp-mac ${SHORTCUTS_DIR}/indiwebmanagerapp-source
-	ln -sf ${CRAFT_DIR}/build/kde/applications/indiwebmanagerapp-mac/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiwebmanagerapp-build
+	ln -sf ${CRAFT_DIR}/build/kde/applications/indiwebmanagerapp-mac/work/build ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiwebmanagerapp-build
 	
 	# KStars
 	ln -sf ${CRAFT_DIR}/download/git/kde/applications/kstars ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/kstars ${SHORTCUTS_DIR}/kstars-source
-	ln -sf ${CRAFT_DIR}/build/kde/applications/kstars/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/kstars-build
+	ln -sf ${CRAFT_DIR}/build/kde/applications/kstars/work/build ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/kstars-build
 	
 	# INDIServer
 	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/indiserver ${SHORTCUTS_DIR}/indiserver-source
-	ln -sf ${CRAFT_DIR}/build/libs/indiserver/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiserver-build
+	ln -sf ${CRAFT_DIR}/build/libs/indiserver/work/build ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiserver-build
 	
 	# INDIServer 3rdParty
 	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver-3rdparty ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/indiserver-3rdparty ${SHORTCUTS_DIR}/indiserver-3rdparty-source
-	ln -sf ${CRAFT_DIR}/build/libs/indiserver-3rdparty/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiserver-3rdparty-build
+	ln -sf ${CRAFT_DIR}/build/libs/indiserver-3rdparty/work/build ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiserver-3rdparty-build
 
 #This will package everything up into the app and then make a dmg.
 	if [ -n "$GENERATE_DMG" ]
