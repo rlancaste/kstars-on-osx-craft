@@ -27,7 +27,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/_mac/libusb"] = None
         self.runtimeDependencies["libs/gsl"] = None
         self.runtimeDependencies["libs/libjpeg-turbo"] = None
-        self.runtimeDependencies["libs/_mac/fftw-double"] = None
+        self.runtimeDependencies["libs/libfftw"] = None
 
 
 from Package.CMakePackageBase import *

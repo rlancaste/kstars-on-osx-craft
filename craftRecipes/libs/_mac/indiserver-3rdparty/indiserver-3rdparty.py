@@ -29,7 +29,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/_mac/libdc1394"] = None
         self.runtimeDependencies["libs/libraw"] = None
         self.runtimeDependencies["libs/tiff"] = None
-        self.runtimeDependencies["libs/_mac/fftw-double"] = None
+        self.runtimeDependencies["libs/libfftw"] = None
         self.runtimeDependencies["libs/ffmpeg"] = None
         self.runtimeDependencies["libs/_mac/indiserver"] = None
         self.runtimeDependencies["libs/_mac/indiserver-3rdparty-libraries"] = None
