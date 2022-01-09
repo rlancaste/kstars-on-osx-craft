@@ -305,18 +305,18 @@ EOF
 	announce "Building INDI 3rd Party Libraries and required dependencies"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i indiserver3rdPartyLibraries
+		craft "$VERBOSE" -i indiserver-3rdparty-libraries
 	else
-		craft "$VERBOSE" -i --target "Latest" indiserver3rdPartyLibraries
+		craft "$VERBOSE" -i --target "Latest" indiserver-3rdparty-libraries
 	fi
 	
 	# This will build INDI 3rd Party drivers only.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Drivers"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i indiserver3rdParty
+		craft "$VERBOSE" -i indiserver-3rdparty
 	else
-		craft "$VERBOSE" -i --target "Latest" indiserver3rdParty
+		craft "$VERBOSE" -i --target "Latest" indiserver-3rdparty
 	fi
 	
 	# This will check for broken links before proceeding.  Sometimes the INDI build fails to properly build drivers due to broken links.
@@ -391,10 +391,10 @@ EOF
 	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiserver-build
 	
 	# INDIServer 3rdParty
-	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver3rdParty ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/indiserver3rdParty ${SHORTCUTS_DIR}/indiserver-3rdParty-source
-	ln -sf ${CRAFT_DIR}/build/libs/indiserver3rdParty/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiserver-3rdParty-build
+	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver-3rdparty ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/indiserver-3rdparty ${SHORTCUTS_DIR}/indiserver-3rdparty-source
+	ln -sf ${CRAFT_DIR}/build/libs/indiserver-3rdparty/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiserver-3rdparty-build
 
 #This will package everything up into the app and then make a dmg.
 	if [ -n "$GENERATE_DMG" ]
