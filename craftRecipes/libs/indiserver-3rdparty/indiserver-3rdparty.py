@@ -1,4 +1,4 @@
-NoneNoneimport glob
+import glob
 from xml.etree import ElementTree as et
 
 import info
