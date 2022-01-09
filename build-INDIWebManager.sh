@@ -120,13 +120,13 @@ EOF
 
 		localVersion=$(git log --pretty=%H ...refs/heads/master^ | head -n 1)
 		remoteVersion=$(git ls-remote origin -h refs/heads/master | cut -f1)
+		isChildOfRemote=$(git merge-base --is-ancestor "$remoteVersion" "$localVersion")
 		cd - > /dev/null
 		echo ""
 		echo ""
 
-		if [ "${localVersion}" != "${remoteVersion}" ]
+		if [[ $isChildOfRemote -eq 1 ]]
 		then
-
 			if [ -z "$FORCE_RUN" ]
 			then
 				echo "Script is out of date"
@@ -135,17 +135,21 @@ EOF
 				echo ""
 				echo "There is a newer version of the script available, please update - run"
 				echo "cd $DIR ; git pull"
-
 				echo "Aborting run"
 				exit 9
 			else
 				echo "WARNING: Script is out of date"
-			
 				echo "Forcing run"
 			fi
 		else
-			echo "Script is up-to-date"
-			echo ""
+			if [[ $remoteVersion == $localVersion ]]
+			then
+			    echo "Script is up-to-date"
+			    echo ""
+			else
+			    echo "Script has local additions"
+			    echo ""
+			fi
 		fi	
 	}
 
@@ -270,10 +274,15 @@ EOF
 	statusBanner "Copying Craft Settings and Blueprint settings specific to building on macs."
 	cp ${DIR}/settings/CraftSettings.ini ${CRAFT_DIR}/etc/
 	cp ${DIR}/settings/BlueprintSettings.ini ${CRAFT_DIR}/etc/
-	statusBanner "Replacing default craft recipes with revised Mac recipes until they get revised and accepted."
+	statusBanner "Resetting Craft Recipes to the official repo."
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde
 	cd ${CRAFT_DIR}/etc/blueprints/locations
-	git clone https://github.com/rlancaste/craft-blueprints-kde.git
+	git clone https://github.com/KDE/craft-blueprints-kde.git
+	statusBanner "Copying in my own recipes until they get revised and accepted."
+	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/kstars # This will need to be finished and accepted before it can be merged.
+	# This copies in all the new recipes.
+	cp -R ${DIR}/craftRecipes/libs/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/ # This copies in all the new and modified lib recipes
+	cp -R ${DIR}/craftRecipes/kde/applications/kstars ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/ # This copies in the main kstars recipe
 	
 #This sets the craft environment based on the settings.
 	source "${CRAFT_DIR}/craft/craftenv.sh"
@@ -320,7 +329,14 @@ EOF
 		find -L "${CRAFT_DIR}/lib" -maxdepth 1 -type l
 		exit
 	fi
-	
+
+#This will build gsc if Needed, but no need to build it every time.
+	if [ ! -d "${CRAFT_DIR}"/gsc ]
+	then
+		announce "Building GSC"
+		craft "$VERBOSE" -i gsc
+	fi
+
 #This will set the INDI_WEB_MANAGER App directory and craft INDI_WEB_MANAGER.
 	announce "Building INDIWebManager and required dependencies"
 	export INDI_WEB_MANAGER_APP="${CRAFT_DIR}/Applications/KDE/INDIWebManager.app"
