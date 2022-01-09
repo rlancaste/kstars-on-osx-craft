@@ -15,11 +15,11 @@ class subinfo(info.infoclass):
         self.patchToApply['1.3.1'] = ("xplanet-1.3.1-ntimes.patch", 1)
 
     def setDependencies(self):
-        self.runtimeDependencies["libs/libpng"] = "default"
-        self.runtimeDependencies["libs/tiff"] = "default"
-        self.runtimeDependencies["libs/libjpeg-turbo"] = "default"
-        self.runtimeDependencies["libs/freetype"] = "default"
-        self.runtimeDependencies["libs/giflib"] = "default"
+        self.runtimeDependencies["libs/libpng"] = None
+        self.runtimeDependencies["libs/tiff"] = None
+        self.runtimeDependencies["libs/libjpeg-turbo"] = None
+        self.runtimeDependencies["libs/freetype"] = None
+        self.runtimeDependencies["libs/giflib"] = None
 
 from Package.AutoToolsPackageBase import *
 

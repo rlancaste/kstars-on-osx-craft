@@ -19,7 +19,7 @@ function usage
 cat <<EOF
 	options:
 	    -a Announce stuff as you go
-	    -s Build the latest stable release (the default is to build the latest version from git)
+	    -s Build the latest stable release (the default is to build the latest version from git master)
 	    -d Generate dmg
 	    -f Force build even if there are script updates
 	    -r Remove everything and do a fresh install
@@ -287,27 +287,27 @@ EOF
 	# This will build INDI Core.  We want to do that every time since INDI changes often.
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i indiserver
+		craft "$VERBOSE" -i --target "stable" indiserver
 	else
-		craft "$VERBOSE" -i --target "Latest" indiserver
+		craft "$VERBOSE" -i --target "master" indiserver
 	fi
 	
 	# This will build INDI 3rd Party with the build libraries flag set.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Libraries and required dependencies"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i indiserver-3rdparty-libraries
+		craft "$VERBOSE" -i --target "stable" indiserver-3rdparty-libraries
 	else
-		craft "$VERBOSE" -i --target "Latest" indiserver-3rdparty-libraries
+		craft "$VERBOSE" -i --target "master" indiserver-3rdparty-libraries
 	fi
 	
 	# This will build INDI 3rd Party drivers only.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Drivers"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i indiserver-3rdparty
+		craft "$VERBOSE" -i --target "stable" indiserver-3rdparty
 	else
-		craft "$VERBOSE" -i --target "Latest" indiserver-3rdparty
+		craft "$VERBOSE" -i --target "master" indiserver-3rdparty
 	fi
 	
 	# This will check for broken links before proceeding.  Sometimes the INDI build fails to properly build drivers due to broken links.
@@ -337,9 +337,9 @@ EOF
 	statusBanner "Crafting INDIWebManager"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i indiwebmanagerapp-mac
+		craft "$VERBOSE" -i --target "stable" indiwebmanagerapp-mac
 	else
-		craft "$VERBOSE" -i --target "Latest" indiwebmanagerapp-mac
+		craft "$VERBOSE" -i --target "master" indiwebmanagerapp-mac
 	fi
 		
 	announce "CRAFT COMPLETE"
@@ -364,26 +364,26 @@ EOF
 	# INDIWebManager
 	ln -sf ${CRAFT_DIR}/download/git/kde/applications/indiwebmanagerapp-mac ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/indiwebmanagerapp-mac ${SHORTCUTS_DIR}/indiwebmanagerapp-source
-	ln -sf ${CRAFT_DIR}/build/kde/applications/indiwebmanagerapp-mac/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiwebmanagerapp-build
+	ln -sf ${CRAFT_DIR}/build/kde/applications/indiwebmanagerapp-mac/work/build ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiwebmanagerapp-build
 	
 	# KStars
 	ln -sf ${CRAFT_DIR}/download/git/kde/applications/kstars ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/kstars ${SHORTCUTS_DIR}/kstars-source
-	ln -sf ${CRAFT_DIR}/build/kde/applications/kstars/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/kstars-build
+	ln -sf ${CRAFT_DIR}/build/kde/applications/kstars/work/build ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/kstars-build
 	
 	# INDIServer
 	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/indiserver ${SHORTCUTS_DIR}/indiserver-source
-	ln -sf ${CRAFT_DIR}/build/libs/indiserver/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiserver-build
+	ln -sf ${CRAFT_DIR}/build/libs/indiserver/work/build ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiserver-build
 	
 	# INDIServer 3rdParty
 	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver-3rdparty ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/indiserver-3rdparty ${SHORTCUTS_DIR}/indiserver-3rdparty-source
-	ln -sf ${CRAFT_DIR}/build/libs/indiserver-3rdparty/work/RelWithDebInfo-Latest ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/RelWithDebInfo-Latest ${SHORTCUTS_DIR}/indiserver-3rdparty-build
+	ln -sf ${CRAFT_DIR}/build/libs/indiserver-3rdparty/work/build ${SHORTCUTS_DIR}
+	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiserver-3rdparty-build
 
 #This will copy the app to a DMG directory in ASTRO_ROOT, package everything up into the app and then make a dmg.
 	if [ -n "$GENERATE_DMG" ]

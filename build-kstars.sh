@@ -19,7 +19,7 @@ function usage
 cat <<EOF
 	options:
 	    -a Announce stuff as you go
-	    -s Build the latest stable release (the default is to build the latest version from git)
+	    -s Build the latest stable release (the default is to build the latest version from git master)
 	    -d Generate dmg
 	    -x Generate an XCode Project as well
 	    -f Force build even if there are script updates
@@ -296,27 +296,27 @@ EOF
 	# This will build INDI Core.  We want to do that every time since INDI changes often.
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i indiserver
+		craft "$VERBOSE" -i --target "stable" indiserver
 	else
-		craft "$VERBOSE" -i --target "Latest" indiserver
+		craft "$VERBOSE" -i --target "master" indiserver
 	fi
 	
 	# This will build INDI 3rd Party with the build libraries flag set.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Libraries and required dependencies"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i indiserver-3rdparty-libraries
+		craft "$VERBOSE" -i --target "stable" indiserver-3rdparty-libraries
 	else
-		craft "$VERBOSE" -i --target "Latest" indiserver-3rdparty-libraries
+		craft "$VERBOSE" -i --target "master" indiserver-3rdparty-libraries
 	fi
 	
 	# This will build INDI 3rd Party drivers only.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Drivers"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i indiserver-3rdparty
+		craft "$VERBOSE" -i --target "stable" indiserver-3rdparty
 	else
-		craft "$VERBOSE" -i --target "Latest" indiserver-3rdparty
+		craft "$VERBOSE" -i --target "master" indiserver-3rdparty
 	fi
 	
 	# This will check for broken links before proceeding.  Sometimes the INDI build fails to properly build drivers due to broken links.
@@ -348,9 +348,9 @@ EOF
 	statusBanner "Crafting KStars"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i kstars
+		craft "$VERBOSE" -i --target "stable" kstars
 	else
-		craft "$VERBOSE" -i --target "Latest" kstars
+		craft "$VERBOSE" -i --target "master" kstars
 	fi
 		
 	announce "CRAFT COMPLETE"

@@ -1,4 +1,4 @@
-import glob
+NoneNoneimport glob
 from xml.etree import ElementTree as et
 
 import info
@@ -7,35 +7,34 @@ import info
 class subinfo(info.infoclass):
     def setTargets(self):
         self.description = 'INDI Library 3rd Party'
-        self.svnTargets['Latest'] = "https://github.com/indilib/indi-3rdparty.git"
-        self.targetInstSrc['Latest'] = ""
+        self.svnTargets['master'] = "https://github.com/indilib/indi-3rdparty.git"
+        self.targetInstSrc['master'] = ""
         
         ver = 'stable-1.9.3'
-        #self.svnTargets[ver] = "https://github.com/indilib/indi-3rdparty.git||" + ver
-        self.svnTargets[ver] = "https://github.com/indilib/indi-3rdparty.git"
-        self.archiveNames[ver] = 'indi-%s.tar.gz' % ver
-        self.targetInstSrc[ver] = ""
+        #self.svnTargets['stable'] = "https://github.com/indilib/indi-3rdparty.git||" + ver
+        self.svnTargets['stable'] = "https://github.com/indilib/indi-3rdparty.git"
+        self.archiveNames['stable'] = 'indi-%s.tar.gz' % ver
+        self.targetInstSrc['stable'] = ""
 
-        self.defaultTarget = ver
+        self.defaultTarget = "master"
     
     def setDependencies(self):
-        self.buildDependencies["dev-utils/grep"] = "default"
-        self.runtimeDependencies["virtual/base"] = "default"
-        self.runtimeDependencies["libs/qt5/qtbase"] = "default"
-        self.runtimeDependencies["libs/libnova"] = "default"
-        self.runtimeDependencies["libs/cfitsio"] = "default"
-        self.runtimeDependencies["libs/libgphoto2"] = "default"
-        self.runtimeDependencies["libs/libftdi"] = "default"
-        self.runtimeDependencies["libs/libdc1394"] = "default"
-        self.runtimeDependencies["libs/libraw"] = "default"
-        self.runtimeDependencies["libs/tiff"] = "default"
-        self.runtimeDependencies["libs/fftw-double"] = "default"
-        self.runtimeDependencies["libs/ffmpeg"] = "default"
-        #Making these dependencies doesn't seem to download the latest versions, it downloads the default.
-        #self.runtimeDependencies["libs/indiserver"] = "Latest"
-        #self.runtimeDependencies["libs/indiserver-3rdparty-libraries"] = "Latest"
-        self.runtimeDependencies["libs/librtlsdr"] = "default"
-        self.runtimeDependencies["libs/limesuite"] = "default"
+        self.buildDependencies["dev-utils/grep"] = None
+        self.runtimeDependencies["virtual/base"] = None
+        self.runtimeDependencies["libs/qt5/qtbase"] = None
+        self.runtimeDependencies["libs/libnova"] = None
+        self.runtimeDependencies["libs/cfitsio"] = None
+        self.runtimeDependencies["libs/libgphoto2"] = None
+        self.runtimeDependencies["libs/libftdi"] = None
+        self.runtimeDependencies["libs/libdc1394"] = None
+        self.runtimeDependencies["libs/libraw"] = None
+        self.runtimeDependencies["libs/tiff"] = None
+        self.runtimeDependencies["libs/fftw-double"] = None
+        self.runtimeDependencies["libs/ffmpeg"] = None
+        self.runtimeDependencies["libs/indiserver"] = None
+        self.runtimeDependencies["libs/indiserver-3rdparty-libraries"] = None
+        self.runtimeDependencies["libs/librtlsdr"] = None
+        self.runtimeDependencies["libs/limesuite"] = None
 
 
 

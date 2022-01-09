@@ -8,9 +8,8 @@ class subinfo(info.infoclass):
         
         self.description = 'a desktop planetarium'
         self.svnTargets['3.5.6'] = 'https://invent.kde.org/education/kstars.git|stable-3.5.6'
-        self.svnTargets['Latest'] = "https://github.com/KDE/kstars.git"
-        self.defaultTarget = '3.5.6'
-        self.patchLevel['3.5.6'] = 1
+        self.svnTargets['master'] = "https://github.com/KDE/kstars.git"
+        self.defaultTarget = 'master'
         self.displayName = "KStars Desktop Planetarium"
 
     def setDependencies(self):
@@ -40,11 +39,12 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/wcslib"] = None
         
         if CraftCore.compiler.isMacOS:
-            self.runtimeDependencies["libs/xplanet"] = "default"
-            self.runtimeDependencies["libs/gsc"] = "default"
-            #Making these dependencies doesn't seem to download the latest versions, it downloads the default.
-            #self.runtimeDependencies["libs/indiserver"] = "Latest"
-            #self.runtimeDependencies["libs/indiserver-3rdparty"] = "Latest"
+            self.runtimeDependencies["libs/xplanet"] = None
+            self.runtimeDependencies["libs/gsc"] = None
+            #Making these dependencies casues an issue where you can't have KStars and INDI both be the latest version or both be stable
+            #You have to comment these out if you want stable, this basically hard codes it to be the latest version.
+            self.runtimeDependencies["libs/indiserver"] = None
+            self.runtimeDependencies["libs/indiserver-3rdparty"] = None
         if not CraftCore.compiler.isMacOS:
             self.runtimeDependencies["libs/indiclient"] = None
             

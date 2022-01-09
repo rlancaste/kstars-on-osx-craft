@@ -13,9 +13,9 @@ class subinfo(info.infoclass):
         #self.patchToApply['2.2.6'] = ("libdc1394-2.2.2-capture.patch", 1)
 
     def setDependencies(self):
-        self.buildDependencies["dev-utils/pkg-config"] = "default"
-        self.runtimeDependencies["virtual/base"] = "default"
-        self.runtimeDependencies["libs/libusb"] = "default"
+        self.buildDependencies["dev-utils/pkg-config"] = None
+        self.runtimeDependencies["virtual/base"] = None
+        self.runtimeDependencies["libs/libusb"] = None
 
 from Package.AutoToolsPackageBase import *
 

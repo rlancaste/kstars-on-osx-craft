@@ -14,8 +14,8 @@ class subinfo(info.infoclass):
         self.defaultTarget = '1.2'
 
     def setDependencies(self):
-        self.buildDependencies["dev-utils/pkg-config"] = "default"
-        self.runtimeDependencies["virtual/base"] = "default"
+        self.buildDependencies["dev-utils/pkg-config"] = None
+        self.runtimeDependencies["virtual/base"] = None
 
 from Package.MakeFilePackageBase import *
 

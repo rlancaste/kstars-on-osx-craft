@@ -7,20 +7,20 @@ import info
 class subinfo(info.infoclass):
     def setTargets(self):
         self.description = 'StellarSolver Sextractor and Astrometry.net based Library Tester Program'
-        self.svnTargets['Latest'] = "https://github.com/rlancaste/stellarsolver.git"
-        self.targetInstSrc['Latest'] = ""
+        self.svnTargets['master'] = "https://github.com/rlancaste/stellarsolver.git"
+        self.targetInstSrc['master'] = ""
 
-        self.defaultTarget = 'Latest'
+        self.defaultTarget = 'master'
     
     def setDependencies(self):
-        self.runtimeDependencies["virtual/base"] = "default"
-        self.runtimeDependencies["libs/qt5/qtbase"] = "default"
-        self.runtimeDependencies["libs/gsl"] = "default"
-        self.runtimeDependencies["libs/mman"] = "default"
-        self.runtimeDependencies["libs/cfitsio"] = "default"
-        self.runtimeDependencies["libs/zlib"] = "default"
-        self.runtimeDependencies["boost-regex"] = "default"
-        self.runtimeDependencies["libs/wcslib"] = "default"
+        self.runtimeDependencies["virtual/base"] = None
+        self.runtimeDependencies["libs/qt5/qtbase"] = None
+        self.runtimeDependencies["libs/gsl"] = None
+        self.runtimeDependencies["libs/mman"] = None
+        self.runtimeDependencies["libs/cfitsio"] = None
+        self.runtimeDependencies["libs/zlib"] = None
+        self.runtimeDependencies["boost-regex"] = None
+        self.runtimeDependencies["libs/wcslib"] = None
 
 from Package.CMakePackageBase import *
 

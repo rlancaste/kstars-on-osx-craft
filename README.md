@@ -103,7 +103,7 @@ The script has a number of options that are explained below.
 
 	-q	This will set craft to use quiet mode (prints MUCH less detail)
 
-	-s	This will make the script build the latest STABLE version of KStars and INDI (Note that by default, this script installs the LATEST version of KStars and INDI from github)
+	-s	This will make the script build the latest STABLE version of KStars and INDI (Note that by default, this script installs the LATEST version of KStars and INDI from github master)
 		
 	-d	This will build KStars and produce a distributable DMG
 

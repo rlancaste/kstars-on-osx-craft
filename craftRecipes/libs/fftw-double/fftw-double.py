@@ -13,7 +13,7 @@ class subinfo(info.infoclass):
         self.defaultTarget = '3.3.10'
 
     def setDependencies(self):
-        self.runtimeDependencies["virtual/base"] = "default"
+        self.runtimeDependencies["virtual/base"] = None
 
 
 from Package.AutoToolsPackageBase import *

@@ -12,10 +12,10 @@ class subinfo(info.infoclass):
         self.defaultTarget = '2.5.27'
 
     def setDependencies(self):
-        self.buildDependencies["libs/gettext"] = "default"
-        self.buildDependencies["dev-utils/pkg-config"] = "default"
-        self.runtimeDependencies["virtual/base"] = "default"
-        self.runtimeDependencies["libs/libusb-compat"] = "default"
+        self.buildDependencies["libs/gettext"] = None
+        self.buildDependencies["dev-utils/pkg-config"] = None
+        self.runtimeDependencies["virtual/base"] = None
+        self.runtimeDependencies["libs/libusb-compat"] = None
         #gd and libexif might be needed too
 
 from Package.AutoToolsPackageBase import *
