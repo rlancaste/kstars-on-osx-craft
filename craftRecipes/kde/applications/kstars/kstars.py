@@ -92,8 +92,7 @@ class Package(CMakePackageBase):
 		# INDI Related items
 
         #	INDI Drivers
-        utils.system("mkdir -p " + KSTARS_APP + "/Contents/MacOS/indi")
-        utils.system("cp -f " + craftRoot + "/bin/indi* " + KSTARS_APP + "/Contents/MacOS/indi/")
+        utils.system("cp -f " + craftRoot + "/bin/indi* " + KSTARS_APP + "/Contents/MacOS/")
         
         #	INDI firmware files"
         utils.system("mkdir -p " + KSTARS_RESOURCES + "/DriverSupport/")
@@ -106,7 +105,7 @@ class Package(CMakePackageBase):
         utils.system("cp -rf " + craftRoot + "/lib/indi/MathPlugins " + KSTARS_RESOURCES)
         
         #	The gsc executable
-        utils.system("cp -f " + craftRoot + "/bin/gsc " + KSTARS_APP + "/Contents/MacOS/indi/")
+        utils.system("cp -f " + craftRoot + "/bin/gsc " + KSTARS_APP + "/Contents/MacOS/")
 
         #	GPhoto Plugins
         GPHOTO_VERSION = subprocess.getoutput("pkg-config --modversion libgphoto2")

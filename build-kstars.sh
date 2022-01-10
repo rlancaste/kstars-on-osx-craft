@@ -281,14 +281,13 @@ EOF
 	statusBanner "Copying in my own recipes until they get revised and accepted."
 	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/kstars # This will need to be finished and accepted before it can be merged.	
 	# This copies in all the new recipes.
-	cp -R ${DIR}/craftRecipes/libs/_mac/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/libs/_mac/ # This copies in all the new and modified lib recipes
 	cp -R ${DIR}/craftRecipes/kde/applications/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/ # This copies in the main kstars recipe
 	
 #This sets the craft environment based on the settings.
 	source "${CRAFT_DIR}/craft/craftenv.sh"
 	
 #This sets an environment variable to disable some errors on XCode 12.
-	export CFLAGS=-Wno-implicit-function-declaration
+	#export CFLAGS=-Wno-implicit-function-declaration
 
 #This will build indi, including the 3rd Party drivers.
 	announce "Building INDI and required dependencies"
