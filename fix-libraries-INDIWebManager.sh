@@ -200,7 +200,7 @@ statusBanner "Processing libindidriver library"
 # need to process libindidriver.1.dylib
 #
 processTarget "${FRAMEWORKS_DIR}/libindidriver.1.dylib"
-processDirectory indi "${INDI_WEB_MANAGER_APP}/Contents/MacOS/indi"
+processDirectory indi "${INDI_WEB_MANAGER_APP}/Contents/MacOS/"
 
 processDirectory GPHOTO_IOLIBS "${INDI_WEB_MANAGER_APP}/Contents/Resources/DriverSupport/gphoto/IOLIBS"
 processDirectory GPHOTO_CAMLIBS "${INDI_WEB_MANAGER_APP}/Contents/Resources/DriverSupport/gphoto/CAMLIBS"

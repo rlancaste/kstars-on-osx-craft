@@ -185,13 +185,8 @@ announce "Running Fix Libraries Script"
 	
 cd ${DMG_DIR}
 
-statusBanner "Processing kstars executable"
-processTarget "${KSTARS_APP}/Contents/MacOS/kstars"
-
-statusBanner "Processing dbus programs"
-processTarget "${KSTARS_APP}/Contents/MacOS/dbus-daemon"
-processTarget "${KSTARS_APP}/Contents/MacOS/dbus-send"
-processTarget "${KSTARS_APP}/Contents/MacOS/xplanet"
+statusBanner "Processing kstars executable, dbus, indi, xplanet and others."
+processTarget "${KSTARS_APP}/Contents/MacOS/"
 
 statusBanner "Processing Phonon backend"
 processTarget "${KSTARS_APP}/Contents/Plugins/phonon4qt5_backend/phonon_vlc.so"
@@ -208,7 +203,6 @@ statusBanner "Processing libindidriver library"
 # need to process libindidriver.1.dylib
 #
 processTarget "${FRAMEWORKS_DIR}/libindidriver.1.dylib"
-processDirectory indi "${KSTARS_APP}/Contents/MacOS/indi"
 processDirectory kio "${KSTARS_APP}/Contents/Plugins/kf5/kio"
 
 processDirectory GPHOTO_IOLIBS "${KSTARS_APP}/Contents/Resources/DriverSupport/gphoto/IOLIBS"

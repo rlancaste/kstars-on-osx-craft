@@ -274,15 +274,7 @@ EOF
 	statusBanner "Copying Craft Settings and Blueprint settings specific to building on macs."
 	cp ${DIR}/settings/CraftSettings.ini ${CRAFT_DIR}/etc/
 	cp ${DIR}/settings/BlueprintSettings.ini ${CRAFT_DIR}/etc/
-	statusBanner "Resetting Craft Recipes to the official repo."
-	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde
-	cd ${CRAFT_DIR}/etc/blueprints/locations
-	git clone https://github.com/KDE/craft-blueprints-kde.git
-	statusBanner "Copying in my own recipes until they get revised and accepted."
-	rm -rf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/kstars # This will need to be finished and accepted before it can be merged.	
-	# This copies in all the new recipes.
-	cp -R ${DIR}/craftRecipes/kde/applications/* ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde/kde/applications/ # This copies in the main kstars recipe
-	
+		
 #This sets the craft environment based on the settings.
 	source "${CRAFT_DIR}/craft/craftenv.sh"
 	
