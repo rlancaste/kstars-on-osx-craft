@@ -90,11 +90,12 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 			then
 				filename=$libFile
 			else
-				# see if I can find it, NOTE:  I had to add the last part and the echo because the find produced multiple results breaking the file copy into frameworks.
-				filename=$(echo $(find "${CRAFT_DIR}/lib" -name "${base}")| cut -d" " -f1)
+				# see if I can find it, NOTE:  I had to add | cut -d" " -f1 because the find produced multiple results breaking the file copy.
+				# I also had to add | awk -F '.dSYM' '{print $1}' because it sometimes found a file with the same name inside the .dSYM file
+				filename=$(echo $(find "${CRAFT_DIR}/lib" -name "${base}")| cut -d" " -f1| awk -F '.dSYM' '{print $1}')
 				if [[ "$filename" == "" ]]
 				then
-					filename=$(echo $(find $(brew --prefix)/lib -name "${base}")| cut -d" " -f1)
+					filename=$(echo $(find $(brew --prefix)/lib -name "${base}")| cut -d" " -f1| awk -F '.dSYM' '{print $1}')
 				fi
 			fi    
 
@@ -191,18 +192,11 @@ processDirectory MacOS "${KSTARS_APP}/Contents/MacOS"
 statusBanner "Processing Phonon backend"
 processTarget "${KSTARS_APP}/Contents/Plugins/phonon4qt5_backend/phonon_vlc.so"
 
-# Also cheat, and add libindidriver.1.dylib to the list
-#
-addFileToCopy "libindidriver.1.dylib"
-
 statusBanner "Copying first round of files"
 copyFilesToFrameworks
 
 statusBanner "Processing libindidriver library"
 
-# need to process libindidriver.1.dylib
-#
-processTarget "${FRAMEWORKS_DIR}/libindidriver.1.dylib"
 processDirectory kio "${KSTARS_APP}/Contents/Plugins/kf5/kio"
 
 processDirectory GPHOTO_IOLIBS "${KSTARS_APP}/Contents/Resources/DriverSupport/gphoto/IOLIBS"
