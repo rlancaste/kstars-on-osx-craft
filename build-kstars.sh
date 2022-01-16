@@ -225,21 +225,6 @@ EOF
 	
 	# Craft does build ninja and install it to the craft directory, but QT Creator expects the homebrew version.
 	brew install ninja
-	
-	# I tried to write a recipe for gpsd, but it requires scons, and I have no idea what to do.
-	brew install gpsd 
-	
-	# It would be good to sort this out.  gpg2 should be built in craft.  TODO!
-	brew install gpg
-	
-	# This is because gpg is not called gpg2 and translations call on gpg2.  Fix this??
-	ln -sf $(brew --prefix)/bin/gpg $(brew --prefix)/bin/gpg2
-	
-	# It would be good to get this stuff into craft too!!! TODO!
-	# The problem here is that the system ruby can't be changed and we need logger-colors.
-	brew install ruby
-	export PATH=$(brew --prefix)/opt/ruby/bin:$PATH
-	gem install logger-colors
 
 #This will create the Astro Directory if it doesn't exist
 	mkdir -p "${ASTRO_ROOT}"

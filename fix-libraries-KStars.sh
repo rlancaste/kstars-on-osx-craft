@@ -185,8 +185,8 @@ announce "Running Fix Libraries Script"
 	
 cd ${DMG_DIR}
 
-statusBanner "Processing kstars executable, dbus, indi, xplanet and others."
-processTarget "${KSTARS_APP}/Contents/MacOS/"
+statusBanner "Processing kstars executable, dbus, indi, xplanet and others in the MacOS directory."
+processDirectory MacOS "${KSTARS_APP}/Contents/MacOS"
 
 statusBanner "Processing Phonon backend"
 processTarget "${KSTARS_APP}/Contents/Plugins/phonon4qt5_backend/phonon_vlc.so"
