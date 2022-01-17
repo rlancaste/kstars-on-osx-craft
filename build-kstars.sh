@@ -262,9 +262,6 @@ EOF
 		
 #This sets the craft environment based on the settings.
 	source "${CRAFT_DIR}/craft/craftenv.sh"
-	
-#This sets an environment variable to disable some errors on XCode 12.
-	#export CFLAGS=-Wno-implicit-function-declaration
 
 #This will build indi, including the 3rd Party drivers.
 	announce "Building INDI and required dependencies"

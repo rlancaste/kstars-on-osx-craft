@@ -225,21 +225,6 @@ EOF
 	
 	# Craft does build ninja and install it to the craft directory, but QT Creator expects the homebrew version.
 	brew install ninja
-	
-	# I tried to write a recipe for gpsd, but it requires scons, and I have no idea what to do.
-	brew install gpsd 
-	
-	# It would be good to sort this out.  gpg2 should be built in craft.  TODO!
-	brew install gpg
-	
-	# This is because gpg is not called gpg2 and translations call on gpg2.  Fix this??
-	ln -sf $(brew --prefix)/bin/gpg $(brew --prefix)/bin/gpg2
-	
-	# It would be good to get this stuff into craft too!!! TODO!
-	# The problem here is that the system ruby can't be changed and we need logger-colors.
-	brew install ruby
-	export PATH=$(brew --prefix)/opt/ruby/bin:$PATH
-	gem install logger-colors
 
 #This will create the Astro Directory if it doesn't exist
 	mkdir -p "${ASTRO_ROOT}"
@@ -281,9 +266,6 @@ EOF
 	
 #This sets the craft environment based on the settings.
 	source "${CRAFT_DIR}/craft/craftenv.sh"
-	
-#This sets an environment variable to disable some errors on XCode 12.
-	export CFLAGS=-Wno-implicit-function-declaration
 
 #This will build indi, including the 3rd Party drivers.
 	announce "Building INDI and required dependencies"
@@ -339,8 +321,6 @@ EOF
 	then
 		rm -rf "${INDI_WEB_MANAGER_APP}"
 	fi
-	
-	source ${CRAFT_DIR}/craft/craftenv.sh
 		
 	statusBanner "Crafting icons"
 	craft "$VERBOSE" breeze-icons
@@ -396,7 +376,7 @@ EOF
 	ln -sf ${CRAFT_DIR}/build/libs/_mac/indiserver-3rdparty/work/build ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiserver-3rdparty-build
 
-#This will copy the app to a DMG directory in ASTRO_ROOT, package everything up into the app and then make a dmg.
+#This will package everything up into the app and then make a dmg.
 	if [ -n "$GENERATE_DMG" ]
 	then
 		source ${DIR}/generate-dmg-INDIWebManager.sh

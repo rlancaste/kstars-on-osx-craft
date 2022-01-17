@@ -52,7 +52,25 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 		#echo "$entry"
 			if [[ "$entry" == @rpath* ]]
 			then
-				truePath=${KSTARS_APP}/Contents/Frameworks/"${entry:7}"
+				truePath=${APP}/Contents/Frameworks/"${entry:7}"
+				if [[ ! -f "${truePath}" ]]
+				then
+					echo "$target points to a file that doesn't exist: $entry points to: $truePath"
+				fi
+			fi
+			
+			if [[ "$entry" == @executable_path* ]]
+			then
+				truePath=${APP}/Contents/MacOS/"${entry:17}"
+				if [[ ! -f "${truePath}" ]]
+				then
+					echo "$target points to a file that doesn't exist: $entry points to: $truePath"
+				fi
+			fi
+			
+			if [[ "$entry" == @loader_path* ]]
+			then
+				truePath=$(echo $target | awk -F $entry '{print $1}')/"${entry:13}"
 				if [[ ! -f "${truePath}" ]]
 				then
 					echo "$target points to a file that doesn't exist: $entry points to: $truePath"
@@ -83,6 +101,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
     		then
 				if [[ -f "$file" ]]
 				then
+					# Note: I don't think we need to check the install ID when packaging, everything is already linked
 					#statusBanner "Processing $directoryName file $base"
 					#if [[ "$file" == *".dylib" ]]
 					#then
@@ -111,40 +130,65 @@ then
 	source ${DIR}/build-env.sh
 fi
 
-#This sets some important variables.
-	DMG_DIR="${ASTRO_ROOT}/KStarsDMG"
-	KSTARS_APP="${DMG_DIR}/KStars.app"
-
 #This should stop the script so that it doesn't run if these paths are blank.
 #That way it doesn't try to edit /Applications instead of ${CRAFT_DIR}/Applications for example
-	if [ -z "${DIR}" ] || [ -z  "${CRAFT_DIR}" ]
+	if [ -z "${DIR}" ]
 	then
 		echo "directory error! aborting Script"
 		exit 9
 	fi
 
-#This code makes sure the craft directory exists.  This won't work too well if it doesn't
-	if [ ! -e ${DMG_DIR} ] || [ ! -e ${KSTARS_APP} ]
+#This sets some important variables.
+	DMG_DIR="${ASTRO_ROOT}/KStarsDMG"
+	APP="${DMG_DIR}/KStars.app"
+
+#This code checks for issues in the KStars App Bundle
+	if [ -e ${DMG_DIR} ] && [ -e ${APP} ]
 	then
-		"DMG Directory does not exist.  You have to build KStars with Craft first. Use build-kstars.sh, then build a DMG"
-		exit
+		statusBanner "Searching for issues in the KStars Bundle's MacOS Directory"
+
+		processDirectory MacOS ${APP}/Contents/MacOS
+
+		statusBanner "Searching for issues in the KStars Bundle's Frameworks Directory"
+
+		processDirectory Frameworks "${APP}/Contents/Frameworks"
+
+		statusBanner "Searching for issues in the KStars Bundle's Plugins Directory"
+
+		processDirectory Plugins "${APP}/Contents/Plugins"
+
+		statusBanner "Searching for issues in the KStars Bundle's Math Plugins Directory"
+
+		processDirectory MathPlugins "${APP}/Contents/Resources/MathPlugins"
+	else
+		echo "KStars DMG Directory does not exist, not checking KStars.  You have to build KStars with Craft first. Use build-kstars.sh, then build a DMG"
 	fi
 
+#This sets some important variables.
+	DMG_DIR="${ASTRO_ROOT}/INDIWebManagerAppDMG"
+	APP="${DMG_DIR}/INDIWebManagerApp.app"
 
-statusBanner "Searching for issues in the Bundle's MacOS Directory"
+#This code checks for issues in the KStars App Bundle
+	if [ -e ${DMG_DIR} ] && [ -e ${APP} ]
+	then
+		statusBanner "Searching for issues in the INDIWebManagerAPP Bundle's MacOS Directory"
 
-processDirectory MacOS ${KSTARS_APP}/Contents/MacOS
+		processDirectory MacOS ${APP}/Contents/MacOS
 
-statusBanner "Searching for issues in the Bundle's Frameworks Directory"
+		statusBanner "Searching for issues in the INDIWebManagerAPP Bundle's Frameworks Directory"
 
-processDirectory Frameworks "${KSTARS_APP}/Contents/Frameworks"
+		processDirectory Frameworks "${APP}/Contents/Frameworks"
 
-statusBanner "Searching for issues in the Bundle's Plugins Directory"
+		statusBanner "Searching for issues in the INDIWebManagerAPP Bundle's Plugins Directory"
 
-processDirectory Plugins "${KSTARS_APP}/Contents/Plugins"
+		processDirectory Plugins "${APP}/Contents/Plugins"
 
-statusBanner "Searching for issues in the Bundle's Math Plugins Directory"
+		statusBanner "Searching for issues in the INDIWebManagerAPP Bundle's Math Plugins Directory"
 
-processDirectory MathPlugins "${KSTARS_APP}/Contents/Resources/MathPlugins"
+		processDirectory MathPlugins "${APP}/Contents/Resources/MathPlugins"
+	else
+		echo "INDIWebManagerApp DMG Directory does not exist, not checking INDIWebManagerAPP.  You have to build it with Craft first. Use build-indiwebmanager.sh, then build a DMG"
+	fi
+
 
 

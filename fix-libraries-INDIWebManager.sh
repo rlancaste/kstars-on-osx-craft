@@ -90,11 +90,12 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 			then
 				filename=$libFile
 			else
-				# see if I can find it, NOTE:  I had to add the last part and the echo because the find produced multiple results breaking the file copy into frameworks.
-				filename=$(echo $(find "${CRAFT_DIR}/lib" -name "${base}")| cut -d" " -f1)
+				# see if I can find it, NOTE:  I had to add | cut -d" " -f1 because the find produced multiple results breaking the file copy.
+				# I also had to add | awk -F '.dSYM' '{print $1}' because it sometimes found a file with the same name inside the .dSYM file
+				filename=$(echo $(find "${CRAFT_DIR}/lib" -name "${base}")| cut -d" " -f1| awk -F '.dSYM' '{print $1}')
 				if [[ "$filename" == "" ]]
 				then
-					filename=$(echo $(find $(brew --prefix)/lib -name "${base}")| cut -d" " -f1)
+					filename=$(echo $(find $(brew --prefix)/lib -name "${base}")| cut -d" " -f1| awk -F '.dSYM' '{print $1}')
 				fi
 			fi    
 
@@ -160,7 +161,7 @@ fi
 		echo "directory error! aborting Fix Libraries Script"
 		exit 9
 	fi
-	
+
 #This code makes sure the craft directory exists.  This won't work too well if it doesn't
 	if [ ! -e ${CRAFT_DIR} ]
 	then
@@ -178,38 +179,31 @@ fi
 announce "Running Fix Libraries Script"
 
 	FILES_TO_COPY=()
-	FRAMEWORKS_DIR="${INDI_WEB_MANAGER_APP}/Contents/Frameworks"
 
 #Files in these locations do not need to be copied into the Frameworks folder.
 	IGNORED_OTOOL_OUTPUT="/Qt|${INDI_WEB_MANAGER_APP}/|/usr/lib/|/System/"
 	
 cd ${DMG_DIR}
 
-statusBanner "Processing INDIWebManager.app executable"
-processTarget "${INDI_WEB_MANAGER_APP}/Contents/MacOS/INDIWebManagerApp"
-
-# Also cheat, and add libindidriver.1.dylib to the list
-#
-addFileToCopy "libindidriver.1.dylib"
+statusBanner "Processing INDIWebManager.app executable and other things in the MacOS directory"
+processDirectory MacOS "${INDI_WEB_MANAGER_APP}/Contents/MacOS"
 
 statusBanner "Copying first round of files"
 copyFilesToFrameworks
 
-statusBanner "Processing libindidriver library"
-
-# need to process libindidriver.1.dylib
-#
-processTarget "${FRAMEWORKS_DIR}/libindidriver.1.dylib"
-processDirectory indi "${INDI_WEB_MANAGER_APP}/Contents/MacOS/"
+statusBanner "Processing Needed plugins and resources"
 
 processDirectory GPHOTO_IOLIBS "${INDI_WEB_MANAGER_APP}/Contents/Resources/DriverSupport/gphoto/IOLIBS"
 processDirectory GPHOTO_CAMLIBS "${INDI_WEB_MANAGER_APP}/Contents/Resources/DriverSupport/gphoto/CAMLIBS"
 
 processDirectory MathPlugins "${INDI_WEB_MANAGER_APP}/Contents/Resources/MathPlugins"
 
-#This should not be necessary because macdeployqt used to do this.  Why do I need to add this?
+statusBanner "Processing possibly needed plugins"
+#I am not sure if we need the following plugins, but if we are going to include these plugins, they should not be linked to craft-root?
 processDirectory Platforms "${INDI_WEB_MANAGER_APP}/Contents/Plugins/platforms"
+processDirectory bearer "${KSTARS_APP}/Contents/Plugins/bearer"
 
+statusBanner "Processing Frameworks"
 processDirectory Frameworks "${FRAMEWORKS_DIR}"
 
 while [ ${FILES_COPIED} -gt 0 ]

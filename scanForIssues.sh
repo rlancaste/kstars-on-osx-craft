@@ -78,6 +78,25 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 					echo "$target points to a file that doesn't exist: $entry points to: $truePath"
 				fi
 			fi
+			
+			if [[ "$entry" == @executable_path* ]]
+			then
+				truePath=${APP}/Contents/MacOS/"${entry:17}"
+				if [[ ! -f "${truePath}" ]]
+				then
+					echo "$target points to a file that doesn't exist: $entry points to: $truePath"
+				fi
+			fi
+			
+			if [[ "$entry" == @loader_path* ]]
+			then
+				truePath=$(echo $target | awk -F $entry '{print $1}')/"${entry:13}"
+				if [[ ! -f "${truePath}" ]]
+				then
+					echo "$target points to a file that doesn't exist: $entry points to: $truePath"
+				fi
+			fi
+
 
 			if [[ "$entry" == /* ]]
 			then
@@ -158,4 +177,8 @@ processDirectory lib "/Users/rlancaste/AstroRoot/craft-root/lib"
 statusBanner "Processing CraftRoot Bin Directory"
 
 processDirectory bin "/Users/rlancaste/AstroRoot/craft-root/bin"
+
+statusBanner "Processing CraftRoot Bin Directory"
+
+processDirectory plugins "/Users/rlancaste/AstroRoot/craft-root/Plugins"
 
