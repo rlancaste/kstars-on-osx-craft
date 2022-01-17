@@ -195,7 +195,7 @@ processTarget "${KSTARS_APP}/Contents/Plugins/phonon4qt5_backend/phonon_vlc.so"
 statusBanner "Copying first round of files"
 copyFilesToFrameworks
 
-statusBanner "Processing libindidriver library"
+statusBanner "Processing Needed plugins and resources"
 
 processDirectory kio "${KSTARS_APP}/Contents/Plugins/kf5/kio"
 
@@ -208,9 +208,22 @@ processDirectory VLC_ACCESS "${KSTARS_APP}/Contents/Plugins/vlc/access"
 processDirectory VLC_AUDIO_OUTPUT "${KSTARS_APP}/Contents/Plugins/vlc/audio_output"
 processDirectory VLC_CODEC "${KSTARS_APP}/Contents/Plugins/vlc/codec"
 
-#This should not be necessary because macdeployqt used to do this.  Why do I need to add this?  It fails to perfectly do them now.
+statusBanner "Processing possibly needed plugins"
+#I am not sure if we need the following plugins, but if we are going to include these plugins, they should not be linked to craft-root?
 processDirectory Platforms "${KSTARS_APP}/Contents/Plugins/platforms"
+processDirectory bearer "${KSTARS_APP}/Contents/Plugins/bearer"
+processDirectory designer "${KSTARS_APP}/Contents/Plugins/designer"
+processDirectory iconengines "${KSTARS_APP}/Contents/Plugins/iconengines"
+processDirectory kauthhelper "${KSTARS_APP}/Contents/Plugins/kauth/helper"
+processDirectory basePluginsDir "${KSTARS_APP}/Contents/Plugins"
+processDirectory kded "${KSTARS_APP}/Contents/Plugins/kf5/kded"
+processDirectory kiod "${KSTARS_APP}/Contents/Plugins/kf5/kiod"
+processDirectory kwindowsystem "${KSTARS_APP}/Contents/Plugins/kf5/kwindowsystem"
+processDirectory sonnet "${KSTARS_APP}/Contents/Plugins/kf5/sonnet"
+processDirectory urifilters "${KSTARS_APP}/Contents/Plugins/kf5/urifilters"
+processDirectory sqldrivers "${KSTARS_APP}/Contents/Plugins/sqldrivers"
 
+statusBanner "Processing Frameworks"
 processDirectory Frameworks "${FRAMEWORKS_DIR}"
 
 while [ ${FILES_COPIED} -gt 0 ]

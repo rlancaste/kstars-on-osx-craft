@@ -1,6 +1,6 @@
 #/bin/bash
 
-#This script is meant to search for issues in the Craft bin and lib directories that could cause issues with packaging and/or running KStars
+#This script is meant to search for issues in the Bundled KStars App that could cause issues with those trying to run it on another computer
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
@@ -13,34 +13,14 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 		target=$1
 		
 		itsID=$(otool -D $target | sed -n '2 p')
-		if [[ "$itsID" != @rpath* ]] && [[ "$itsID" != ${CRAFT_DIR}/* ]]
+		if [[ "$itsID" != @rpath* ]]
 		then
 			echo "$target has the wrong install ID: $itsID"
 		fi
 		
 	}
 	
-	#This function is meant to check for links to homebrew programs or libraries.  
-	#We want to link to craft libraries, not homebrew since homebrew doesn't build for distribution, so minimum macos version is newer than you want.
-	function checkForHomebrewLinks
-	{
-		target=$1
-        	
-		entries=$(otool -L $target | sed '1d' | awk '{print $1}' | egrep -v "$IGNORED_OTOOL_OUTPUT")
-		#echo "Processing $target"
-		
-		for entry in $entries
-		do
-		#echo "$entry"
-			if [[ "$entry" == /usr/local/* ]]
-			then
-				echo "$target has a link to HomeBrew: $entry"
-			fi
-		done
-		
-	}
-	
-	#This function is intended to search for links that are not full paths, links to external folders, or not rpaths
+	#This function is intended to search for links that are not rpaths
 	function checkForBadPaths
 	{
 		target=$1
@@ -51,7 +31,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 		for entry in $entries
 		do
 		#echo "$entry"
-			if [[ "$entry" != @rpath* ]] && [[ "$entry" != ${CRAFT_DIR}/* ]] && [[ "$entry" != /usr/local/* ]]
+			if [[ "$entry" != @rpath* ]] && [[ $(basename "$entry") != $(basename $target) ]]
 			then
 				echo "$target has a bad path: $entry"
 			fi
@@ -72,7 +52,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 		#echo "$entry"
 			if [[ "$entry" == @rpath* ]]
 			then
-				truePath=${CRAFT_DIR}/lib/"${entry:7}"
+				truePath=${KSTARS_APP}/Contents/Frameworks/"${entry:7}"
 				if [[ ! -f "${truePath}" ]]
 				then
 					echo "$target points to a file that doesn't exist: $entry points to: $truePath"
@@ -89,7 +69,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 		done
 
 	}
-
+	
 	function processDirectory
 	{
 		directoryName=$1
@@ -99,22 +79,18 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 		do
     		base=$(basename $file)
     		
-    		if [[ "$file" != *".dSYM" ]] && [[ "$file" != *".framework" ]] && [[ "$file" == ${CRAFT_DIR}/* ]]
+    		if [[ "$file" != *".dSYM" ]] && [[ "$file" != *".framework" ]] && [[ "$file" == ${DMG_DIR}/* ]]
     		then
 				if [[ -f "$file" ]]
 				then
 					#statusBanner "Processing $directoryName file $base"
-					if [[ "$file" == *".dylib" ]]
-					then
-						checkForBadID $file
-					fi
+					#if [[ "$file" == *".dylib" ]]
+					#then
+					#	checkForBadID $file
+					#fi
 					
-					if [[ "$file" != *".a" ]]
-					then
-						checkForBrokenLinks $file
-						checkForHomebrewLinks $file
-						checkForBadPaths $file
-					fi
+					checkForBadPaths $file
+					checkForBrokenLinks $file
 				else
 					processDirectory $base $file
 				fi
@@ -135,27 +111,40 @@ then
 	source ${DIR}/build-env.sh
 fi
 
+#This sets some important variables.
+	DMG_DIR="${ASTRO_ROOT}/KStarsDMG"
+	KSTARS_APP="${DMG_DIR}/KStars.app"
+
 #This should stop the script so that it doesn't run if these paths are blank.
 #That way it doesn't try to edit /Applications instead of ${CRAFT_DIR}/Applications for example
 	if [ -z "${DIR}" ] || [ -z  "${CRAFT_DIR}" ]
 	then
-		echo "directory error! aborting Fix Libraries Script"
+		echo "directory error! aborting Script"
 		exit 9
 	fi
 
 #This code makes sure the craft directory exists.  This won't work too well if it doesn't
-	if [ ! -e ${CRAFT_DIR} ]
+	if [ ! -e ${DMG_DIR} ] || [ ! -e ${KSTARS_APP} ]
 	then
-		"Craft directory does not exist.  You have to build KStars with Craft first. Use build-kstars.sh"
+		"DMG Directory does not exist.  You have to build KStars with Craft first. Use build-kstars.sh, then build a DMG"
 		exit
 	fi
 
 
-statusBanner "Searching for issues in CraftRoot Lib Directory and subfolders"
+statusBanner "Searching for issues in the Bundle's MacOS Directory"
 
-processDirectory lib "/Users/rlancaste/AstroRoot/craft-root/lib"
+processDirectory MacOS ${KSTARS_APP}/Contents/MacOS
 
-statusBanner "Processing CraftRoot Bin Directory"
+statusBanner "Searching for issues in the Bundle's Frameworks Directory"
 
-processDirectory bin "/Users/rlancaste/AstroRoot/craft-root/bin"
+processDirectory Frameworks "${KSTARS_APP}/Contents/Frameworks"
+
+statusBanner "Searching for issues in the Bundle's Plugins Directory"
+
+processDirectory Plugins "${KSTARS_APP}/Contents/Plugins"
+
+statusBanner "Searching for issues in the Bundle's Math Plugins Directory"
+
+processDirectory MathPlugins "${KSTARS_APP}/Contents/Resources/MathPlugins"
+
 
