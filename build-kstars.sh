@@ -188,9 +188,13 @@ EOF
 # This installs the xcode command line tools if not installed yet.
 # Yes these tools will be automatically installed if the user has never used git before
 # But sometimes they need to be installed again.
-# If they are already installed, it will just print an error message
-	announce "Installing xcode command line tools"
-	xcode-select --install
+	
+	if ! command -v xcode-select &> /dev/null
+	then
+		announce "Installing xcode command line tools"
+		xcode-select --install
+	fi
+	
 	
 # From here on out exit if there is a failure
 	set -e
@@ -225,6 +229,13 @@ EOF
 	
 	# Craft does build ninja and install it to the craft directory, but QT Creator expects the homebrew version.
 	brew install ninja
+	
+	# It would be good to sort this out.  gpg2 should be built in craft.  This is needed for translations to work.
+	brew install gpg
+	brew install svn
+	
+	# This is because gpg is not called gpg2 and translations call on gpg2.  Fix this??
+	ln -sf $(brew --prefix)/bin/gpg $(brew --prefix)/bin/gpg2
 
 #This will create the Astro Directory if it doesn't exist
 	mkdir -p "${ASTRO_ROOT}"
