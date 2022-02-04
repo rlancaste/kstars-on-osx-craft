@@ -197,7 +197,7 @@ copyFilesToFrameworks
 
 statusBanner "Processing Needed plugins and resources"
 
-#processDirectory kio "${KSTARS_APP}/Contents/Plugins/kf5/kio"
+processDirectory kio "${KSTARS_APP}/Contents/Plugins/kf5/kio"
 
 processDirectory GPHOTO_IOLIBS "${KSTARS_APP}/Contents/Resources/DriverSupport/gphoto/IOLIBS"
 processDirectory GPHOTO_CAMLIBS "${KSTARS_APP}/Contents/Resources/DriverSupport/gphoto/CAMLIBS"
