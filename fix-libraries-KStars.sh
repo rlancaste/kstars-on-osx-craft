@@ -1,4 +1,4 @@
-#/bin/bash
+#/bin/zsh
 
 # This script has three goals:
 # 1) It makes sure the DMG folder is set up, KStars is copied there, and the variables aree correct.
@@ -6,7 +6,7 @@
 # 3) copy those libraries to the blah/Frameworks dir
 # 4) Update those programs to know where to look for said libraries
 
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR=${0:a:h}
 
 #This adds a file to the list so it can be copied to Frameworks
 	function addFileToCopy

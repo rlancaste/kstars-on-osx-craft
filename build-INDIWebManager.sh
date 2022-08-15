@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/zsh
 
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR=${0:a:h}
 
 ANNOUNCE=""
 BUILD_INDI=""
@@ -200,7 +200,7 @@ EOF
 	if [[ $(command -v brew) == "" ]]
 	then
 		announce "Installing Homebrew."
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		/bin/zsh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	else
 		#This will remove all the homebrew packages if desired.
 		if [ -n "$REMOVE_ALL" ]

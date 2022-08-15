@@ -1,8 +1,8 @@
-#/bin/bash
+#/bin/zsh
 
 #This script is meant to search for issues in the Bundled KStars App that could cause issues with those trying to run it on another computer
 
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR=${0:a:h}
 
 #Files in these locations can be safely ignored.
 	IGNORED_OTOOL_OUTPUT="/usr/lib/|/System/"

@@ -1,4 +1,4 @@
-#/bin/bash
+#/bin/zsh
 
 # This script has four goals:
 # 1) Run the Fix-libraries script to get all frameworks into the App
@@ -7,7 +7,7 @@
 # 4) Generate checksums
 
 #This gets the current folder this script resides in.  It is needed to run other scripts.
-	DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+	DIR=${0:a:h}
 
 #This function makes the dmg look nice.
 	function set_bundle_display_options() {

@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/zsh
 
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR=${0:a:h}
 
 ANNOUNCE=""
 BUILD_INDI=""
@@ -163,7 +163,7 @@ EOF
 	processOptions $@
 	
 #Check to see that this script is up to date.  If you want it to run anyway, use the -f option.
-	checkUpToDate
+	#checkUpToDate
 	
 # Prepare to run the script by setting all of the environment variables	
 	source ${DIR}/build-env.sh
@@ -204,7 +204,7 @@ EOF
 	if [[ $(command -v brew) == "" ]]
 	then
 		announce "Installing Homebrew."
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		/bin/zsh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	else
 		#This will remove all the homebrew packages if desired.
 		if [ -n "$REMOVE_ALL" ]

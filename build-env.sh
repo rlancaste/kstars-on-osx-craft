@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # This file will make it easier to use the scripts and do stuff on command line
 #
@@ -20,7 +20,7 @@ function announce
 }
 
 # This sets the DIR variable to the current path of the scripts.
-export DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+export DIR=${0:a:h}
 
 # This sets the directory paths.  Note that these are customizable.
 # Beware that none of them should have spaces in the file path.
@@ -45,7 +45,7 @@ export QMAKE_MACOSX_DEPLOYMENT_TARGET=10.13
 export MACOSX_DEPLOYMENT_TARGET=10.13
 
 # This sets the current version numbers that will be used throughout the script.
-export KSTARS_VERSION=3.5.7
+export KSTARS_VERSION=3.6.0
 export INDI_WEB_MANAGER_APP_VERSION=1.8
 
 echo "DIR                   is [${DIR}]"
