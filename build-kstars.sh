@@ -163,7 +163,7 @@ EOF
 	processOptions $@
 	
 #Check to see that this script is up to date.  If you want it to run anyway, use the -f option.
-	#checkUpToDate
+	checkUpToDate
 	
 # Prepare to run the script by setting all of the environment variables	
 	source ${DIR}/build-env.sh
