@@ -7,7 +7,7 @@
 # 4) Generate checksums
 
 #This gets the current folder this script resides in.  It is needed to run other scripts.
-	DIR=${0:a:h}
+	DIR=$(dirname "$0")
 
 #This function makes the dmg look nice.
 	function set_bundle_display_options() {

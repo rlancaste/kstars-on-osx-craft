@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-DIR=${0:a:h}
+DIR=$(dirname "$0")
 
 ANNOUNCE=""
 BUILD_INDI=""

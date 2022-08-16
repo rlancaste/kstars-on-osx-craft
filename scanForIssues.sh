@@ -2,7 +2,7 @@
 
 #This script is meant to search for issues in the Craft bin and lib directories that could cause issues with packaging and/or running KStars
 
-DIR=${0:a:h}
+DIR=$(dirname "$0")
 
 #Files in these locations can be safely ignored.
 	IGNORED_OTOOL_OUTPUT="/usr/lib/|/System/"

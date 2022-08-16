@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-DIR=${0:a:h}
+DIR=$(dirname "$0")
 # Prepare to run the script by setting all of the environment variables	
 	source "${DIR}/build-env.sh"
 
@@ -28,11 +28,11 @@ fi
 # Check with the user to see if they want to create a new diff or change the current one.
 	read -p "Do you either want to create a new arcanist diff (1) or update an existing one (2)? " arcDiffOpts
 
-	if [ "$arcDiffOpts" == "1" ]
+	if [[ "$arcDiffOpts" == "1" ]]
 	then
 		echo "Creating a new diff."
 		arc diff --create
-	elif [ "$arcDiffOpts" == "2" ]
+	elif [[ "$arcDiffOpts" == "2" ]]
 	then
 		echo "Updating the existing diff (if one exists already)."
 		arc diff

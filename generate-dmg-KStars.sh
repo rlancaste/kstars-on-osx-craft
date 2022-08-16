@@ -7,7 +7,7 @@
 # 4) Generate checksums
 
 #This gets the current folder this script resides in.  It is needed to run other scripts.
-	DIR=${0:a:h}
+	DIR=$(dirname "$0")
 
 #This function makes the dmg look nice.
 	function set_bundle_display_options() {
@@ -151,8 +151,7 @@ macdeployqt KStars.app -qmldir="${KSTARS_APP}/Contents/Resources/kstars/qml"
 	hdiutil attach ${UNCOMPRESSED_DMG}
 
 # Obtain device information
-	DEVS=$(hdiutil attach ${UNCOMPRESSED_DMG} | cut -f 1)
-	DEV=$(echo $DEVS | cut -f 1 -d ' ')
+	DEV=$(echo $(hdiutil attach ${UNCOMPRESSED_DMG} | cut -f 1) | cut -f 1 -d ' ')
 	VOLUME=$(mount |grep ${DEV} | cut -f 3 -d ' ')
 
 # copy in and set volume icon
@@ -170,7 +169,7 @@ macdeployqt KStars.app -qmldir="${KSTARS_APP}/Contents/Resources/kstars/qml"
 	mv -f ${VOLUME}/Pictures ${VOLUME}/.Pictures
 
 # Unmount the disk image
-	hdiutil detach $DEV
+	hdiutil detach "${DEV}"
 
 # Convert the disk image to read-only
 	hdiutil convert ${UNCOMPRESSED_DMG} -format UDBZ -o ${DMG_DIR}/kstars-${KSTARS_VERSION}.dmg

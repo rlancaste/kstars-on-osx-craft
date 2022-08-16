@@ -2,7 +2,7 @@
 
 #This script is meant to search for issues in the Bundled KStars App that could cause issues with those trying to run it on another computer
 
-DIR=${0:a:h}
+DIR=$(dirname "$0")
 
 #Files in these locations can be safely ignored.
 	IGNORED_OTOOL_OUTPUT="/usr/lib/|/System/"

@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-DIR=${0:a:h}
+DIR=$(dirname "$0")
 # Prepare to run the script by setting all of the environment variables	
 	source "${DIR}/build-env.sh"
 	

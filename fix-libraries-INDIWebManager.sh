@@ -6,14 +6,14 @@
 # 3) copy those libraries to the blah/Frameworks dir
 # 4) Update those programs to know where to look for said libraries
 
-DIR=${0:a:h}
+DIR=$(dirname "$0")
 
 #This adds a file to the list so it can be copied to Frameworks
 	function addFileToCopy
 	{
 		for e in "${FILES_TO_COPY[@]}"
 		do 
-			if [ "$e" == "$1" ]
+			if [[ "$e" == "$1" ]]
 			then
 				return 0
 			fi

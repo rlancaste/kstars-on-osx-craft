@@ -20,7 +20,7 @@ function announce
 }
 
 # This sets the DIR variable to the current path of the scripts.
-export DIR=${0:a:h}
+export DIR=$(dirname "$0")
 
 # This sets the directory paths.  Note that these are customizable.
 # Beware that none of them should have spaces in the file path.
