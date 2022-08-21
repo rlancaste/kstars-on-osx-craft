@@ -332,7 +332,7 @@ EOF
 	statusBanner "Crafting KStars"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i --target "stable" kstars
+		craft "$VERBOSE" -i --target "$KSTARS_VERSION" kstars
 	else
 		craft "$VERBOSE" -i --target "master" kstars
 	fi
