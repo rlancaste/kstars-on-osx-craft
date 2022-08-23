@@ -206,7 +206,7 @@ EOF
 		if [ -n "$REMOVE_ALL" ]
 		then
 			announce "You have selected the REMOVE_ALL option.  Warning, this will clear all currently installed homebrew packages."
-			read -p "Do you really wish to proceed? (y/n)" runscript
+			read runscript"?Do you really wish to proceed? (y/n)"
 			if [ "$runscript" != "y" ]
 			then
 				echo "Quitting the script as you requested."
@@ -236,7 +236,7 @@ EOF
 		if [ -n "$REMOVE_ALL" ]
 		then
 			announce "You have selected the REMOVE_ALL option.  Warning, this will clear the entire craft directory."
-			read -p "Do you really wish to proceed? (y/n)" runscript2
+			read runscript2"?Do you really wish to proceed? (y/n)"
 			if [ "$runscript2" != "y" ]
 			then
 				echo "Quitting the script as you requested."
