@@ -31,29 +31,31 @@ DIR=$(dirname "$0")
 		
 		#This hard coded rpath needs to be removed from any files that have it for packaged apps because later there could be rpath conflicts
         #if the program is run on a computer with the same paths as the build computer
-        install_name_tool -delete_rpath ${CRAFT_DIR}/lib $target
-        	
-		entries=$(otool -L $target | sed '1d' | awk '{print $1}' | egrep -v "$IGNORED_OTOOL_OUTPUT")
+        if [[ $(otool -l $target| grep RPATH -A2) == *"${CRAFT_DIR}/lib"* ]]
+        then
+        	install_name_tool -delete_rpath ${CRAFT_DIR}/lib $target
+		fi
+        
+		lineentries=$(otool -L $target | sed '1d' | awk '{print $1}' | egrep -v "$IGNORED_OTOOL_OUTPUT")
+		entries=($(echo "$lineentries"))
 		echo "Processing $target"
-	
+		
+		# This should get the right rpath into the target file
 		relativeRoot="${KSTARS_APP}/Contents"
-	
 		pathDiff=${target#${relativeRoot}*}
-
-		#This is a Framework file
 		if [[ "$pathDiff" == /Frameworks/* ]]
 		then
-			newname="@rpath/$(basename $target)"
-			install_name_tool -add_rpath "@loader_path/" $target		
-			echo "    This is a Framework, change its own id $target -> $newname" 
-			
-			install_name_tool -id \
-			$newname \
-			$target
+			if [[ $(otool -l $target| grep RPATH -A2) == *"@loader_path/"* ]]
+        	then
+				install_name_tool -add_rpath "@loader_path/" $target	
+			fi
 		else
-		    pathToFrameworks=$(echo $(dirname "${pathDiff}") | awk -F/ '{for (i = 1; i < NF ; i++) {printf("../")} }')
+			pathToFrameworks=$(echo $(dirname "${pathDiff}") | awk -F/ '{for (i = 1; i < NF ; i++) {printf("../")} }')
 			pathToFrameworks="${pathToFrameworks}Frameworks/"
-			install_name_tool -add_rpath "@loader_path/${pathToFrameworks}" $target
+			if [[ $(otool -l $target| grep RPATH -A2) == *"@loader_path/${pathToFrameworks}"* ]]
+        	then
+				install_name_tool -add_rpath "@loader_path/${pathToFrameworks}" $target
+			fi
 		fi
 		
 		for entry in $entries
@@ -61,13 +63,15 @@ DIR=$(dirname "$0")
 			baseEntry=$(basename $entry)
 			newname=""
 			newname="@rpath/${baseEntry}"
-			echo "    change reference $entry -> $newname" 
-
-			install_name_tool -change \
-			$entry \
-			$newname \
-			$target
-
+			if [[ $entry != $newname ]]
+			then
+			
+				echo "    change reference $entry -> $newname" 
+				install_name_tool -change \
+				$entry \
+				$newname \
+				$target
+			fi
 			addFileToCopy "$entry"
 		done
 		echo ""
@@ -85,6 +89,7 @@ DIR=$(dirname "$0")
 			# if it starts with a / then easy.
 			#
 			base=$(basename $libFile)
+			linkName=$(echo ${base}| cut -d. -f1).dylib
 
 			if [[ $libFile == /* ]]
 			then
@@ -95,7 +100,13 @@ DIR=$(dirname "$0")
 				filename=$(echo $(find "${CRAFT_DIR}/lib" -name "${base}")| cut -d" " -f1| awk -F '.dSYM' '{print $1}')
 				if [[ "$filename" == "" ]]
 				then
-					filename=$(echo $(find $(brew --prefix)/lib -name "${base}")| cut -d" " -f1| awk -F '.dSYM' '{print $1}')
+					if [[ -f "${FRAMEWORKS_DIR}/${base}" ]]
+					then
+						filename="${FRAMEWORKS_DIR}/${base}"
+					else
+						statusBanner "Failure to find library $libFile in craft-root or Frameworks.  Is it linked properly?"
+						exit
+					fi
 				fi
 			fi    
 
@@ -104,12 +115,25 @@ DIR=$(dirname "$0")
 				echo "HAVE TO COPY [$base] from [${filename}] to Frameworks"
 				cp -fL "${filename}" "${FRAMEWORKS_DIR}"
 				
+				newname="@rpath/${linkName}"
+				target="${FRAMEWORKS_DIR}/${base}"	
+					
+				echo "     Changing library id $target -> $newname" 
+				install_name_tool -id \
+				$newname \
+				$target
+				
+				# This makes a link to the dylib with just the basic name of the library just in case
+				if [[ "${base}" != "${linkName}" ]]
+				then
+					ln -s "${target}" "${FRAMEWORKS_DIR}/${linkName}" 
+				fi
+				
 				FILES_COPIED=$((FILES_COPIED+1))
 			
 				# Seem to need this for the macqtdeploy
 				#
 				chmod +w "${FRAMEWORKS_DIR}/${base}"
-		
 			
 			else
 				echo ""
