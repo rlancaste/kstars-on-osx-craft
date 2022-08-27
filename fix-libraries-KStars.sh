@@ -45,14 +45,14 @@ DIR=$(dirname "$0")
 		pathDiff=${target#${relativeRoot}*}
 		if [[ "$pathDiff" == /Frameworks/* ]]
 		then
-			if [[ $(otool -l $target| grep RPATH -A2) == *"@loader_path/"* ]]
+			if [[ $(otool -l $target| grep RPATH -A2) != *"@loader_path/"* ]]
         	then
 				install_name_tool -add_rpath "@loader_path/" $target	
 			fi
 		else
 			pathToFrameworks=$(echo $(dirname "${pathDiff}") | awk -F/ '{for (i = 1; i < NF ; i++) {printf("../")} }')
 			pathToFrameworks="${pathToFrameworks}Frameworks/"
-			if [[ $(otool -l $target| grep RPATH -A2) == *"@loader_path/${pathToFrameworks}"* ]]
+			if [[ $(otool -l $target| grep RPATH -A2) != *"@loader_path/${pathToFrameworks}"* ]]
         	then
 				install_name_tool -add_rpath "@loader_path/${pathToFrameworks}" $target
 			fi
