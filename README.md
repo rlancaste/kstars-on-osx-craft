@@ -22,7 +22,8 @@ This script is written by Rob Lancaster (rlancaste), but it is built upon:
 
 ### Prerequisites for running the script (no longer required beforehand!!!)
 
-One very important requirement is that your mac must be running OS X Sierra (10.12) or later.  QT refuses to build now on earlier versions.
+One very important requirement is that your mac must be running OS X Catalina (10.15) or later.  QT refuses to build now on anything before Sierra
+and many of the Craft recipes and requirements for KStars and INDI now require Catalina.  
 This script makes use of the xcode command line tools, qt, homebrew (not much anymore), and craft.
 In the old version of the script, you had to install many of these first, but it can now do them automatically. 
 You can install these things beforehand if you like, but it is not required, as they will install.
@@ -160,17 +161,9 @@ So it is provided here both for convenience and for additional functionality.
 ### Submitting any changes you make in KStars
 
 Let's say you made some change that was totally awesome or made some significant improvement and you want to submit it.
-The KStars Code is hosted on this GIT Repository: [https://github.com/KDE/kstars](https://github.com/KDE/kstars)
-But KStars changes must be submitted using Phabricator. Please see this website for details: [https://phabricator.kde.org/project/profile/295/](https://phabricator.kde.org/project/profile/295/)
+The KStars Code is hosted on this GITLAB Repository: [https://invent.kde.org/education/kstars](https://invent.kde.org/education/kstars)
+If you make your own GitLab fork of KStars, you can submit changes by pushing them to your own fork and then making a merge request.
 
-
-You can run the script [submitKStarsChanges.sh](submitKStarsChanges.sh) to use Arcanist/Phabricator
-This script does several things:
-1. It downloads Arcanist and Phabricator to your craft-root directory in a folder called arc if they aren't there yet.
-2. It checks to make sure you ran build-KStars.sh first
-3. It exports the path to arcanist and changes to the kstars source directory
-4. Then it runs either "arc diff" or "arc diff --create", depending on your selection.
-5. Now just follow the prompts and you should be able to submit your changes via Phabricator.
 
 ### Using the INDI Repository Scripts.
 There are two scripts in this repo that are going to be useful for editing INDI.  
