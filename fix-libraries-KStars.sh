@@ -126,7 +126,7 @@ DIR=$(dirname "$0")
 				# This makes a link to the dylib with just the basic name of the library just in case
 				if [[ "${base}" != "${linkName}" ]]
 				then
-					ln -s "${target}" "${FRAMEWORKS_DIR}/${linkName}" 
+					ln -s "${base}" "${FRAMEWORKS_DIR}/${linkName}" 
 				fi
 				
 				FILES_COPIED=$((FILES_COPIED+1))

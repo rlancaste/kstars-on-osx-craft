@@ -45,7 +45,7 @@ export QMAKE_MACOSX_DEPLOYMENT_TARGET=10.15
 export MACOSX_DEPLOYMENT_TARGET=10.15
 
 # This sets the current version numbers that will be used throughout the script.
-export KSTARS_VERSION=3.6.1
+export KSTARS_VERSION=3.6.2
 export INDI_WEB_MANAGER_APP_VERSION=1.8
 
 echo "DIR                   is [${DIR}]"
