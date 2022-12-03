@@ -341,11 +341,15 @@ EOF
 	
 #This will create some symlinks that make it easier to edit INDI and KStars
 	announce "Creating symlinks"
-	mkdir -p ${SHORTCUTS_DIR}
 	
-	if [ -d ${SHORTCUTS_DIR} ]
+	if [ ! -d ${SHORTCUTS_DIR} ]
 	then
-		rm -f ${SHORTCUTS_DIR}/*
+		mkdir -p ${SHORTCUTS_DIR}
+	else
+		if [ "$(ls -A ${SHORTCUTS_DIR})" ] # shortcuts directory is not empty
+		then
+			rm -f ${SHORTCUTS_DIR}/*
+		fi
 	fi
 	
 	#Craft Shortcuts
@@ -357,27 +361,33 @@ EOF
 	ln -sf ${CRAFT_DIR}/etc/blueprints/locations/craft-blueprints-kde ${SHORTCUTS_DIR}
 	
 	# INDIWebManager
-	ln -sf ${CRAFT_DIR}/download/git/kde/applications/indiwebmanagerapp-mac ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/indiwebmanagerapp-mac ${SHORTCUTS_DIR}/indiwebmanagerapp-source
-	ln -sf ${CRAFT_DIR}/build/kde/applications/indiwebmanagerapp-mac/work/build ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiwebmanagerapp-build
+	if [ -d ${CRAFT_DIR}/download/git/kde/applications/indiwebmanagerapp-mac ]
+	then
+		ln -sf ${CRAFT_DIR}/download/git/kde/applications/indiwebmanagerapp-mac ${SHORTCUTS_DIR}
+		mv ${SHORTCUTS_DIR}/indiwebmanagerapp-mac ${SHORTCUTS_DIR}/indiwebmanagerapp-source
+		ln -sf ${CRAFT_DIR}/build/kde/applications/indiwebmanagerapp-mac/work/build ${SHORTCUTS_DIR}
+		mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiwebmanagerapp-build
+	fi
 	
 	# KStars
-	ln -sf ${CRAFT_DIR}/download/git/kde/applications/kstars ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/kstars ${SHORTCUTS_DIR}/kstars-source
-	ln -sf ${CRAFT_DIR}/build/kde/applications/kstars/work/build ${SHORTCUTS_DIR}
-	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/kstars-build
+	if [ -d ${CRAFT_DIR}/download/git/kde/applications/kstars ]
+	then
+		ln -sf ${CRAFT_DIR}/download/git/kde/applications/kstars ${SHORTCUTS_DIR}
+		mv ${SHORTCUTS_DIR}/kstars ${SHORTCUTS_DIR}/kstars-source
+		ln -sf ${CRAFT_DIR}/build/kde/applications/kstars/work/build ${SHORTCUTS_DIR}
+		mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/kstars-build
+	fi
 	
 	# INDIServer
-	ln -sf ${CRAFT_DIR}/download/git/libs/_mac/indiserver ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/indiserver ${SHORTCUTS_DIR}/indiserver-source
-	ln -sf ${CRAFT_DIR}/build/libs/_mac/indiserver/work/build ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/build/libs/indiserver/work/build ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiserver-build
 	
 	# INDIServer 3rdParty
-	ln -sf ${CRAFT_DIR}/download/git/libs/_mac/indiserver-3rdparty ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/download/git/libs/indiserver-3rdparty ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/indiserver-3rdparty ${SHORTCUTS_DIR}/indiserver-3rdparty-source
-	ln -sf ${CRAFT_DIR}/build/libs/_mac/indiserver-3rdparty/work/build ${SHORTCUTS_DIR}
+	ln -sf ${CRAFT_DIR}/build/libs/indiserver-3rdparty/work/build ${SHORTCUTS_DIR}
 	mv ${SHORTCUTS_DIR}/build ${SHORTCUTS_DIR}/indiserver-3rdparty-build
 
 #This will package everything up into the app and then make a dmg.
