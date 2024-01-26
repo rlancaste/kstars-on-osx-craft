@@ -77,10 +77,10 @@ EOF
 					REMOVE_ALL="Yep"
 					;;
 				v)
-					VERBOSE="-vvv"
+					VERBOSE="v"
 					;;
 				q)
-					VERBOSE="-q"
+					VERBOSE="q"
 					;;
 				*)
 					dieUsage "Unsupported option $option"
@@ -173,7 +173,7 @@ EOF
 	
 # Before starting, check to see if the remote servers are accessible
 	statusBanner "Checking Connections"
-	checkForConnection Homebrew "https://raw.githubusercontent.com/Homebrew/install/master/install"
+	#checkForConnection Homebrew "https://raw.githubusercontent.com/Homebrew/install/master/install"
 	checkForConnection Craft "https://raw.githubusercontent.com/KDE/craft/master/setup/CraftBootstrap.py"
 	checkForConnection Oxygen "https://github.com/KDE/oxygen.git"
 	checkForConnection CustomMacBlueprints "https://github.com/rlancaste/craft-blueprints-kde.git"
@@ -280,27 +280,27 @@ EOF
 	# This will build INDI Core.  We want to do that every time since INDI changes often.
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i --target "stable" indiserver
+		craft -i"$VERBOSE" --target "stable" indiserver
 	else
-		craft "$VERBOSE" -i --target "master" indiserver
+		craft -i"$VERBOSE" --target "master" indiserver
 	fi
 	
 	# This will build INDI 3rd Party with the build libraries flag set.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Libraries and required dependencies"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i --target "stable" indiserver-3rdparty-libraries
+		craft -i"$VERBOSE" --target "stable" indiserver-3rdparty-libraries
 	else
-		craft "$VERBOSE" -i --target "master" indiserver-3rdparty-libraries
+		craft -i"$VERBOSE" --target "master" indiserver-3rdparty-libraries
 	fi
 	
 	# This will build INDI 3rd Party drivers only.  We want to do that every time since INDI changes often.
 	announce "Building INDI 3rd Party Drivers"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i --target "stable" indiserver-3rdparty
+		craft -i"$VERBOSE" --target "stable" indiserver-3rdparty
 	else
-		craft "$VERBOSE" -i --target "master" indiserver-3rdparty
+		craft -i"$VERBOSE" --target "master" indiserver-3rdparty
 	fi
 	
 	# This will check for broken links before proceeding.  Sometimes the INDI build fails to properly build drivers due to broken links.
@@ -318,7 +318,7 @@ EOF
 	if [ ! -d "${CRAFT_DIR}"/gsc ]
 	then
 		announce "Building GSC"
-		craft "$VERBOSE" -i gsc
+		craft -i"$VERBOSE" gsc
 	fi
 
 #This will set the KStars App directory and craft KStars.
@@ -332,9 +332,9 @@ EOF
 	statusBanner "Crafting KStars"
 	if [ -n "$STABLE_BUILD" ]
 	then
-		craft "$VERBOSE" -i --target "$KSTARS_VERSION" kstars
+		craft -i"$VERBOSE" --target "$KSTARS_VERSION" kstars
 	else
-		craft "$VERBOSE" -i --target "master" kstars
+		craft -i"$VERBOSE" --target "master" kstars
 	fi
 		
 	announce "CRAFT COMPLETE"
