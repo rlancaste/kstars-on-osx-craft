@@ -204,7 +204,7 @@ EOF
 	if [[ $(command -v brew) == "" ]]
 	then
 		announce "Installing Homebrew."
-		/bin/zsh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	else
 		#This will remove all the homebrew packages if desired.
 		if [ -n "$REMOVE_ALL" ]
